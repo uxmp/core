@@ -1,0 +1,21 @@
+{
+    "name": "usox/core",
+    "description": "Usox",
+    "type": "project",
+    "require": {
+        "usox/json-schema-api": "^0.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.4",
+        "phpstan/phpstan": "^0.12.93",
+        "phpstan/phpstan-strict-rules": "^0.12.10"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Jakob",
+            "email": "github@usox.org"
+        }
+    ]
+}
