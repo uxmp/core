@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Usox\Core\Orm\Model\Artist;
 use Usox\Core\Orm\Model\ArtistInterface;
 
+/**
+ * @extends EntityRepository<ArtistInterface>
+ */
 final class ArtistRepository extends EntityRepository implements ArtistRepositoryInterface
 {
     public function prototype(): ArtistInterface

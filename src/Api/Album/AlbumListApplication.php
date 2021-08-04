@@ -29,7 +29,7 @@ final class AlbumListApplication extends AbstractApiApplication
 
             $songList = [];
             foreach ($album->getSongs() as $track) {
-                $songList[] = sprintf('http://localhost:8888/play/'.$track->getId());
+                $songList[] = sprintf('http://localhost:8888/play/%d', $track->getId());
             }
 
             $list[] = [
@@ -41,7 +41,7 @@ final class AlbumListApplication extends AbstractApiApplication
         }
 
         $response->getBody()->write(
-            json_encode(['items' => $list], JSON_PRETTY_PRINT)
+            (string) json_encode(['items' => $list], JSON_PRETTY_PRINT)
         );
         return $response
             ->withHeader('Access-Control-Allow-Origin', '*')

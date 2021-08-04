@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Usox\Core\Orm\Model\Album;
 use Usox\Core\Orm\Model\AlbumInterface;
 
+/**
+ * @extends EntityRepository<AlbumInterface>
+ */
 final class AlbumRepository extends EntityRepository implements AlbumRepositoryInterface
 {
     public function prototype(): AlbumInterface

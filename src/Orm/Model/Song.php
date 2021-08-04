@@ -64,12 +64,12 @@ class Song implements SongInterface
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(?string $title): SongInterface
+    public function setTitle(string $title): SongInterface
     {
         $this->title = $title;
         return $this;

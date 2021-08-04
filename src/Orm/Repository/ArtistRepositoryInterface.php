@@ -5,6 +5,9 @@ namespace Usox\Core\Orm\Repository;
 use Doctrine\Persistence\ObjectRepository;
 use Usox\Core\Orm\Model\ArtistInterface;
 
+/**
+ * @extends ObjectRepository<ArtistInterface>
+ */
 interface ArtistRepositoryInterface extends ObjectRepository
 {
     public function prototype(): ArtistInterface;

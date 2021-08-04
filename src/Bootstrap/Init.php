@@ -27,6 +27,8 @@ final class Init
 {
     /**
      * @param callable(ContainerInterface): mixed $app
+     *
+     * @return mixed
      */
     public static function run(callable $app)
     {

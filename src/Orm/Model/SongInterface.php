@@ -6,9 +6,9 @@ interface SongInterface
 {
     public function getId(): int;
 
-    public function getTitle(): ?string;
+    public function getTitle(): string;
 
-    public function setTitle(?string $title): SongInterface;
+    public function setTitle(string $title): SongInterface;
 
     public function getArtistId(): int;
 

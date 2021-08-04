@@ -100,7 +100,7 @@ class Album implements AlbumInterface
         return $this->mbid;
     }
 
-    public function setMbid(string $mbid): AlbumInterface
+    public function setMbid(?string $mbid): AlbumInterface
     {
         $this->mbid = $mbid;
         return $this;

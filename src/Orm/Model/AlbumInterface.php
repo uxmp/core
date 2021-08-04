@@ -25,5 +25,5 @@ interface AlbumInterface
 
     public function getMbid(): ?string;
 
-    public function setMbid(string $mbid): AlbumInterface;
+    public function setMbid(?string $mbid): AlbumInterface;
 }

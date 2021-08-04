@@ -8,6 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Usox\Core\Orm\Model\Song;
 use Usox\Core\Orm\Model\SongInterface;
 
+/**
+ * @extends EntityRepository<SongInterface>
+ */
 final class SongRepository extends EntityRepository implements SongRepositoryInterface
 {
     public function prototype(): SongInterface
