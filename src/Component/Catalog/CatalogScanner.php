@@ -46,7 +46,8 @@ final class CatalogScanner implements CatalogScannerInterface
 
             if (!array_key_exists($artist_key, $artists)) {
                 $artists[$artist_key] = (new IntermediateArtist())
-                    ->setTitle($song['artist']);
+                    ->setTitle($song['artist'])
+                    ->setMbid($song['artist_mbid'])
                 ;
             }
 
@@ -54,6 +55,7 @@ final class CatalogScanner implements CatalogScannerInterface
                 $albums[$album_key] = (new IntermediateAlbum())
                     ->setTitle($song['album'])
                     ->setArtist($song['artist'])
+                    ->setMbid($song['album_mbid'])
                 ;
 
                 $artists[$artist_key]->addAlbum($albums[$album_key]);
@@ -63,12 +65,14 @@ final class CatalogScanner implements CatalogScannerInterface
                     ->setTitle($song['title'])
                     ->setFilename($song['filename'])
                     ->setTrackNumber($song['track'])
+                    ->setMbid($song['mbid'])
             );
         }
 
         foreach ($artists as $artist_im) {
             $artist = $this->artistRepository->prototype()
                 ->setTitle($artist_im->getTitle())
+                ->setMbid($artist_im->getMbid())
             ;
 
             $this->artistRepository->save($artist);
@@ -77,6 +81,7 @@ final class CatalogScanner implements CatalogScannerInterface
                 $album = $this->albumRepository->prototype()
                     ->setTitle($album_im->getTitle())
                     ->setArtist($artist)
+                    ->setMbid($album_im->getMbid())
                 ;
 
                 $this->albumRepository->save($album);
@@ -88,6 +93,7 @@ final class CatalogScanner implements CatalogScannerInterface
                         ->setAlbum($album)
                         ->setArtist($artist)
                         ->setFilename($song_im->getFilename())
+                        ->setMbid($song_im->getMbid())
                     ;
 
                     $this->songRepository->save($song);

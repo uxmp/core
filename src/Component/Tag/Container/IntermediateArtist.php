@@ -11,6 +11,8 @@ final class IntermediateArtist implements IntermediateArtistInterface
     /** @var array<IntermediateAlbumInterface> */
     private array $albums = [];
 
+    private ?string $mbid = null;
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -30,6 +32,17 @@ final class IntermediateArtist implements IntermediateArtistInterface
     public function addAlbum(IntermediateAlbumInterface $album): IntermediateArtistInterface
     {
         $this->albums[] = $album;
+        return $this;
+    }
+
+    public function getMbid(): ?string
+    {
+        return $this->mbid;
+    }
+
+    public function setMbid(?string $mbid): IntermediateArtistInterface
+    {
+        $this->mbid = $mbid;
         return $this;
     }
 }

@@ -30,8 +30,13 @@ class Album implements AlbumInterface
     private int $artist_id;
 
     /**
+     * @Column(type="string", length="32", nullable="true")
+     */
+    private ?string $mbid = null;
+
+    /**
      * @ManyToOne(targetEntity="Artist", inversedBy="albums")
-     * @JoinColumn(name="artist_id", referencedColumnName="id")
+     * @JoinColumn(name="artist_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private ArtistInterface $artist;
 
@@ -89,4 +94,16 @@ class Album implements AlbumInterface
     {
         return $this->songs;
     }
+
+    public function getMbid(): ?string
+    {
+        return $this->mbid;
+    }
+
+    public function setMbid(string $mbid): AlbumInterface
+    {
+        $this->mbid = $mbid;
+        return $this;
+    }
+
 }

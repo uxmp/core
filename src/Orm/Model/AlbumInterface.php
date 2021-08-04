@@ -22,4 +22,8 @@ interface AlbumInterface
      * @return iterable<SongInterface>
      */
     public function getSongs(): iterable;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(string $mbid): AlbumInterface;
 }

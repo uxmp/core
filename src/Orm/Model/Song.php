@@ -43,8 +43,13 @@ class Song implements SongInterface
     private string $filename;
 
     /**
+     * @Column(type="string", length="32", nullable=true)
+     */
+    private ?string $mbid = null;
+
+    /**
      * @ManyToOne(targetEntity="Album", inversedBy="songs")
-     * @JoinColumn(name="album_id", referencedColumnName="id")
+     * @JoinColumn(name="album_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private AlbumInterface $album;
 
@@ -133,6 +138,17 @@ class Song implements SongInterface
     public function setFilename(string $filename): SongInterface
     {
         $this->filename = $filename;
+        return $this;
+    }
+
+    public function getMbid(): ?string
+    {
+        return $this->mbid;
+    }
+
+    public function setMbid(?string $mbid): SongInterface
+    {
+        $this->mbid = $mbid;
         return $this;
     }
 

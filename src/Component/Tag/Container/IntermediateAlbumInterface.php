@@ -18,4 +18,8 @@ interface IntermediateAlbumInterface
     public function getSongs(): array;
 
     public function addSong(IntermediateSongInterface $song): IntermediateAlbumInterface;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(?string $mbid): IntermediateAlbumInterface;
 }

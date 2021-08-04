@@ -33,4 +33,8 @@ interface SongInterface
     public function getFilename(): string;
 
     public function setFilename(string $filename): SongInterface;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(?string $mbid): SongInterface;
 }

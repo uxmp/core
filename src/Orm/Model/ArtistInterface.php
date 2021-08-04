@@ -2,8 +2,6 @@
 
 namespace Usox\Core\Orm\Model;
 
-use Doctrine\ORM\PersistentCollection;
-
 interface ArtistInterface
 {
     public function getId(): int;
@@ -16,4 +14,8 @@ interface ArtistInterface
      * @return iterable<AlbumInterface>
      */
     public function getAlbums(): iterable;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(?string $mbid): ArtistInterface;
 }

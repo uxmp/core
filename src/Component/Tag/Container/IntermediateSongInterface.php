@@ -15,4 +15,8 @@ interface IntermediateSongInterface
     public function getTitle(): ?string;
 
     public function setTitle(?string $title): IntermediateSongInterface;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(?string $mbid): IntermediateSongInterface;
 }

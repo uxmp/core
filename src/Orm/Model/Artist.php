@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Usox\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 /**
  * @Entity(repositoryClass="\Usox\Core\Orm\Repository\ArtistRepository")
@@ -24,6 +23,11 @@ class Artist implements ArtistInterface
      * @Column(type="string", nullable=true)
      */
     private ?string $title = null;
+
+    /**
+     * @Column(type="string", length="32", nullable=true)
+     */
+    private ?string $mbid = null;
 
     /**
      * @OneToMany(targetEntity="Album", mappedBy="artist", cascade={"ALL"}, indexBy="id")
@@ -57,4 +61,16 @@ class Artist implements ArtistInterface
     {
         return $this->albums;
     }
+
+    public function getMbid(): ?string
+    {
+        return $this->mbid;
+    }
+
+    public function setMbid(?string $mbid): ArtistInterface
+    {
+        $this->mbid = $mbid;
+        return $this;
+    }
+
 }

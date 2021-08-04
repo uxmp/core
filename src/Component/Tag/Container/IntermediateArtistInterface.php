@@ -14,4 +14,8 @@ interface IntermediateArtistInterface
     public function getAlbums(): array;
 
     public function addAlbum(IntermediateAlbumInterface $album): IntermediateArtistInterface;
+
+    public function getMbid(): ?string;
+
+    public function setMbid(?string $mbid): IntermediateArtistInterface;
 }
