@@ -9,14 +9,12 @@ use Usox\Core\Component\Tag\Container\AudioFileInterface;
 final class VorbisExtractor implements ExtractorInterface
 {
     public function extract(
-        string $filename,
         array $data,
         AudioFileInterface $audioFile
     ): void {
         $tags = $data['vorbiscomment'];
 
         $audioFile
-            ->setFilename($filename)
             ->setMbid(current($tags['musicbrainz_trackid']))
             ->setTitle(current($tags['title']))
             ->setTrackNumber((int) current($tags['tracknumber']))

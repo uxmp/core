@@ -9,14 +9,12 @@ use Usox\Core\Component\Tag\Container\AudioFileInterface;
 final class Id3v2Extractor implements ExtractorInterface
 {
     public function extract(
-        string $filename,
         array $data,
         AudioFileInterface $audioFile
     ): void {
         $tags = $data['id3v2'];
 
         $audioFile
-            ->setFilename($filename)
             ->setMbid($tags['text']['MusicBrainz Release Track Id'] ?? null)
             ->setTitle(current($tags['title']))
             ->setTrackNumber((int) current($tags['track_number']))

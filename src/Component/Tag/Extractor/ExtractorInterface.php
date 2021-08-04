@@ -10,7 +10,6 @@ interface ExtractorInterface
      * @param array<mixed> $data
      */
     public function extract(
-        string $filename,
         array $data,
         AudioFileInterface $audioFile
     ): void;

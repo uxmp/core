@@ -38,7 +38,7 @@ final class CatalogScanner implements CatalogScannerInterface
         $discs = [];
 
         foreach ($this->search($directory) as $filename) {
-            $audioFile = new AudioFile();
+            $audioFile = (new AudioFile())->setFilename($filename);
 
             $analysisResult = $this->id3Analyzer->analyze($filename)['tags'];
 
@@ -48,7 +48,6 @@ final class CatalogScanner implements CatalogScannerInterface
             }
 
             $extractor->extract(
-                $filename,
                 $analysisResult,
                 $audioFile
             );
