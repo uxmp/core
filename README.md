@@ -1,1 +1,1 @@
-# usox-core
+# xmp-core

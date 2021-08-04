@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Usox\Core\Component\Catalog;
 
+use Generator;
 use getID3;
 use Usox\Core\Component\Tag\Container\IntermediateAlbum;
 use Usox\Core\Component\Tag\Container\IntermediateAlbumInterface;
@@ -26,16 +27,13 @@ final class CatalogScanner implements CatalogScannerInterface
 
     public function scan(string $directory): array
     {
-        $result = [];
-
-        $this->search($directory, $result);
-
         /** @var array<IntermediateAlbumInterface> $albums */
         $albums = [];
         $artists = [];
 
         $extractor = new Id3Extractor();
-        foreach ($result as $filename) {
+
+        foreach ($this->search($directory) as $filename) {
             $song = $extractor->extract(
                 $filename,
                 $this->id3Analyzer->analyze($filename)['tags']['id3v2']
@@ -104,16 +102,19 @@ final class CatalogScanner implements CatalogScannerInterface
         return $artists;
     }
 
-    private function search(string $directory, array &$result): void
+    /**
+     * @return Generator<string>
+     */
+    private function search(string $directory): Generator
     {
         $files = scandir($directory);
 
         foreach ($files as $value) {
             $path = realpath($directory . DIRECTORY_SEPARATOR . $value);
             if (!is_dir($path)) {
-                $result[] = $path;
+                yield $path;
             } elseif ($value != "." && $value != "..") {
-                $this->search($path, $result);
+                yield from $this->search($path);
             }
         }
     }
