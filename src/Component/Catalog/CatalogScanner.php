@@ -7,7 +7,7 @@ namespace Usox\Core\Component\Catalog;
 use Generator;
 use getID3;
 use Usox\Core\Component\Tag\Container\AudioFile;
-use Usox\Core\Component\Tag\Extractor\Id3Extractor;
+use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
 use Usox\Core\Orm\Repository\SongRepositoryInterface;
@@ -18,22 +18,29 @@ final class CatalogScanner implements CatalogScannerInterface
         private getID3 $id3Analyzer,
         private ArtistRepositoryInterface $artistRepository,
         private AlbumRepositoryInterface $albumRepository,
-        private SongRepositoryInterface $songRepository
+        private SongRepositoryInterface $songRepository,
+        private ExtractorDeterminatorInterface $extractorDeterminator
     ) {
     }
 
     public function scan(string $directory): array
     {
-        $extractor = new Id3Extractor();
         $artists = [];
         $albums = [];
 
         foreach ($this->search($directory) as $filename) {
             $audioFile = new AudioFile();
 
+            $analysisResult = $this->id3Analyzer->analyze($filename)['tags'];
+
+            $extractor = $this->extractorDeterminator->determine($analysisResult);
+            if ($extractor === null) {
+                continue;
+            }
+
             $extractor->extract(
                 $filename,
-                $this->id3Analyzer->analyze($filename)['tags']['id3v2'],
+                $analysisResult,
                 $audioFile
             );
 

@@ -4,7 +4,7 @@ namespace Usox\Core\Component\Tag\Extractor;
 
 use Usox\Core\Component\Tag\Container\AudioFileInterface;
 
-interface Id3ExtractorInterface
+interface ExtractorInterface
 {
     /**
      * @param array<mixed> $data
@@ -14,4 +14,9 @@ interface Id3ExtractorInterface
         array $data,
         AudioFileInterface $audioFile
     ): void;
+
+    /**
+     * @param array<mixed> $data
+     */
+    public function applies(array $data): bool;
 }

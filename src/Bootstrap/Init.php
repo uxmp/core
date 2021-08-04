@@ -15,6 +15,9 @@ use Usox\Core\Api\Album\AlbumListApplication;
 use Usox\Core\Api\Playback\PlaySongApplication;
 use Usox\Core\Component\Catalog\CatalogScanner;
 use Usox\Core\Component\Catalog\CatalogScannerInterface;
+use Usox\Core\Component\Tag\Extractor\ExtractorDeterminator;
+use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
+use Usox\Core\Component\Tag\Extractor\Id3v2Extractor;
 use Usox\Core\Orm\Model\Album;
 use Usox\Core\Orm\Model\Artist;
 use Usox\Core\Orm\Model\Song;
@@ -22,6 +25,7 @@ use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
 use Usox\Core\Orm\Repository\SongRepositoryInterface;
 use function DI\autowire;
+use function DI\create;
 
 final class Init
 {
@@ -39,6 +43,13 @@ final class Init
             Psr17Factory::class => autowire(),
             CatalogScannerInterface::class => autowire(CatalogScanner::class),
             getID3::class => autowire(),
+            ExtractorDeterminatorInterface::class => static function (ContainerInterface $c): ExtractorDeterminatorInterface {
+                return new ExtractorDeterminator(
+                    [
+                        $c->get(Id3v2Extractor::class)
+                    ]
+                );
+            },
             ArtistRepositoryInterface::class => function (ContainerInterface $c): ArtistRepositoryInterface {
                 return $c->get(EntityManagerInterface::class)->getRepository(Artist::class);
             },
