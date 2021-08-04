@@ -41,15 +41,15 @@ class Album implements AlbumInterface
     private ArtistInterface $artist;
 
     /**
-     * @OneToMany(targetEntity="Song", mappedBy="album", cascade={"ALL"}, indexBy="id")
+     * @OneToMany(targetEntity="Disc", mappedBy="album", cascade={"ALL"}, indexBy="id")
      *
-     * @var iterable<SongInterface>
+     * @var iterable<DiscInterface>
      */
-    private iterable $songs;
+    private iterable $discs;
 
     public function __construct()
     {
-        $this->songs = new ArrayCollection();
+        $this->discs = new ArrayCollection();
     }
 
     public function getId(): int
@@ -68,17 +68,6 @@ class Album implements AlbumInterface
         return $this;
     }
 
-    public function getArtistId(): int
-    {
-        return $this->artist_id;
-    }
-
-    public function setArtistId(int $artist_id): AlbumInterface
-    {
-        $this->artist_id = $artist_id;
-        return $this;
-    }
-
     public function getArtist(): ArtistInterface
     {
         return $this->artist;
@@ -90,11 +79,6 @@ class Album implements AlbumInterface
         return $this;
     }
 
-    public function getSongs(): iterable
-    {
-        return $this->songs;
-    }
-
     public function getMbid(): ?string
     {
         return $this->mbid;
@@ -104,5 +88,10 @@ class Album implements AlbumInterface
     {
         $this->mbid = $mbid;
         return $this;
+    }
+
+    public function getDiscs(): iterable
+    {
+        return $this->discs;
     }
 }

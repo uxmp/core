@@ -24,6 +24,8 @@ final class VorbisExtractor implements ExtractorInterface
             ->setArtistMbid(current($tags['musicbrainz_albumartistid']))
             ->setAlbumTitle(current($tags['album']))
             ->setAlbumMbid(current($tags['musicbrainz_albumid']))
+            ->setDiscMbid(current($tags['musicbrainz_releasegroupid']))
+            ->setDiscNumber((int) current($tags['discnumber']))
         ;
     }
 

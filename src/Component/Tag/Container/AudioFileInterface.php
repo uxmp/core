@@ -6,7 +6,7 @@ interface AudioFileInterface
 {
     public function getTrackNumber(): ?int;
 
-    public function setTrackNumber(?int $track_number): AudioFileInterface;
+    public function setTrackNumber(?int $trackNumber): AudioFileInterface;
 
     public function getFilename(): ?string;
 
@@ -22,17 +22,25 @@ interface AudioFileInterface
 
     public function getArtistTitle(): ?string;
 
-    public function setArtistTitle(?string $artist_title): AudioFileInterface;
+    public function setArtistTitle(?string $artistTitle): AudioFileInterface;
 
     public function getArtistMbid(): ?string;
 
-    public function setArtistMbid(?string $artist_mbid): AudioFileInterface;
+    public function setArtistMbid(?string $artistMbid): AudioFileInterface;
 
     public function getAlbumTitle(): ?string;
 
-    public function setAlbumTitle(?string $album_title): AudioFileInterface;
+    public function setAlbumTitle(?string $albumTitle): AudioFileInterface;
 
     public function getAlbumMbid(): ?string;
 
-    public function setAlbumMbid(?string $album_mbid): AudioFileInterface;
+    public function setAlbumMbid(?string $albumMbid): AudioFileInterface;
+
+    public function getDiscMbid(): ?string;
+
+    public function setDiscMbid(?string $discMbid): AudioFileInterface;
+
+    public function getDiscNumber(): ?int;
+
+    public function setDiscNumber(?int $discNumber): AudioFileInterface;
 }

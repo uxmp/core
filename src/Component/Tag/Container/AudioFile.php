@@ -22,6 +22,10 @@ final class AudioFile implements AudioFileInterface
 
     private ?string $albumMbid = null;
 
+    private ?string $discMbid = null;
+
+    private ?int $discNumber = null;
+
     public function getTrackNumber(): ?int
     {
         return $this->trackNumber;
@@ -107,6 +111,28 @@ final class AudioFile implements AudioFileInterface
     public function setAlbumMbid(?string $albumMbid): AudioFileInterface
     {
         $this->albumMbid = $albumMbid;
+        return $this;
+    }
+
+    public function getDiscMbid(): ?string
+    {
+        return $this->discMbid;
+    }
+
+    public function setDiscMbid(?string $discMbid): AudioFileInterface
+    {
+        $this->discMbid = $discMbid;
+        return $this;
+    }
+
+    public function getDiscNumber(): ?int
+    {
+        return $this->discNumber;
+    }
+
+    public function setDiscNumber(?int $discNumber): AudioFileInterface
+    {
+        $this->discNumber = $discNumber;
         return $this;
     }
 }

@@ -8,8 +8,12 @@ use Generator;
 use getID3;
 use Usox\Core\Component\Tag\Container\AudioFile;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
+use Usox\Core\Orm\Model\AlbumInterface;
+use Usox\Core\Orm\Model\ArtistInterface;
+use Usox\Core\Orm\Model\DiscInterface;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
+use Usox\Core\Orm\Repository\DiscRepositoryInterface;
 use Usox\Core\Orm\Repository\SongRepositoryInterface;
 
 final class CatalogScanner implements CatalogScannerInterface
@@ -19,14 +23,19 @@ final class CatalogScanner implements CatalogScannerInterface
         private ArtistRepositoryInterface $artistRepository,
         private AlbumRepositoryInterface $albumRepository,
         private SongRepositoryInterface $songRepository,
-        private ExtractorDeterminatorInterface $extractorDeterminator
+        private ExtractorDeterminatorInterface $extractorDeterminator,
+        private DiscRepositoryInterface $discRepository
     ) {
     }
 
-    public function scan(string $directory): array
+    public function scan(string $directory): void
     {
+        /** @var array<string, ArtistInterface> $artists */
         $artists = [];
+        /** @var array<string, AlbumInterface> $albums */
         $albums = [];
+        /** @var array<string, DiscInterface> $discs */
+        $discs = [];
 
         foreach ($this->search($directory) as $filename) {
             $audioFile = new AudioFile();
@@ -46,6 +55,7 @@ final class CatalogScanner implements CatalogScannerInterface
 
             $artistMbid = $audioFile->getArtistMbid();
             $albumMbid = $audioFile->getAlbumMbid();
+            $discMbId = $audioFile->getDiscMbId();
 
             $artist = $artists[$artistMbid] ?? null;
             if ($artist === null) {
@@ -70,10 +80,23 @@ final class CatalogScanner implements CatalogScannerInterface
                 $albums[$albumMbid] = $album;
             }
 
+            $disc = $discs[$discMbId] ?? null;
+            if ($disc === null) {
+                $disc = $this->discRepository->prototype()
+                    ->setMbid($discMbId)
+                    ->setAlbum($album)
+                    ->setNumber($audioFile->getDiscNumber())
+                ;
+
+                $this->discRepository->save($disc);
+
+                $discs[$discMbId] = $disc;
+            }
+
             $song = $this->songRepository->prototype()
                 ->setTitle($audioFile->getTitle())
                 ->setTrackNumber($audioFile->getTrackNumber())
-                ->setAlbum($album)
+                ->setDisc($disc)
                 ->setArtist($artist)
                 ->setFilename($audioFile->getFilename())
                 ->setMbid($audioFile->getMbid())
@@ -81,8 +104,6 @@ final class CatalogScanner implements CatalogScannerInterface
 
             $this->songRepository->save($song);
         }
-
-        return $artists;
     }
 
     /**

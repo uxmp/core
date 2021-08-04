@@ -28,13 +28,15 @@ final class AlbumListApplication extends AbstractApiApplication
             /** @var AlbumInterface $album */
 
             $songList = [];
-            foreach ($album->getSongs() as $track) {
-                $songList[] = sprintf('http://localhost:8888/play/%d', $track->getId());
+            foreach ($album->getDiscs() as $disc) {
+                foreach ($disc->getSongs() as $song) {
+                    $songList[] = sprintf('http://localhost:8888/play/%d', $song->getId());
+                }
             }
 
             $list[] = [
                 'id' => $album->getId(),
-                'artistId' => $album->getArtistId(),
+                'artistId' => $album->getArtist()->getId(),
                 'name' => $album->getTitle(),
                 'songList' => $songList
             ];

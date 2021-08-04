@@ -10,10 +10,6 @@ interface SongInterface
 
     public function setTitle(string $title): SongInterface;
 
-    public function getArtistId(): int;
-
-    public function setArtistId(int $artist_id): SongInterface;
-
     public function getArtist(): ArtistInterface;
 
     public function setArtist(ArtistInterface $artist): SongInterface;
@@ -22,14 +18,6 @@ interface SongInterface
 
     public function setTrackNumber(int $track_number): SongInterface;
 
-    public function getAlbum(): AlbumInterface;
-
-    public function setAlbum(AlbumInterface $album): SongInterface;
-
-    public function getAlbumId(): int;
-
-    public function setAlbumId(int $album_id): SongInterface;
-
     public function getFilename(): string;
 
     public function setFilename(string $filename): SongInterface;
@@ -37,4 +25,8 @@ interface SongInterface
     public function getMbid(): ?string;
 
     public function setMbid(?string $mbid): SongInterface;
+
+    public function getDisc(): DiscInterface;
+
+    public function setDisc(DiscInterface $disc): SongInterface;
 }

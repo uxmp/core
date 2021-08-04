@@ -21,9 +21,11 @@ use Usox\Core\Component\Tag\Extractor\Id3v2Extractor;
 use Usox\Core\Component\Tag\Extractor\VorbisExtractor;
 use Usox\Core\Orm\Model\Album;
 use Usox\Core\Orm\Model\Artist;
+use Usox\Core\Orm\Model\Disc;
 use Usox\Core\Orm\Model\Song;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
+use Usox\Core\Orm\Repository\DiscRepositoryInterface;
 use Usox\Core\Orm\Repository\SongRepositoryInterface;
 use function DI\autowire;
 use function DI\create;
@@ -60,6 +62,9 @@ final class Init
             },
             SongRepositoryInterface::class => function (ContainerInterface $c): SongRepositoryInterface {
                 return $c->get(EntityManagerInterface::class)->getRepository(Song::class);
+            },
+            DiscRepositoryInterface::class => function (ContainerInterface $c): DiscRepositoryInterface {
+                return $c->get(EntityManagerInterface::class)->getRepository(Disc::class);
             },
             EntityManagerInterface::class => static function (ContainerInterface $c): EntityManagerInterface {
                 $paths = [__DIR__ . '/../Orm/Model/'];

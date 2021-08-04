@@ -35,7 +35,7 @@ class Song implements SongInterface
     /**
      * @Column(type="integer")
      */
-    private int $album_id;
+    private int $disc_id;
 
     /**
      * @Column(type="text")
@@ -48,10 +48,10 @@ class Song implements SongInterface
     private ?string $mbid = null;
 
     /**
-     * @ManyToOne(targetEntity="Album", inversedBy="songs")
-     * @JoinColumn(name="album_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ManyToOne(targetEntity="Disc", inversedBy="songs")
+     * @JoinColumn(name="disc_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private AlbumInterface $album;
+    private DiscInterface $disc;
 
     /**
      * @ManyToOne(targetEntity="Artist")
@@ -72,17 +72,6 @@ class Song implements SongInterface
     public function setTitle(string $title): SongInterface
     {
         $this->title = $title;
-        return $this;
-    }
-
-    public function getArtistId(): int
-    {
-        return $this->artist_id;
-    }
-
-    public function setArtistId(int $artist_id): SongInterface
-    {
-        $this->artist_id = $artist_id;
         return $this;
     }
 
@@ -108,28 +97,6 @@ class Song implements SongInterface
         return $this;
     }
 
-    public function getAlbum(): AlbumInterface
-    {
-        return $this->album;
-    }
-
-    public function setAlbum(AlbumInterface $album): SongInterface
-    {
-        $this->album = $album;
-        return $this;
-    }
-
-    public function getAlbumId(): int
-    {
-        return $this->album_id;
-    }
-
-    public function setAlbumId(int $album_id): SongInterface
-    {
-        $this->album_id = $album_id;
-        return $this;
-    }
-
     public function getFilename(): string
     {
         return $this->filename;
@@ -149,6 +116,17 @@ class Song implements SongInterface
     public function setMbid(?string $mbid): SongInterface
     {
         $this->mbid = $mbid;
+        return $this;
+    }
+
+    public function getDisc(): DiscInterface
+    {
+        return $this->disc;
+    }
+
+    public function setDisc(DiscInterface $disc): SongInterface
+    {
+        $this->disc = $disc;
         return $this;
     }
 }
