@@ -57,5 +57,4 @@ final class IntermediateSong implements IntermediateSongInterface
         $this->mbid = $mbid;
         return $this;
     }
-
 }

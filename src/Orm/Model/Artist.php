@@ -72,5 +72,4 @@ class Artist implements ArtistInterface
         $this->mbid = $mbid;
         return $this;
     }
-
 }

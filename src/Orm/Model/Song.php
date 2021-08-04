@@ -151,5 +151,4 @@ class Song implements SongInterface
         $this->mbid = $mbid;
         return $this;
     }
-
 }

@@ -28,7 +28,7 @@ final class Init
     /**
      * @param callable(ContainerInterface): mixed $app
      */
-    static function run(callable $app)
+    public static function run(callable $app)
     {
         $builder = new ContainerBuilder();
         $builder->addDefinitions([

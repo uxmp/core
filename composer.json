@@ -21,10 +21,13 @@
         "usox/json-schema-api": "^0.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^0.12.93",
-        "phpstan/phpstan-strict-rules": "^0.12.10"
+        "phpstan/phpstan-mockery": "^0.12.14",
+        "phpstan/phpstan-strict-rules": "^0.12.10",
+        "phpunit/phpunit": "^9.5",
+        "thecodingmachine/phpstan-strict-rules": "^0.12.1"
     },
     "license": "MIT",
     "authors": [
@@ -45,6 +48,12 @@
         }
     },
     "scripts": {
-        "serve": "php -S localhost:8888 -t src/public"
+        "serve": "php -S localhost:8888 -t src/public",
+	"qa": "composer check-cs && composer stan && composer test",
+	"check-cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
+	"fix-cs": "./vendor/bin/php-cs-fixer fix",
+	"test": "./vendor/bin/phpunit tests",
+	"stan": "./vendor/bin/phpstan analyse",
+	"coverage": "./vendor/bin/phpunit --warm-coverage-cache tests && XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html build/coverage tests"
     }
 }

@@ -61,5 +61,4 @@ final class IntermediateAlbum implements IntermediateAlbumInterface
         $this->mbid = $mbid;
         return $this;
     }
-
 }

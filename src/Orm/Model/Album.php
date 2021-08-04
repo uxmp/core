@@ -105,5 +105,4 @@ class Album implements AlbumInterface
         $this->mbid = $mbid;
         return $this;
     }
-
 }

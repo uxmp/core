@@ -112,7 +112,7 @@ final class CatalogScanner implements CatalogScannerInterface
             $path = realpath($directory . DIRECTORY_SEPARATOR . $value);
             if (!is_dir($path)) {
                 $result[] = $path;
-            } else if ($value != "." && $value != "..") {
+            } elseif ($value != "." && $value != "..") {
                 $this->search($path, $result);
             }
         }
