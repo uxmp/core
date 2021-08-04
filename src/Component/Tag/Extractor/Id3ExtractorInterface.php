@@ -2,14 +2,16 @@
 
 namespace Usox\Core\Component\Tag\Extractor;
 
+use Usox\Core\Component\Tag\Container\AudioFileInterface;
+
 interface Id3ExtractorInterface
 {
     /**
      * @param array<mixed> $data
-     * @return array{filename: string, artist: string, album: string, title: string, track: int, id: string}
      */
     public function extract(
         string $filename,
-        array $data
-    ): array;
+        array $data,
+        AudioFileInterface $audioFile
+    ): void;
 }

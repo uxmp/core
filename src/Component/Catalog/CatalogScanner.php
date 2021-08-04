@@ -6,10 +6,7 @@ namespace Usox\Core\Component\Catalog;
 
 use Generator;
 use getID3;
-use Usox\Core\Component\Tag\Container\IntermediateAlbum;
-use Usox\Core\Component\Tag\Container\IntermediateAlbumInterface;
-use Usox\Core\Component\Tag\Container\IntermediateArtist;
-use Usox\Core\Component\Tag\Container\IntermediateSong;
+use Usox\Core\Component\Tag\Container\AudioFile;
 use Usox\Core\Component\Tag\Extractor\Id3Extractor;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
@@ -27,76 +24,55 @@ final class CatalogScanner implements CatalogScannerInterface
 
     public function scan(string $directory): array
     {
-        /** @var array<IntermediateAlbumInterface> $albums */
-        $albums = [];
-        $artists = [];
-
         $extractor = new Id3Extractor();
+        $artists = [];
+        $albums = [];
 
         foreach ($this->search($directory) as $filename) {
-            $song = $extractor->extract(
+            $audioFile = new AudioFile();
+
+            $extractor->extract(
                 $filename,
-                $this->id3Analyzer->analyze($filename)['tags']['id3v2']
+                $this->id3Analyzer->analyze($filename)['tags']['id3v2'],
+                $audioFile
             );
 
-            $album_key = md5($song['album'].$song['artist']);
-            $artist_key = md5($song['artist']);
+            $artistMbid = $audioFile->getArtistMbid();
+            $albumMbid = $audioFile->getAlbumMbid();
 
-            if (!array_key_exists($artist_key, $artists)) {
-                $artists[$artist_key] = (new IntermediateArtist())
-                    ->setTitle($song['artist'])
-                    ->setMbid($song['artist_mbid'])
+            $artist = $artists[$artistMbid] ?? null;
+            if ($artist === null) {
+                $artist = $this->artistRepository->prototype()
+                    ->setTitle($audioFile->getArtistTitle())
+                    ->setMbid($audioFile->getArtistMbid())
                 ;
+                $this->artistRepository->save($artist);
+
+                $artists[$artistMbid] = $artist;
             }
 
-            if (!array_key_exists($album_key, $albums)) {
-                $albums[$album_key] = (new IntermediateAlbum())
-                    ->setTitle($song['album'])
-                    ->setArtist($song['artist'])
-                    ->setMbid($song['album_mbid'])
-                ;
-
-                $artists[$artist_key]->addAlbum($albums[$album_key]);
-            }
-            $albums[$album_key]->addSong(
-                (new IntermediateSong())
-                    ->setTitle($song['title'])
-                    ->setFilename($song['filename'])
-                    ->setTrackNumber($song['track'])
-                    ->setMbid($song['mbid'])
-            );
-        }
-
-        foreach ($artists as $artist_im) {
-            $artist = $this->artistRepository->prototype()
-                ->setTitle($artist_im->getTitle())
-                ->setMbid($artist_im->getMbid())
-            ;
-
-            $this->artistRepository->save($artist);
-
-            foreach ($artist_im->getAlbums() as $album_im) {
+            $album = $albums[$albumMbid] ?? null;
+            if ($album === null) {
                 $album = $this->albumRepository->prototype()
-                    ->setTitle($album_im->getTitle())
+                    ->setTitle($audioFile->getAlbumTitle())
                     ->setArtist($artist)
-                    ->setMbid($album_im->getMbid())
+                    ->setMbid($albumMbid)
                 ;
-
                 $this->albumRepository->save($album);
 
-                foreach ($album_im->getSongs() as $song_im) {
-                    $song = $this->songRepository->prototype()
-                        ->setTitle($song_im->getTitle())
-                        ->setTrackNumber($song_im->getTrackNumber())
-                        ->setAlbum($album)
-                        ->setArtist($artist)
-                        ->setFilename($song_im->getFilename())
-                        ->setMbid($song_im->getMbid())
-                    ;
-
-                    $this->songRepository->save($song);
-                }
+                $albums[$albumMbid] = $album;
             }
+
+            $song = $this->songRepository->prototype()
+                ->setTitle($audioFile->getTitle())
+                ->setTrackNumber($audioFile->getTrackNumber())
+                ->setAlbum($album)
+                ->setArtist($artist)
+                ->setFilename($audioFile->getFilename())
+                ->setMbid($audioFile->getMbid())
+            ;
+
+            $this->songRepository->save($song);
         }
 
         return $artists;
@@ -109,12 +85,14 @@ final class CatalogScanner implements CatalogScannerInterface
     {
         $files = scandir($directory);
 
-        foreach ($files as $value) {
-            $path = realpath($directory . DIRECTORY_SEPARATOR . $value);
-            if (!is_dir($path)) {
-                yield $path;
-            } elseif ($value != "." && $value != "..") {
-                yield from $this->search($path);
+        if ($files !== false) {
+            foreach ($files as $value) {
+                $path = (string) realpath($directory . DIRECTORY_SEPARATOR . $value);
+                if (!is_dir($path)) {
+                    yield $path;
+                } elseif ($value != '.' && $value != '..') {
+                    yield from $this->search($path);
+                }
             }
         }
     }

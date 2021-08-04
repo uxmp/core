@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Usox\Core\Component\Tag\Extractor;
 
+use Usox\Core\Component\Tag\Container\AudioFileInterface;
+
 final class Id3Extractor implements Id3ExtractorInterface
 {
     public function extract(
         string $filename,
-        array $data
-    ): array {
-        return [
-            'filename' => $filename,
-            'mbid' => $data['text']['MusicBrainz Release Track Id'] ?? null,
-            'artist' => current($data['artist']),
-            'artist_mbid' => $data['text']['MusicBrainz Album Artist Id'] ?? null,
-            'album' => current($data['album']),
-            'album_mbid' => $data['text']['MusicBrainz Album Id'] ?? null,
-            'title' => current($data['title']),
-            'track' => (int) current($data['track_number']),
-            'id' => md5($filename),
-        ];
+        array $data,
+        AudioFileInterface $audioFile
+    ): void {
+        $audioFile
+            ->setFilename($filename)
+            ->setMbid($data['text']['MusicBrainz Release Track Id'] ?? null)
+            ->setTitle(current($data['title']))
+            ->setTrackNumber((int) current($data['track_number']))
+            ->setArtistTitle(current($data['artist']))
+            ->setArtistMbid($data['text']['MusicBrainz Album Artist Id'] ?? null)
+            ->setAlbumTitle(current($data['album']))
+            ->setAlbumMbid($data['text']['MusicBrainz Album Id'] ?? null)
+        ;
     }
 }
