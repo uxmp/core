@@ -7,6 +7,8 @@ use Usox\Core\Orm\Model\ArtistInterface;
 
 /**
  * @extends ObjectRepository<ArtistInterface>
+ *
+ * @method iterable<ArtistInterface> findAll()
  */
 interface ArtistRepositoryInterface extends ObjectRepository
 {

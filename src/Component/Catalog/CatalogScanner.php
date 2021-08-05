@@ -54,7 +54,7 @@ final class CatalogScanner implements CatalogScannerInterface
 
             $artistMbid = $audioFile->getArtistMbid();
             $albumMbid = $audioFile->getAlbumMbid();
-            $discMbId = $audioFile->getDiscMbId();
+            $discMbId = $audioFile->getDiscMbid();
 
             $artist = $artists[$artistMbid] ?? null;
             if ($artist === null) {
