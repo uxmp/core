@@ -11,24 +11,11 @@ use Doctrine\ORM\Tools\Setup;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
-use Usox\Core\Api\Album\AlbumListApplication;
-use Usox\Core\Api\Playback\PlaySongApplication;
-use Usox\Core\Component\Catalog\CatalogScanner;
-use Usox\Core\Component\Catalog\CatalogScannerInterface;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminator;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
 use Usox\Core\Component\Tag\Extractor\Id3v2Extractor;
 use Usox\Core\Component\Tag\Extractor\VorbisExtractor;
-use Usox\Core\Orm\Model\Album;
-use Usox\Core\Orm\Model\Artist;
-use Usox\Core\Orm\Model\Disc;
-use Usox\Core\Orm\Model\Song;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
-use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
-use Usox\Core\Orm\Repository\DiscRepositoryInterface;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
 use function DI\autowire;
-use function DI\create;
 
 final class Init
 {
@@ -40,11 +27,11 @@ final class Init
     public static function run(callable $app)
     {
         $builder = new ContainerBuilder();
+        $builder->addDefinitions(require __DIR__ . '/../Api/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Catalog/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
-            AlbumListApplication::class => autowire(),
-            PlaySongApplication::class => autowire(),
             Psr17Factory::class => autowire(),
-            CatalogScannerInterface::class => autowire(CatalogScanner::class),
             getID3::class => autowire(),
             ExtractorDeterminatorInterface::class => static function (ContainerInterface $c): ExtractorDeterminatorInterface {
                 return new ExtractorDeterminator(
@@ -53,18 +40,6 @@ final class Init
                         $c->get(VorbisExtractor::class),
                     ]
                 );
-            },
-            ArtistRepositoryInterface::class => function (ContainerInterface $c): ArtistRepositoryInterface {
-                return $c->get(EntityManagerInterface::class)->getRepository(Artist::class);
-            },
-            AlbumRepositoryInterface::class => function (ContainerInterface $c): AlbumRepositoryInterface {
-                return $c->get(EntityManagerInterface::class)->getRepository(Album::class);
-            },
-            SongRepositoryInterface::class => function (ContainerInterface $c): SongRepositoryInterface {
-                return $c->get(EntityManagerInterface::class)->getRepository(Song::class);
-            },
-            DiscRepositoryInterface::class => function (ContainerInterface $c): DiscRepositoryInterface {
-                return $c->get(EntityManagerInterface::class)->getRepository(Disc::class);
             },
             EntityManagerInterface::class => static function (ContainerInterface $c): EntityManagerInterface {
                 $paths = [__DIR__ . '/../Orm/Model/'];

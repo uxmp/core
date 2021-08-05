@@ -25,7 +25,7 @@ class Artist implements ArtistInterface
     private ?string $title = null;
 
     /**
-     * @Column(type="string", length="32", nullable=true)
+     * @Column(type="string", length="32", nullable=true, unique=true)
      */
     private ?string $mbid = null;
 

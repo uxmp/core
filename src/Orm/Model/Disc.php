@@ -30,7 +30,7 @@ class Disc implements DiscInterface
     private int $number;
 
     /**
-     * @Column(type="string", length="32", nullable="true")
+     * @Column(type="string", length="32", nullable="true", unique=true)
      */
     private ?string $mbid = null;
 

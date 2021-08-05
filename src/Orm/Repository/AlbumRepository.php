@@ -23,4 +23,11 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
         $this->getEntityManager()->persist($album);
         $this->getEntityManager()->flush();
     }
+
+    public function findByMbId(string $mbid): ?AlbumInterface
+    {
+        return $this->findOneBy([
+            'mbid' => $mbid
+        ]);
+    }
 }

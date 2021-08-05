@@ -13,4 +13,6 @@ interface AlbumRepositoryInterface extends ObjectRepository
     public function prototype(): AlbumInterface;
 
     public function save(AlbumInterface $album): void;
+
+    public function findByMbId(string $mbid): ?AlbumInterface;
 }

@@ -13,4 +13,6 @@ interface DiscRepositoryInterface extends ObjectRepository
     public function prototype(): DiscInterface;
 
     public function save(DiscInterface $disc): void;
+
+    public function findByMbId(string $mbid): ?DiscInterface;
 }

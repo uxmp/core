@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Usox\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Usox\Core\Orm\Model\DiscInterface;
 use Usox\Core\Orm\Model\Song;
 use Usox\Core\Orm\Model\SongInterface;
 
@@ -22,5 +23,12 @@ final class SongRepository extends EntityRepository implements SongRepositoryInt
     {
         $this->getEntityManager()->persist($song);
         $this->getEntityManager()->flush();
+    }
+
+    public function findByMbId(string $mbid): ?SongInterface
+    {
+        return $this->findOneBy([
+            'mbid' => $mbid
+        ]);
     }
 }

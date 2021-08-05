@@ -23,4 +23,11 @@ final class ArtistRepository extends EntityRepository implements ArtistRepositor
         $this->getEntityManager()->persist($artist);
         $this->getEntityManager()->flush();
     }
+
+    public function findByMbId(string $mbid): ?ArtistInterface
+    {
+        return $this->findOneBy([
+            'mbid' => $mbid
+        ]);
+    }
 }

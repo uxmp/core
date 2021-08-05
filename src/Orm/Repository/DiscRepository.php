@@ -23,4 +23,11 @@ final class DiscRepository extends EntityRepository implements DiscRepositoryInt
         $this->getEntityManager()->persist($disc);
         $this->getEntityManager()->flush();
     }
+
+    public function findByMbId(string $mbid): ?DiscInterface
+    {
+        return $this->findOneBy([
+            'mbid' => $mbid
+        ]);
+    }
 }

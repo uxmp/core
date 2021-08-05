@@ -26,7 +26,7 @@ final class AudioFile implements AudioFileInterface
 
     private ?int $discNumber = null;
 
-    public function getTrackNumber(): ?int
+    public function getTrackNumber(): int
     {
         return $this->trackNumber;
     }
@@ -37,7 +37,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getFilename(): ?string
+    public function getFilename(): string
     {
         return $this->filename;
     }
@@ -48,7 +48,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -59,7 +59,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getMbid(): ?string
+    public function getMbid(): string
     {
         return $this->mbid;
     }
@@ -70,7 +70,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getArtistTitle(): ?string
+    public function getArtistTitle(): string
     {
         return $this->artistTitle;
     }
@@ -81,7 +81,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getArtistMbid(): ?string
+    public function getArtistMbid(): string
     {
         return $this->artistMbid;
     }
@@ -92,7 +92,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getAlbumTitle(): ?string
+    public function getAlbumTitle(): string
     {
         return $this->albumTitle;
     }
@@ -103,7 +103,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getAlbumMbid(): ?string
+    public function getAlbumMbid(): string
     {
         return $this->albumMbid;
     }
@@ -114,7 +114,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getDiscMbid(): ?string
+    public function getDiscMbid(): string
     {
         return $this->discMbid;
     }
@@ -125,7 +125,7 @@ final class AudioFile implements AudioFileInterface
         return $this;
     }
 
-    public function getDiscNumber(): ?int
+    public function getDiscNumber(): int
     {
         return $this->discNumber;
     }
@@ -134,5 +134,10 @@ final class AudioFile implements AudioFileInterface
     {
         $this->discNumber = $discNumber;
         return $this;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->mbid && $this->artistMbid && $this->albumMbid;
     }
 }
