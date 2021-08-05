@@ -19,8 +19,10 @@ final class DiscCache implements DiscCacheInterface
     ) {
     }
 
-    public function retrieve(AudioFileInterface $audioFile): DiscInterface
-    {
+    public function retrieve(
+        AudioFileInterface $audioFile,
+        array $analysisResult
+    ): DiscInterface {
         $discMbId = $audioFile->getDiscMbid();
 
         $disc = $this->cache[$discMbId] ?? null;
@@ -29,7 +31,7 @@ final class DiscCache implements DiscCacheInterface
             if ($disc === null) {
                 $disc = $this->discRepository->prototype()
                     ->setMbid($discMbId)
-                    ->setAlbum($this->albumCache->retrieve($audioFile))
+                    ->setAlbum($this->albumCache->retrieve($audioFile, $analysisResult))
                     ->setNumber($audioFile->getDiscNumber())
                 ;
 

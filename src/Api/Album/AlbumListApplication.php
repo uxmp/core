@@ -38,7 +38,8 @@ final class AlbumListApplication extends AbstractApiApplication
                 'id' => $album->getId(),
                 'artistId' => $album->getArtist()->getId(),
                 'name' => $album->getTitle(),
-                'songList' => $songList
+                'songList' => $songList,
+                'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid())
             ];
         }
 

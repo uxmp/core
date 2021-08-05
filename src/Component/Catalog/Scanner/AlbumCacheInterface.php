@@ -7,5 +7,11 @@ use Usox\Core\Orm\Model\AlbumInterface;
 
 interface AlbumCacheInterface
 {
-    public function retrieve(AudioFileInterface $audioFile): AlbumInterface;
+    /**
+     * @param array<mixed> $analysisResult
+     */
+    public function retrieve(
+        AudioFileInterface $audioFile,
+        array $analysisResult
+    ): AlbumInterface;
 }

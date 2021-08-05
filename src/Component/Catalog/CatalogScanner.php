@@ -6,7 +6,6 @@ namespace Usox\Core\Component\Catalog;
 
 use Generator;
 use getID3;
-use Usox\Core\Component\Catalog\Scanner\ArtistCacheInterface;
 use Usox\Core\Component\Catalog\Scanner\DiscCacheInterface;
 use Usox\Core\Component\Tag\Container\AudioFile;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
@@ -18,7 +17,6 @@ final class CatalogScanner implements CatalogScannerInterface
         private getID3 $id3Analyzer,
         private SongRepositoryInterface $songRepository,
         private ExtractorDeterminatorInterface $extractorDeterminator,
-        private ArtistCacheInterface $artistCache,
         private DiscCacheInterface $discCache
     ) {
     }
@@ -28,15 +26,15 @@ final class CatalogScanner implements CatalogScannerInterface
         foreach ($this->search($directory) as $filename) {
             $audioFile = (new AudioFile())->setFilename($filename);
 
-            $analysisResult = $this->id3Analyzer->analyze($filename)['tags'];
+            $analysisResult = $this->id3Analyzer->analyze($filename);
 
-            $extractor = $this->extractorDeterminator->determine($analysisResult);
+            $extractor = $this->extractorDeterminator->determine($analysisResult['tags']);
             if ($extractor === null) {
                 continue;
             }
 
             $extractor->extract(
-                $analysisResult,
+                $analysisResult['tags'],
                 $audioFile
             );
 
@@ -49,11 +47,13 @@ final class CatalogScanner implements CatalogScannerInterface
                 $song = $this->songRepository->prototype();
             }
 
+            $disc = $this->discCache->retrieve($audioFile, $analysisResult);
+
             $song
                 ->setTitle($audioFile->getTitle())
                 ->setTrackNumber($audioFile->getTrackNumber())
-                ->setDisc($this->discCache->retrieve($audioFile))
-                ->setArtist($this->artistCache->retrieve($audioFile))
+                ->setDisc($disc)
+                ->setArtist($disc->getAlbum()->getArtist())
                 ->setFilename($audioFile->getFilename())
                 ->setMbid($audioFile->getMbid())
             ;

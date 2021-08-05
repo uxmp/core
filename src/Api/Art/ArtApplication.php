@@ -2,43 +2,45 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Playback;
+namespace Usox\Core\Api\Art;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Model\SongInterface;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
+use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 
-final class PlaySongApplication extends AbstractApiApplication
+final class ArtApplication extends AbstractApiApplication
 {
     public function __construct(
         private Psr17Factory $psr17Factory,
-        private SongRepositoryInterface $songRepository
+        private AlbumRepositoryInterface $albumRepository
     ) {
     }
 
     /**
-     * @param array{id: int} $args
+     * @param array{id: string, type: string} $args
      */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        $songId = (int) $args['id'];
+        $albumId = $args['id'];
 
-        /** @var SongInterface $song */
-        $song = $this->songRepository->find($songId);
-        $path = $song->getFilename();
+        $filename = $albumId . '.jpg';
+        $path = sprintf(
+            '%s/%s',
+            realpath(__DIR__ . '/../../../../assets/img/album'),
+            $filename
+        );
 
         $size = filesize($path);
 
         return $response
             ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Content-Type', 'audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3')
-            ->withHeader('Content-Disposition', 'filename=song'.$songId.'.mp3')
+            ->withHeader('Content-Type', 'image/jpg')
+            ->withHeader('Content-Disposition', 'filename='.$filename)
             ->withHeader('Content-Length', (string) $size)
             ->withHeader('Cache-Control', 'no-cache')
             ->withHeader('Content-Range', 'bytes '.$size)

@@ -11,6 +11,7 @@ use Doctrine\ORM\Tools\Setup;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
+use Usox\Core\Component\Event\EventHandlerInterface;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminator;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
 use Usox\Core\Component\Tag\Extractor\Id3v2Extractor;
@@ -28,7 +29,9 @@ final class Init
     {
         $builder = new ContainerBuilder();
         $builder->addDefinitions(require __DIR__ . '/../Api/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Album/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Catalog/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Event/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),
@@ -56,6 +59,10 @@ final class Init
         ]);
         $container = $builder->build();
 
-        return $app($container);
+        $result = $app($container);
+
+        $container->get(EventHandlerInterface::class)->run();
+
+        return $result;
     }
 }
