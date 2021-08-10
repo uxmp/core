@@ -10,6 +10,8 @@ use Usox\Core\Orm\Model\AlbumInterface;
 
 /**
  * @extends EntityRepository<AlbumInterface>
+ *
+ * @method AlbumInterface[] findBy(mixed[] $criteria, null|array $order = null, null|int $limit = null, null|int $offset = null)
  */
 final class AlbumRepository extends EntityRepository implements AlbumRepositoryInterface
 {

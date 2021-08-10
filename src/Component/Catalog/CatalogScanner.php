@@ -13,6 +13,11 @@ use Usox\Core\Orm\Repository\SongRepositoryInterface;
 
 final class CatalogScanner implements CatalogScannerInterface
 {
+    private const SUPPORTED_FORMATS = [
+        'mp3',
+        'flac',
+    ];
+
     public function __construct(
         private getID3 $id3Analyzer,
         private SongRepositoryInterface $songRepository,
@@ -27,6 +32,10 @@ final class CatalogScanner implements CatalogScannerInterface
             $audioFile = (new AudioFile())->setFilename($filename);
 
             $analysisResult = $this->id3Analyzer->analyze($filename);
+            if (!in_array($analysisResult['fileformat'] ?? '', static::SUPPORTED_FORMATS)) {
+                // @todo skip
+                continue;
+            }
 
             $extractor = $this->extractorDeterminator->determine($analysisResult['tags']);
             if ($extractor === null) {

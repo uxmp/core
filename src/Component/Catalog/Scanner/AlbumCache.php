@@ -47,6 +47,11 @@ final class AlbumCache implements AlbumCacheInterface
                     }
                 );
             }
+            $this->eventHandler->fire(
+                static function (ContainerInterface $c) use ($album, $analysisResult): void {
+                    $c->get(AlbumCoverUpdaterInterface::class)->update($album, $analysisResult);
+                }
+            );
 
             $this->cache[$albumMbid] = $album;
         }

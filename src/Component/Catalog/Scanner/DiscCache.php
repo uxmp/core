@@ -39,6 +39,8 @@ final class DiscCache implements DiscCacheInterface
             }
 
             $this->cache[$discMbId] = $disc;
+        } else {
+            $this->albumCache->retrieve($audioFile, $analysisResult);
         }
 
         return $disc;

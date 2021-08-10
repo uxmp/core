@@ -7,7 +7,6 @@ namespace Usox\Core\Api\Album;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Model\AlbumInterface;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumListApplication extends AbstractApiApplication
@@ -24,21 +23,12 @@ final class AlbumListApplication extends AbstractApiApplication
     ): ResponseInterface {
         $list = [];
 
-        foreach ($this->albumRepository->findAll() as $album) {
-            /** @var AlbumInterface $album */
-
-            $songList = [];
-            foreach ($album->getDiscs() as $disc) {
-                foreach ($disc->getSongs() as $song) {
-                    $songList[] = sprintf('http://localhost:8888/play/%d', $song->getId());
-                }
-            }
-
+        foreach ($this->albumRepository->findBy([], ['title' => 'ASC']) as $album) {
             $list[] = [
-                'id' => $album->getId(),
+                'albumId' => $album->getId(),
                 'artistId' => $album->getArtist()->getId(),
+                'artistName' => $album->getArtist()->getTitle(),
                 'name' => $album->getTitle(),
-                'songList' => $songList,
                 'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid())
             ];
         }

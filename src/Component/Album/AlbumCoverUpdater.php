@@ -19,9 +19,15 @@ final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
         if ($image !== null) {
             $filename = realpath($destination) . '/' . $album->getMbid();
             if (!file_exists($filename)) {
-                $extension = match ($image['image_mime']) {
-                    'image/jpeg' => 'jpg',
-                };
+                try {
+                    $extension = match ($image['image_mime']) {
+                        'image/jpeg' => 'jpg',
+                        'image/png' => 'png',
+                        'image/gif' => 'gif',
+                    };
+                } catch (\UnhandledMatchError) {
+                    // @todo log this
+                }
 
                 file_put_contents($filename. '.' . $extension, $image['data']);
             }
