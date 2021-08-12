@@ -9,6 +9,7 @@ use Usox\Core\Api\Album\AlbumListApplication;
 use Usox\Core\Api\Art\ArtApplication;
 use Usox\Core\Api\Artist\ArtistListApplication;
 use Usox\Core\Api\Playback\PlaySongApplication;
+use Usox\Core\Api\Random\RandomSongsApplication;
 use Usox\Core\Bootstrap\Init;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -21,6 +22,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/albums', AlbumListApplication::class);
     $app->get('/art/{type}/{id}', ArtApplication::class);
     $app->get('/album/{albumId}', AlbumApplication::class);
+    $app->get('/random/songs', RandomSongsApplication::class);
 
     $app->run();
 });
