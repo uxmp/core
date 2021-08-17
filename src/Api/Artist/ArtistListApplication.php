@@ -33,8 +33,7 @@ final class ArtistListApplication extends AbstractApiApplication
         $response->getBody()->write(
             (string) json_encode(['items' => $list], JSON_PRETTY_PRINT)
         );
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Content-Type', 'application/json');
+
+        return $this->asJson($response);
     }
 }

@@ -36,7 +36,6 @@ final class PlaySongApplication extends AbstractApiApplication
         $size = filesize($path);
 
         return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Content-Type', 'audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3')
             ->withHeader('Content-Disposition', 'filename=song'.$songId.'.mp3')
             ->withHeader('Content-Length', (string) $size)

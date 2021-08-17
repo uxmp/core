@@ -8,6 +8,7 @@ use Usox\Core\Api\Album\AlbumListApplication;
 use Usox\Core\Api\Art\ArtApplication;
 use Usox\Core\Api\Artist\ArtistListApplication;
 use Usox\Core\Api\Playback\PlaySongApplication;
+use Usox\Core\Api\Public\LoginApplication;
 use function DI\autowire;
 
 return [
@@ -15,4 +16,5 @@ return [
     ArtistListApplication::class => autowire(),
     PlaySongApplication::class => autowire(),
     ArtApplication::class => autowire(),
+    LoginApplication::class => autowire(),
 ];

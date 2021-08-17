@@ -38,7 +38,6 @@ final class ArtApplication extends AbstractApiApplication
         $size = filesize($path);
 
         return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Content-Type', 'image/jpg')
             ->withHeader('Content-Disposition', 'filename='.$filename)
             ->withHeader('Content-Length', (string) $size)

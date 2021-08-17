@@ -11,6 +11,7 @@ use Doctrine\ORM\Tools\Setup;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
+use Usox\Core\Component\Config\ConfigProviderInterface;
 use Usox\Core\Component\Event\EventHandlerInterface;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminator;
 use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
@@ -32,6 +33,8 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Album/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Catalog/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Event/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Config/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Session/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),
@@ -48,9 +51,13 @@ final class Init
                 $paths = [__DIR__ . '/../Orm/Model/'];
                 $isDevMode = true;
 
+                /** @var ConfigProviderInterface $config */
+                $config = $c->get(ConfigProviderInterface::class);
+
                 // the connection configuration
                 $dbParams = [
-                    'url' => 'sqlite:///'. __DIR__ .'/../../dev/db.sqlite',
+                    'url' => $config->getDbDsn(),
+                    'password' => $config->getDbPassword()
                 ];
 
                 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

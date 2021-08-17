@@ -9,11 +9,15 @@ use Psr\Container\ContainerInterface;
 use Usox\Core\Orm\Model\Album;
 use Usox\Core\Orm\Model\Artist;
 use Usox\Core\Orm\Model\Disc;
+use Usox\Core\Orm\Model\Session;
 use Usox\Core\Orm\Model\Song;
+use Usox\Core\Orm\Model\User;
 use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
 use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
 use Usox\Core\Orm\Repository\DiscRepositoryInterface;
+use Usox\Core\Orm\Repository\SessionRepositoryInterface;
 use Usox\Core\Orm\Repository\SongRepositoryInterface;
+use Usox\Core\Orm\Repository\UserRepositoryInterface;
 
 return [
     ArtistRepositoryInterface::class => function (ContainerInterface $c): ArtistRepositoryInterface {
@@ -27,5 +31,11 @@ return [
     },
     DiscRepositoryInterface::class => function (ContainerInterface $c): DiscRepositoryInterface {
         return $c->get(EntityManagerInterface::class)->getRepository(Disc::class);
+    },
+    SessionRepositoryInterface::class => function (ContainerInterface $c): SessionRepositoryInterface {
+        return $c->get(EntityManagerInterface::class)->getRepository(Session::class);
+    },
+    UserRepositoryInterface::class => function (ContainerInterface $c): UserRepositoryInterface {
+        return $c->get(EntityManagerInterface::class)->getRepository(User::class);
     },
 ];

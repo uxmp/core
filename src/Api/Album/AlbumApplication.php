@@ -26,8 +26,6 @@ final class AlbumApplication extends AbstractApiApplication
 
         $album = $this->albumRepository->find($albumId);
 
-        $response = $response->withHeader('Access-Control-Allow-Origin', '*');
-
         if ($album === null) {
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
@@ -69,8 +67,7 @@ final class AlbumApplication extends AbstractApiApplication
         $response->getBody()->write(
             (string) json_encode($data, JSON_PRETTY_PRINT)
         );
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Content-Type', 'application/json');
+
+        return $this->asJson($response);
     }
 }

@@ -28,4 +28,13 @@ abstract class AbstractApiApplication
     ): ResponseInterface {
         return $this->run($request, $response, $args);
     }
+
+    /**
+     * Adds json content type to the response
+     */
+    protected function asJson(
+        ResponseInterface $response
+    ): ResponseInterface {
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 }
