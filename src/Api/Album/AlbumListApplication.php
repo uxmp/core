@@ -24,10 +24,12 @@ final class AlbumListApplication extends AbstractApiApplication
         $list = [];
 
         foreach ($this->albumRepository->findBy([], ['title' => 'ASC']) as $album) {
+            $artist = $album->getArtist();
+
             $list[] = [
                 'albumId' => $album->getId(),
-                'artistId' => $album->getArtist()->getId(),
-                'artistName' => $album->getArtist()->getTitle(),
+                'artistId' => $artist->getId(),
+                'artistName' => $artist->getTitle(),
                 'name' => $album->getTitle(),
                 'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid())
             ];
