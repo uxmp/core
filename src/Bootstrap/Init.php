@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Bootstrap;
+namespace Uxmp\Core\Bootstrap;
 
 use DI\ContainerBuilder;
 use Doctrine\ORM\EntityManager;
@@ -11,12 +11,12 @@ use Doctrine\ORM\Tools\Setup;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
-use Usox\Core\Component\Config\ConfigProviderInterface;
-use Usox\Core\Component\Event\EventHandlerInterface;
-use Usox\Core\Component\Tag\Extractor\ExtractorDeterminator;
-use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
-use Usox\Core\Component\Tag\Extractor\Id3v2Extractor;
-use Usox\Core\Component\Tag\Extractor\VorbisExtractor;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Component\Event\EventHandlerInterface;
+use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminator;
+use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
+use Uxmp\Core\Component\Tag\Extractor\Id3v2Extractor;
+use Uxmp\Core\Component\Tag\Extractor\VorbisExtractor;
 use function DI\autowire;
 
 final class Init

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Usox\Core\Orm\Model\Disc;
-use Usox\Core\Orm\Model\DiscInterface;
+use Uxmp\Core\Orm\Model\Disc;
+use Uxmp\Core\Orm\Model\DiscInterface;
 
 /**
  * @extends EntityRepository<DiscInterface>

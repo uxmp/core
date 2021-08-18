@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Component\Tag\Container;
+namespace Uxmp\Core\Component\Tag\Container;
 
 interface AudioFileInterface
 {

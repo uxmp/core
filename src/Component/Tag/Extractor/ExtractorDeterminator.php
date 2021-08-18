@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Tag\Extractor;
+namespace Uxmp\Core\Component\Tag\Extractor;
 
 final class ExtractorDeterminator implements ExtractorDeterminatorInterface
 {

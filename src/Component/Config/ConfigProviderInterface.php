@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Component\Config;
+namespace Uxmp\Core\Component\Config;
 
 interface ConfigProviderInterface
 {

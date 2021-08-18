@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Session;
+namespace Uxmp\Core\Component\Session;
 
 use Firebase\JWT\JWT;
-use Usox\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 final class JwtManager implements JwtManagerInterface
 {

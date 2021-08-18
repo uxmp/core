@@ -1,10 +1,10 @@
 <?php
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
-use Usox\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
  * @extends EntityRepository<UserInterface>

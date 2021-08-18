@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Album;
+namespace Uxmp\Core\Component\Album;
 
-use Usox\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\AlbumInterface;
 
 final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
 {

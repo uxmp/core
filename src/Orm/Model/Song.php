@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Model;
+namespace Uxmp\Core\Orm\Model;
 
 /**
- * @Entity(repositoryClass="\Usox\Core\Orm\Repository\SongRepository")
+ * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\SongRepository")
  * @Table(name="song")
  */
 class Song implements SongInterface

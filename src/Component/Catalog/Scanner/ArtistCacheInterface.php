@@ -1,9 +1,9 @@
 <?php
 
-namespace Usox\Core\Component\Catalog\Scanner;
+namespace Uxmp\Core\Component\Catalog\Scanner;
 
-use Usox\Core\Component\Tag\Container\AudioFileInterface;
-use Usox\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Orm\Model\ArtistInterface;
 
 interface ArtistCacheInterface
 {

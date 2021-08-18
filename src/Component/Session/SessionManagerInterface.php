@@ -1,8 +1,8 @@
 <?php
 
-namespace Usox\Core\Component\Session;
+namespace Uxmp\Core\Component\Session;
 
-use Usox\Core\Orm\Model\SessionInterface;
+use Uxmp\Core\Orm\Model\SessionInterface;
 
 interface SessionManagerInterface
 {

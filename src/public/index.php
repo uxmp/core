@@ -8,17 +8,17 @@ use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
-use Usox\Core\Api\Album\AlbumApplication;
-use Usox\Core\Api\Album\AlbumListApplication;
-use Usox\Core\Api\Art\ArtApplication;
-use Usox\Core\Api\Artist\ArtistListApplication;
-use Usox\Core\Api\Playback\PlaySongApplication;
-use Usox\Core\Api\Public\LoginApplication;
-use Usox\Core\Api\Public\LogoutApplication;
-use Usox\Core\Api\Random\RandomSongsApplication;
-use Usox\Core\Bootstrap\Init;
-use Usox\Core\Component\Config\ConfigProviderInterface;
-use Usox\Core\Component\Session\SessionValidatorMiddleware;
+use Uxmp\Core\Api\Album\AlbumApplication;
+use Uxmp\Core\Api\Album\AlbumListApplication;
+use Uxmp\Core\Api\Art\ArtApplication;
+use Uxmp\Core\Api\Artist\ArtistListApplication;
+use Uxmp\Core\Api\Playback\PlaySongApplication;
+use Uxmp\Core\Api\Public\LoginApplication;
+use Uxmp\Core\Api\Public\LogoutApplication;
+use Uxmp\Core\Api\Random\RandomSongsApplication;
+use Uxmp\Core\Bootstrap\Init;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
 require __DIR__ . '/../../vendor/autoload.php';
 

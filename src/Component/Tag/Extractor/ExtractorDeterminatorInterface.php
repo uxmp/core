@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Component\Tag\Extractor;
+namespace Uxmp\Core\Component\Tag\Extractor;
 
 interface ExtractorDeterminatorInterface
 {

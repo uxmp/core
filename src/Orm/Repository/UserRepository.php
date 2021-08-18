@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Usox\Core\Orm\Model\User;
-use Usox\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Model\User;
+use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
  * @extends EntityRepository<UserInterface>

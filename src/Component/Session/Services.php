@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Session;
+namespace Uxmp\Core\Component\Session;
 
 use function DI\autowire;
 

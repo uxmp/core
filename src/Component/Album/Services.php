@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Album;
+namespace Uxmp\Core\Component\Album;
 
 use function DI\autowire;
 

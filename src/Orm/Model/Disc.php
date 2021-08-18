@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Model;
+namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="\Usox\Core\Orm\Repository\DiscRepository")
+ * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\DiscRepository")
  * @Table(name="disc")
  */
 class Disc implements DiscInterface

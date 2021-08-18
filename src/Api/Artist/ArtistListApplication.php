@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Artist;
+namespace Uxmp\Core\Api\Artist;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtistListApplication extends AbstractApiApplication
 {
@@ -30,10 +30,6 @@ final class ArtistListApplication extends AbstractApiApplication
             ];
         }
 
-        $response->getBody()->write(
-            (string) json_encode(['items' => $list], JSON_PRETTY_PRINT)
-        );
-
-        return $this->asJson($response);
+        return $this->asJson($response, ['items' => $list]);
     }
 }

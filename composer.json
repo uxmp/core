@@ -1,6 +1,6 @@
 {
-    "name": "usox/core",
-    "description": "Usox",
+    "name": "uxmp/core",
+    "description": "Usox Media Player Backend",
     "type": "project",
     "config": {
         "sort-packages": true
@@ -42,13 +42,13 @@
     ],
     "autoload-dev": {
         "psr-4": {
-            "Usox\\Core\\": ["tests/"]
+            "Uxmp\\Core\\": ["tests/"]
         }
     },
     "autoload": {
         "classmap": ["src/"],
         "psr-4": {
-            "Usox\\Core\\": ["src/"]
+            "Uxmp\\Core\\": ["src/"]
         }
     },
     "scripts": {

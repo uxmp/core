@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Tag\Container;
+namespace Uxmp\Core\Component\Tag\Container;
 
 final class AudioFile implements AudioFileInterface
 {

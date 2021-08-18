@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Component\Session;
+namespace Uxmp\Core\Component\Session;
 
 interface JwtManagerInterface
 {

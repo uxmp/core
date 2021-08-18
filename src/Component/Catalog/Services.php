@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Catalog;
+namespace Uxmp\Core\Component\Catalog;
 
 use function DI\autowire;
 

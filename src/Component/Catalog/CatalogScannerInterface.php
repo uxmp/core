@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Component\Catalog;
+namespace Uxmp\Core\Component\Catalog;
 
 interface CatalogScannerInterface
 {

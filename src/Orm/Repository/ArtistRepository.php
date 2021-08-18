@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Usox\Core\Orm\Model\Artist;
-use Usox\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Model\Artist;
+use Uxmp\Core\Orm\Model\ArtistInterface;
 
 /**
  * @extends EntityRepository<ArtistInterface>

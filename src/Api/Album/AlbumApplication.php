@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Album;
+namespace Uxmp\Core\Api\Album;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumApplication extends AbstractApiApplication
 {

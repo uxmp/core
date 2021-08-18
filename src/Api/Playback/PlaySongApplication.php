@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Playback;
+namespace Uxmp\Core\Api\Playback;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Model\SongInterface;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class PlaySongApplication extends AbstractApiApplication
 {

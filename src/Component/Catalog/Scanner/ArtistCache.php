@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Catalog\Scanner;
+namespace Uxmp\Core\Component\Catalog\Scanner;
 
-use Usox\Core\Component\Tag\Container\AudioFileInterface;
-use Usox\Core\Orm\Model\ArtistInterface;
-use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtistCache implements ArtistCacheInterface
 {

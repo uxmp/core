@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Usox\Core\Orm\Model\Album;
-use Usox\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\Album;
+use Uxmp\Core\Orm\Model\AlbumInterface;
 
 /**
  * @extends EntityRepository<AlbumInterface>

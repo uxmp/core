@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Model;
+namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="\Usox\Core\Orm\Repository\AlbumRepository")
+ * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\AlbumRepository")
  * @Table(name="album")
  */
 class Album implements AlbumInterface

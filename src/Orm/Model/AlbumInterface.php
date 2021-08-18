@@ -1,6 +1,6 @@
 <?php
 
-namespace Usox\Core\Orm\Model;
+namespace Uxmp\Core\Orm\Model;
 
 interface AlbumInterface
 {

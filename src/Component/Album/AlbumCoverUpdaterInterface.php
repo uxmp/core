@@ -1,8 +1,8 @@
 <?php
 
-namespace Usox\Core\Component\Album;
+namespace Uxmp\Core\Component\Album;
 
-use Usox\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\AlbumInterface;
 
 interface AlbumCoverUpdaterInterface
 {

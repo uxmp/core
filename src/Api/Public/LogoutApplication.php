@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Public;
+namespace Uxmp\Core\Api\Public;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Component\Config\ConfigProviderInterface;
-use Usox\Core\Component\Session\SessionManagerInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Component\Session\SessionManagerInterface;
 
 final class LogoutApplication extends AbstractApiApplication
 {
@@ -28,12 +28,8 @@ final class LogoutApplication extends AbstractApiApplication
             $this->sessionManager->logout((int) $sessionId);
         }
 
-        $response->getBody()->write(
-            (string) json_encode(['items' => true], JSON_PRETTY_PRINT)
-        );
-
         return $this
-            ->asJson($response)
+            ->asJson($response, ['items' => true])
             ->withHeader(
                 'Set-Cookie',
                 sprintf(

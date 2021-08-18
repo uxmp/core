@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Catalog\Scanner;
+namespace Uxmp\Core\Component\Catalog\Scanner;
 
-use Usox\Core\Component\Tag\Container\AudioFileInterface;
-use Usox\Core\Orm\Model\DiscInterface;
-use Usox\Core\Orm\Repository\DiscRepositoryInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Orm\Model\DiscInterface;
+use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 
 final class DiscCache implements DiscCacheInterface
 {

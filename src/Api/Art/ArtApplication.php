@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Art;
+namespace Uxmp\Core\Api\Art;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class ArtApplication extends AbstractApiApplication
 {

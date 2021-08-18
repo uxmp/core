@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Catalog\Scanner;
+namespace Uxmp\Core\Component\Catalog\Scanner;
 
 use Psr\Container\ContainerInterface;
-use Usox\Core\Component\Album\AlbumCoverUpdaterInterface;
-use Usox\Core\Component\Event\EventEnum;
-use Usox\Core\Component\Event\EventHandlerInterface;
-use Usox\Core\Component\Tag\Container\AudioFileInterface;
-use Usox\Core\Orm\Model\AlbumInterface;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
+use Uxmp\Core\Component\Event\EventEnum;
+use Uxmp\Core\Component\Event\EventHandlerInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumCache implements AlbumCacheInterface
 {

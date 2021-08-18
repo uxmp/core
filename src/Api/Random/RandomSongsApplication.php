@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Random;
+namespace Uxmp\Core\Api\Random;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Usox\Core\Api\AbstractApiApplication;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class RandomSongsApplication extends AbstractApiApplication
 {

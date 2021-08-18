@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Catalog;
+namespace Uxmp\Core\Component\Catalog;
 
 use Generator;
 use getID3;
-use Usox\Core\Component\Catalog\Scanner\DiscCacheInterface;
-use Usox\Core\Component\Tag\Container\AudioFile;
-use Usox\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
+use Uxmp\Core\Component\Catalog\Scanner\DiscCacheInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFile;
+use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
+use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class CatalogScanner implements CatalogScannerInterface
 {

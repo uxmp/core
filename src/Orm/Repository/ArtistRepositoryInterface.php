@@ -1,9 +1,9 @@
 <?php
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\Persistence\ObjectRepository;
-use Usox\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Model\ArtistInterface;
 
 /**
  * @extends ObjectRepository<ArtistInterface>

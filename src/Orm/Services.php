@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm;
+namespace Uxmp\Core\Orm;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
-use Usox\Core\Orm\Model\Album;
-use Usox\Core\Orm\Model\Artist;
-use Usox\Core\Orm\Model\Disc;
-use Usox\Core\Orm\Model\Session;
-use Usox\Core\Orm\Model\Song;
-use Usox\Core\Orm\Model\User;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
-use Usox\Core\Orm\Repository\ArtistRepositoryInterface;
-use Usox\Core\Orm\Repository\DiscRepositoryInterface;
-use Usox\Core\Orm\Repository\SessionRepositoryInterface;
-use Usox\Core\Orm\Repository\SongRepositoryInterface;
-use Usox\Core\Orm\Repository\UserRepositoryInterface;
+use Uxmp\Core\Orm\Model\Album;
+use Uxmp\Core\Orm\Model\Artist;
+use Uxmp\Core\Orm\Model\Disc;
+use Uxmp\Core\Orm\Model\Session;
+use Uxmp\Core\Orm\Model\Song;
+use Uxmp\Core\Orm\Model\User;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
+use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
+use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
+use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
+use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 
 return [
     ArtistRepositoryInterface::class => function (ContainerInterface $c): ArtistRepositoryInterface {

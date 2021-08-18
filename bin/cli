@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Usox\Core\Bootstrap\Init;
-use Usox\Core\Component\Catalog\CatalogScannerInterface;
+use Uxmp\Core\Bootstrap\Init;
+use Uxmp\Core\Component\Catalog\CatalogScannerInterface;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

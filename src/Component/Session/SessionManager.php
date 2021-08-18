@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Session;
+namespace Uxmp\Core\Component\Session;
 
-use Usox\Core\Orm\Model\SessionInterface;
-use Usox\Core\Orm\Repository\SessionRepositoryInterface;
-use Usox\Core\Orm\Repository\UserRepositoryInterface;
+use Uxmp\Core\Orm\Model\SessionInterface;
+use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
+use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 
 final class SessionManager implements SessionManagerInterface
 {

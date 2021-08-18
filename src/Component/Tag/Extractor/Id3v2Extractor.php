@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Tag\Extractor;
+namespace Uxmp\Core\Component\Tag\Extractor;
 
-use Usox\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 
 final class Id3v2Extractor implements ExtractorInterface
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Orm\Repository;
+namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Usox\Core\Orm\Model\DiscInterface;
-use Usox\Core\Orm\Model\Song;
-use Usox\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Model\DiscInterface;
+use Uxmp\Core\Orm\Model\Song;
+use Uxmp\Core\Orm\Model\SongInterface;
 
 /**
  * @extends EntityRepository<SongInterface>

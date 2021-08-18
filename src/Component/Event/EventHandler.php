@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Component\Event;
+namespace Uxmp\Core\Component\Event;
 
 use Psr\Container\ContainerInterface;
 

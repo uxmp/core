@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Usox\Core\Api\Album;
+namespace Uxmp\Core\Api\Album;
 
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -11,11 +11,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
-use Usox\Core\Orm\Model\AlbumInterface;
-use Usox\Core\Orm\Model\ArtistInterface;
-use Usox\Core\Orm\Model\DiscInterface;
-use Usox\Core\Orm\Model\SongInterface;
-use Usox\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Model\DiscInterface;
+use Uxmp\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 class AlbumApplicationTest extends MockeryTestCase
 {
