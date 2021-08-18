@@ -31,10 +31,17 @@ abstract class AbstractApiApplication
 
     /**
      * Adds json content type to the response
+     *
+     * @param array<mixed> $data
      */
     protected function asJson(
-        ResponseInterface $response
+        ResponseInterface $response,
+        array $data
     ): ResponseInterface {
+        $response->getBody()->write(
+            (string) json_encode($data, JSON_PRETTY_PRINT)
+        );
+
         return $response->withHeader('Content-Type', 'application/json');
     }
 }

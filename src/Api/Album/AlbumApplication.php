@@ -33,20 +33,28 @@ final class AlbumApplication extends AbstractApiApplication
         $discs = $album->getDiscs();
         $discsData = [];
 
+        $artist = $album->getArtist();
+        $albumId = $album->getId();
+        $albumName = $album->getTitle();
+        $artistId = $artist->getId();
+        $artistName = $artist->getTitle();
+
         foreach ($discs as $disc) {
             $songData = [];
 
             foreach ($disc->getSongs() as $song) {
+                $songId = $song->getId();
+
                 $songData[] = [
-                    'id' => $song->getId(),
+                    'id' => $songId,
                     'name' => $song->getTitle(),
-                    'artistName' => $album->getArtist()->getTitle(),
-                    'albumName' => $album->getTitle(),
+                    'artistName' => $artistName,
+                    'albumName' => $albumName,
                     'trackNumber' => $song->getTrackNumber(),
-                    'playUrl' => sprintf('http://localhost:8888/play/%d', $song->getId()),
+                    'playUrl' => sprintf('http://localhost:8888/play/%d', $songId),
                     'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid()),
-                    'artistId' => $album->getArtist()->getId(),
-                    'albumId' => $album->getId()
+                    'artistId' => $artistId,
+                    'albumId' => $albumId,
                 ];
             }
 
@@ -56,18 +64,15 @@ final class AlbumApplication extends AbstractApiApplication
             ];
         }
 
-        $data = [
-            'id' => $album->getId(),
-            'name' => $album->getTitle(),
-            'artistId' => $album->getArtist()->getId(),
-            'artistName' => $album->getArtist()->getTitle(),
-            'discs' => $discsData,
-        ];
-
-        $response->getBody()->write(
-            (string) json_encode($data, JSON_PRETTY_PRINT)
+        return $this->asJson(
+            $response,
+            [
+                'id' => $albumId,
+                'name' => $albumName,
+                'artistId' => $artistId,
+                'artistName' => $artistName,
+                'discs' => $discsData,
+            ]
         );
-
-        return $this->asJson($response);
     }
 }
