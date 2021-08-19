@@ -8,7 +8,7 @@ use Uxmp\Core\Api\Album\AlbumListApplication;
 use Uxmp\Core\Api\Art\ArtApplication;
 use Uxmp\Core\Api\Artist\ArtistListApplication;
 use Uxmp\Core\Api\Playback\PlaySongApplication;
-use Uxmp\Core\Api\Public\LoginApplication;
+use Uxmp\Core\Api\Common\LoginApplication;
 use function DI\autowire;
 
 return [

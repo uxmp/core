@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JetBrains\PhpStorm\Pure;
 use Uxmp\Core\Orm\Model\Session;
 use Uxmp\Core\Orm\Model\SessionInterface;
 
@@ -15,6 +16,7 @@ use Uxmp\Core\Orm\Model\SessionInterface;
  */
 final class SessionRepository extends EntityRepository implements SessionRepositoryInterface
 {
+    #[Pure]
     public function prototype(): SessionInterface
     {
         return new Session();

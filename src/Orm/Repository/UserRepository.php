@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use JetBrains\PhpStorm\Pure;
 use Uxmp\Core\Orm\Model\User;
 use Uxmp\Core\Orm\Model\UserInterface;
 
@@ -15,6 +16,7 @@ use Uxmp\Core\Orm\Model\UserInterface;
  */
 final class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
+    #[Pure]
     public function prototype(): UserInterface
     {
         return new User();

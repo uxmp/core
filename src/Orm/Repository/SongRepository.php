@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Uxmp\Core\Orm\Model\DiscInterface;
+use JetBrains\PhpStorm\Pure;
 use Uxmp\Core\Orm\Model\Song;
 use Uxmp\Core\Orm\Model\SongInterface;
 
@@ -14,6 +14,7 @@ use Uxmp\Core\Orm\Model\SongInterface;
  */
 final class SongRepository extends EntityRepository implements SongRepositoryInterface
 {
+    #[Pure]
     public function prototype(): SongInterface
     {
         return new Song();

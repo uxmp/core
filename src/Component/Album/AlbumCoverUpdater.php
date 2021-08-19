@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Album;
 
+use UnhandledMatchError;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 
 final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
@@ -25,7 +26,7 @@ final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
                         'image/png' => 'png',
                         'image/gif' => 'gif',
                     };
-                } catch (\UnhandledMatchError) {
+                } catch (UnhandledMatchError) {
                     // @todo log this
                 }
 

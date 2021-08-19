@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Api\Public;
+namespace Uxmp\Core\Api\Common;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

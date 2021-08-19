@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Api\Public;
+namespace Uxmp\Core\Api\Common;
 
+use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
@@ -33,12 +34,14 @@ final class LoginApplication extends AbstractApiApplication
         $session = $this->sessionManager->login($username, $password);
 
         if ($session === null) {
-            throw new \InvalidArgumentException();
+            throw new InvalidArgumentException();
         }
+
+        $lifetime = time() + $this->configProvider->getTokenLifetime();
 
         $payload = [
             'iat' => time(),
-            'exp' => time() + $this->configProvider->getTokenLifetime(),
+            'exp' => $lifetime,
             'sub' => (string) $session->getId(),
         ];
 
@@ -52,7 +55,7 @@ final class LoginApplication extends AbstractApiApplication
                     '%s=%s; path=/; Expires=%s',
                     $this->configProvider->getCookieName(),
                     $token,
-                    date(DATE_RFC1123, time() + $this->configProvider->getTokenLifetime())
+                    date(DATE_RFC1123, $lifetime)
                 )
             );
     }

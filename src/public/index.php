@@ -13,8 +13,8 @@ use Uxmp\Core\Api\Album\AlbumListApplication;
 use Uxmp\Core\Api\Art\ArtApplication;
 use Uxmp\Core\Api\Artist\ArtistListApplication;
 use Uxmp\Core\Api\Playback\PlaySongApplication;
-use Uxmp\Core\Api\Public\LoginApplication;
-use Uxmp\Core\Api\Public\LogoutApplication;
+use Uxmp\Core\Api\Common\LoginApplication;
+use Uxmp\Core\Api\Common\LogoutApplication;
 use Uxmp\Core\Api\Random\RandomSongsApplication;
 use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
@@ -43,7 +43,7 @@ Init::run(static function (ContainerInterface $dic): void {
 
     $app->add($dic->get(SessionValidatorMiddleware::class));
     $app->add(new JwtAuthentication([
-        'ignore' => ['/public/login', '/art'],
+        'ignore' => ['/common/login', '/art'],
         'cookie' => $config->getCookieName(),
         'secret' => $config->getJwtSecret(),
         'logger' => $logger,
@@ -55,8 +55,8 @@ Init::run(static function (ContainerInterface $dic): void {
         'credentials' => true,
     ]));
 
-    $app->post('/public/login', LoginApplication::class);
-    $app->get('/public/logout', LogoutApplication::class);
+    $app->post('/common/login', LoginApplication::class);
+    $app->get('/common/logout', LogoutApplication::class);
     $app->get('/play/{id}', PlaySongApplication::class);
     $app->get('/artists', ArtistListApplication::class);
     $app->get('/albums', AlbumListApplication::class);

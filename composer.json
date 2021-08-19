@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.9",
         "firebase/php-jwt": "^5.4",
         "james-heinrich/getid3": "^1.9",
+        "jetbrains/phpstorm-attributes": "^1.0",
         "monolog/monolog": "^2.3",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\AlbumRepository")
@@ -47,6 +48,7 @@ class Album implements AlbumInterface
      */
     private iterable $discs;
 
+    #[Pure]
     public function __construct()
     {
         $this->discs = new ArrayCollection();

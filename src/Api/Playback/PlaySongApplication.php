@@ -29,7 +29,6 @@ final class PlaySongApplication extends AbstractApiApplication
     ): ResponseInterface {
         $songId = (int) $args['id'];
 
-        /** @var SongInterface $song */
         $song = $this->songRepository->find($songId);
         $path = $song->getFilename();
 

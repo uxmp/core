@@ -23,7 +23,7 @@ final class Id3v2Extractor implements ExtractorInterface
             ->setAlbumTitle(current($tags['album']))
             ->setAlbumMbid($tags['text']['MusicBrainz Album Id'] ?? null)
             ->setDiscMbid($tags['text']['MusicBrainz Release Group Id'] ?? null)
-            ->setDiscNumber((int) strstr((string) current($tags['part_of_a_set']), '/', true));
+            ->setDiscNumber((int) strstr((string) current($tags['part_of_a_set']), '/', true))
         ;
     }
 

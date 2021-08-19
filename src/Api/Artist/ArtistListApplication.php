@@ -23,7 +23,7 @@ final class ArtistListApplication extends AbstractApiApplication
     ): ResponseInterface {
         $list = [];
 
-        foreach ($this->artistRepository->findAll() as $artist) {
+        foreach ($this->artistRepository->findBy([], ['title' => 'ASC']) as $artist) {
             $list[] = [
                 'id' => $artist->getId(),
                 'name' => $artist->getTitle(),
