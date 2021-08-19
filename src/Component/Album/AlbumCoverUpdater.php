@@ -16,18 +16,20 @@ final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
         $destination = __DIR__ . '/../../../../assets/img/album/';
 
         // search in comments
+        /** @var null|array{image_mime: string, data: string} $image */
         $image = $metadata['comments']['picture'][0] ?? null;
         if ($image !== null) {
             $filename = realpath($destination) . '/' . $album->getMbid();
             if (!file_exists($filename)) {
-                try {
-                    $extension = match ($image['image_mime']) {
-                        'image/jpeg' => 'jpg',
-                        'image/png' => 'png',
-                        'image/gif' => 'gif',
-                    };
-                } catch (UnhandledMatchError) {
-                    // @todo log this
+                $extension = match ($image['image_mime']) {
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/gif' => 'gif',
+                    default => null,
+                };
+
+                if ($extension === null) {
+                    return;
                 }
 
                 file_put_contents($filename. '.' . $extension, $image['data']);

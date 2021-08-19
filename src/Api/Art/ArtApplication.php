@@ -18,9 +18,6 @@ final class ArtApplication extends AbstractApiApplication
     ) {
     }
 
-    /**
-     * @param array{id: string, type: string} $args
-     */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,

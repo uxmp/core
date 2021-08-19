@@ -26,6 +26,7 @@ final class LoginApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
+        /** @var array<string, mixed> $body */
         $body = $request->getParsedBody();
 
         $username = $body['username'] ?? '';

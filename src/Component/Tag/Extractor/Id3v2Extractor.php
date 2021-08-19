@@ -15,14 +15,14 @@ final class Id3v2Extractor implements ExtractorInterface
         $tags = $data['id3v2'];
 
         $audioFile
-            ->setMbid($tags['text']['MusicBrainz Release Track Id'] ?? null)
+            ->setMbid($tags['text']['MusicBrainz Release Track Id'] ?? '')
             ->setTitle(current($tags['title']))
             ->setTrackNumber((int) current($tags['track_number']))
             ->setArtistTitle(current($tags['artist']))
-            ->setArtistMbid($tags['text']['MusicBrainz Album Artist Id'] ?? null)
+            ->setArtistMbid($tags['text']['MusicBrainz Album Artist Id'] ?? '')
             ->setAlbumTitle(current($tags['album']))
-            ->setAlbumMbid($tags['text']['MusicBrainz Album Id'] ?? null)
-            ->setDiscMbid($tags['text']['MusicBrainz Release Group Id'] ?? null)
+            ->setAlbumMbid($tags['text']['MusicBrainz Album Id'] ?? '')
+            ->setDiscMbid($tags['text']['MusicBrainz Release Group Id'] ?? '')
             ->setDiscNumber((int) strstr((string) current($tags['part_of_a_set']), '/', true))
         ;
     }

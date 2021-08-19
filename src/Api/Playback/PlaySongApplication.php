@@ -19,9 +19,6 @@ final class PlaySongApplication extends AbstractApiApplication
     ) {
     }
 
-    /**
-     * @param array{id: int} $args
-     */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,
@@ -30,6 +27,10 @@ final class PlaySongApplication extends AbstractApiApplication
         $songId = (int) $args['id'];
 
         $song = $this->songRepository->find($songId);
+
+        if ($song === null) {
+            throw new \RuntimeException('song not found');
+        }
         $path = $song->getFilename();
 
         $size = filesize($path);

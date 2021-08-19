@@ -2,12 +2,11 @@
 
 namespace Uxmp\Core\Orm\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ObjectRepository;
 use Uxmp\Core\Orm\Model\SessionInterface;
 
 /**
- * @extends EntityRepository<SessionInterface>
+ * @extends ObjectRepository<SessionInterface>
  *
  * @method null|SessionInterface findOneBy(mixed[] $criteria)
  * @method null|SessionInterface find(int $id)

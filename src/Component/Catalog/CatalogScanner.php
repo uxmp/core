@@ -32,7 +32,7 @@ final class CatalogScanner implements CatalogScannerInterface
             $audioFile = (new AudioFile())->setFilename($filename);
 
             $analysisResult = $this->id3Analyzer->analyze($filename);
-            if (!in_array($analysisResult['fileformat'] ?? '', self::SUPPORTED_FORMATS)) {
+            if (!in_array($analysisResult['fileformat'] ?? '', self::SUPPORTED_FORMATS, true)) {
                 // @todo skip
                 continue;
             }

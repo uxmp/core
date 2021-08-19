@@ -6,32 +6,32 @@ namespace Uxmp\Core\Component\Tag\Container;
 
 final class AudioFile implements AudioFileInterface
 {
-    private ?string $title = null;
+    private string $title;
 
-    private ?int $trackNumber = null;
+    private int $trackNumber;
 
-    private ?string $filename = null;
+    private string $filename;
 
-    private ?string $mbid = null;
+    private string $mbid;
 
-    private ?string $artistTitle = null;
+    private string $artistTitle;
 
-    private ?string $artistMbid = null;
+    private string $artistMbid;
 
-    private ?string $albumTitle = null;
+    private string $albumTitle;
 
-    private ?string $albumMbid = null;
+    private string $albumMbid;
 
-    private ?string $discMbid = null;
+    private string $discMbid;
 
-    private ?int $discNumber = null;
+    private int $discNumber;
 
     public function getTrackNumber(): int
     {
         return $this->trackNumber;
     }
 
-    public function setTrackNumber(?int $trackNumber): AudioFileInterface
+    public function setTrackNumber(int $trackNumber): AudioFileInterface
     {
         $this->trackNumber = $trackNumber;
         return $this;
@@ -42,7 +42,7 @@ final class AudioFile implements AudioFileInterface
         return $this->filename;
     }
 
-    public function setFilename(?string $filename): AudioFileInterface
+    public function setFilename(string $filename): AudioFileInterface
     {
         $this->filename = $filename;
         return $this;
@@ -53,7 +53,7 @@ final class AudioFile implements AudioFileInterface
         return $this->title;
     }
 
-    public function setTitle(?string $title): AudioFileInterface
+    public function setTitle(string $title): AudioFileInterface
     {
         $this->title = $title;
         return $this;
@@ -64,7 +64,7 @@ final class AudioFile implements AudioFileInterface
         return $this->mbid;
     }
 
-    public function setMbid(?string $mbid): AudioFileInterface
+    public function setMbid(string $mbid): AudioFileInterface
     {
         $this->mbid = $mbid;
         return $this;
@@ -75,7 +75,7 @@ final class AudioFile implements AudioFileInterface
         return $this->artistTitle;
     }
 
-    public function setArtistTitle(?string $artistTitle): AudioFileInterface
+    public function setArtistTitle(string $artistTitle): AudioFileInterface
     {
         $this->artistTitle = $artistTitle;
         return $this;
@@ -86,7 +86,7 @@ final class AudioFile implements AudioFileInterface
         return $this->artistMbid;
     }
 
-    public function setArtistMbid(?string $artistMbid): AudioFileInterface
+    public function setArtistMbid(string $artistMbid): AudioFileInterface
     {
         $this->artistMbid = $artistMbid;
         return $this;
@@ -97,7 +97,7 @@ final class AudioFile implements AudioFileInterface
         return $this->albumTitle;
     }
 
-    public function setAlbumTitle(?string $albumTitle): AudioFileInterface
+    public function setAlbumTitle(string $albumTitle): AudioFileInterface
     {
         $this->albumTitle = $albumTitle;
         return $this;
@@ -108,7 +108,7 @@ final class AudioFile implements AudioFileInterface
         return $this->albumMbid;
     }
 
-    public function setAlbumMbid(?string $albumMbid): AudioFileInterface
+    public function setAlbumMbid(string $albumMbid): AudioFileInterface
     {
         $this->albumMbid = $albumMbid;
         return $this;
@@ -119,7 +119,7 @@ final class AudioFile implements AudioFileInterface
         return $this->discMbid;
     }
 
-    public function setDiscMbid(?string $discMbid): AudioFileInterface
+    public function setDiscMbid(string $discMbid): AudioFileInterface
     {
         $this->discMbid = $discMbid;
         return $this;
@@ -130,7 +130,7 @@ final class AudioFile implements AudioFileInterface
         return $this->discNumber;
     }
 
-    public function setDiscNumber(?int $discNumber): AudioFileInterface
+    public function setDiscNumber(int $discNumber): AudioFileInterface
     {
         $this->discNumber = $discNumber;
         return $this;
@@ -138,6 +138,6 @@ final class AudioFile implements AudioFileInterface
 
     public function isValid(): bool
     {
-        return $this->mbid && $this->artistMbid && $this->albumMbid;
+        return $this->mbid !== '' && $this->artistMbid !== '' && $this->albumMbid !== '';
     }
 }

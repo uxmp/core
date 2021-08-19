@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 
 final class EventHandler implements EventHandlerInterface
 {
-    /** @var array<array{type: int, context: array<mixed>}> */
+    /** @var array<int, callable(ContainerInterface): void> */
     private array $events = [];
 
     public function __construct(

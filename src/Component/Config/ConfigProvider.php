@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Component\Config;
 
 use Monolog\Logger;
+use Psr\Log\LogLevel;
 
 final class ConfigProvider implements ConfigProviderInterface
 {
@@ -28,9 +29,9 @@ final class ConfigProvider implements ConfigProviderInterface
         return 1086400;
     }
 
-    public function getLogLevel(): int
+    public function getLogLevel(): string
     {
-        return Logger::DEBUG;
+        return LogLevel::DEBUG;
     }
 
     public function getDbDsn(): string

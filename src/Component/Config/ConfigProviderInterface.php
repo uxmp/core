@@ -2,6 +2,8 @@
 
 namespace Uxmp\Core\Component\Config;
 
+use Psr\Log\LogLevel;
+
 interface ConfigProviderInterface
 {
     public function getLogFilePath(): string;
@@ -12,7 +14,10 @@ interface ConfigProviderInterface
 
     public function getTokenLifetime(): int;
 
-    public function getLogLevel(): int;
+    /**
+     * @phpstan-return LogLevel::*
+     */
+    public function getLogLevel(): string;
 
     public function getDbDsn(): string;
 

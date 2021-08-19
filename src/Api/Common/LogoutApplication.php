@@ -18,6 +18,9 @@ final class LogoutApplication extends AbstractApiApplication
     ) {
     }
 
+    /**
+     * @param array<string, mixed> $args
+     */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,
