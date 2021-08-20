@@ -11,6 +11,8 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class RandomSongsApplication extends AbstractApiApplication
 {
+    private const DEFAULT_LIMIT = 100;
+
     public function __construct(
         private SongRepositoryInterface $songRepository
     ) {
@@ -23,29 +25,33 @@ final class RandomSongsApplication extends AbstractApiApplication
     ): ResponseInterface {
         $list = [];
 
+        $limit = (int) ($args['limit'] ?? self::DEFAULT_LIMIT);
+
         foreach ($this->songRepository->findAll() as $song) {
             $album = $song->getDisc()->getAlbum();
 
+            $artist = $album->getArtist();
+            $songId = $song->getId();
+
             $list[] = [
-                'id' => $song->getId(),
+                'id' => $songId,
                 'name' => $song->getTitle(),
-                'artistName' => $album->getArtist()->getTitle(),
+                'artistName' => $artist->getTitle(),
                 'albumName' => $album->getTitle(),
                 'trackNumber' => $song->getTrackNumber(),
-                'playUrl' => sprintf('http://localhost:8888/play/%d', $song->getId()),
+                'playUrl' => sprintf('http://localhost:8888/play/%d', $songId),
                 'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid()),
-                'artistId' => $album->getArtist()->getId(),
+                'artistId' => $artist->getId(),
                 'albumId' => $album->getId()
             ];
         }
 
+        // @todo inefficient, but doctrine doesn't support RAND order natively
         shuffle($list);
 
-        $response->getBody()->write(
-            (string) json_encode(['items' => $list], JSON_PRETTY_PRINT)
+        return $this->asJson(
+            $response,
+            ['items' => array_slice($list, 0, $limit)]
         );
-        return $response
-            ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Content-Type', 'application/json');
     }
 }
