@@ -16,14 +16,14 @@ final class SessionManager implements SessionManagerInterface
     ) {
     }
 
-    public function lookup(string $subject): ?SessionInterface
+    public function lookup(int $sessionId): ?SessionInterface
     {
-        return $this->sessionRepository->find((int) $subject);
+        return $this->sessionRepository->find($sessionId);
     }
 
     public function logout(int $sessionId): void
     {
-        $session = $this->sessionRepository->find($sessionId);
+        $session = $this->lookup($sessionId);
         if ($session !== null) {
             $session->setActive(false);
 

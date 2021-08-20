@@ -6,7 +6,7 @@ use Uxmp\Core\Orm\Model\SessionInterface;
 
 interface SessionManagerInterface
 {
-    public function lookup(string $subject): ?SessionInterface;
+    public function lookup(int $sessionId): ?SessionInterface;
 
     public function logout(int $sessionId): void;
 

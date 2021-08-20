@@ -25,7 +25,7 @@ final class SessionValidatorMiddleware implements MiddlewareInterface
     ): ResponseInterface {
         $tokenData = $request->getAttribute('token');
         if ($tokenData !== null) {
-            $session = $this->sessionManager->lookup($tokenData['sub'] ?? '');
+            $session = $this->sessionManager->lookup((int) ($tokenData['sub'] ?? 0));
 
             if ($session === null) {
                 return $this->psr17Factory->createResponse(
