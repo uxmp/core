@@ -62,7 +62,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/albums', AlbumListApplication::class);
     $app->get('/art/{type}/{id}', ArtApplication::class);
     $app->get('/album/{albumId}', AlbumApplication::class);
-    $app->get('/random/songs', RandomSongsApplication::class);
+    $app->get('/random/songs[/{limit}]', RandomSongsApplication::class);
 
     $app->run();
 });
