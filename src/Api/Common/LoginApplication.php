@@ -47,13 +47,22 @@ final class LoginApplication extends AbstractApiApplication
         ];
 
         $token = $this->jwtManager->encode($payload);
+        $user = $session->getUser();
 
         return $this
-            ->asJson($response, ['items' => ['token' => $token]])
+            ->asJson(
+                $response,
+                [
+                    'data' => [
+                        'token' => $token,
+                        'user' => ['id' => $user->getId(), 'name' => $user->getName()]
+                    ]
+                ]
+            )
             ->withHeader(
                 'Set-Cookie',
                 sprintf(
-                    '%s=%s; path=/; Expires=%s',
+                    '%s=%s; path=/play; Expires=%s',
                     $this->configProvider->getCookieName(),
                     $token,
                     date(DATE_RFC1123, $lifetime)

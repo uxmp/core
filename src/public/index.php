@@ -43,20 +43,20 @@ Init::run(static function (ContainerInterface $dic): void {
 
     $app->add($dic->get(SessionValidatorMiddleware::class));
     $app->add(new JwtAuthentication([
-        'ignore' => ['/common/login', '/art'],
+        'ignore' => ['/common', '/art'],
         'cookie' => $config->getCookieName(),
         'secret' => $config->getJwtSecret(),
         'logger' => $logger,
     ]));
     $app->add(new CorsMiddleware([
         'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+        'headers.allow' => ['Authorization', 'Content-Type'],
         'origin' => ['*'],
         'logger' => $logger,
-        'credentials' => true,
     ]));
 
     $app->post('/common/login', LoginApplication::class);
-    $app->get('/common/logout', LogoutApplication::class);
+    $app->post('/common/logout', LogoutApplication::class);
     $app->get('/play/{id}', PlaySongApplication::class);
     $app->get('/artists', ArtistListApplication::class);
     $app->get('/albums', AlbumListApplication::class);

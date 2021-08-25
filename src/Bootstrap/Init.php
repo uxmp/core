@@ -52,9 +52,6 @@ final class Init
                 $paths = [__DIR__ . '/../Orm/Model/'];
                 $isDevMode = true;
 
-                /** @var ConfigProviderInterface $config */
-                $config = $c->get(ConfigProviderInterface::class);
-
                 // the connection configuration
                 $dbParams = [
                     'url' => $_ENV['DATABASE_DSN'],
