@@ -32,7 +32,7 @@ final class InitCommand extends Ahc\Cli\Input\Command
 }
 
 // Init App with name and version
-$app = new Ahc\Cli\Application('usox core', 'v0.0.1');
+$app = new Ahc\Cli\Application('uxmp core', 'v0.0.1');
 
 // Add commands with optional aliases`
 $app->add(new InitCommand, 'i');

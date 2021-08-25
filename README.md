@@ -1,7 +1,7 @@
 # uxmp-core
 
-### Attention
+## Setup
 
-This repo contains dummy data which may affect security, so don't use it atm.
+Copy .env.dist to .env and adjust the variables according to your server setup
 
 TBD

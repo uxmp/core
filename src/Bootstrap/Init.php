@@ -8,6 +8,7 @@ use DI\ContainerBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Setup;
+use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
@@ -56,15 +57,23 @@ final class Init
 
                 // the connection configuration
                 $dbParams = [
-                    'url' => $config->getDbDsn(),
-                    'password' => $config->getDbPassword()
+                    'url' => $_ENV['DATABASE_DSN'],
+                    'password' => $_ENV['DATABASE_PASSWORD'],
                 ];
 
                 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
                 return EntityManager::create($dbParams, $config);
             },
+            Dotenv::class => function (): Dotenv {
+                $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+                $dotenv->safeLoad();
+                return $dotenv;
+            },
         ]);
         $container = $builder->build();
+
+        // @todo validate env variable
+        $container->get(Dotenv::class);
 
         $result = $app($container);
 

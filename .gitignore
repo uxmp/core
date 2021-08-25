@@ -2,3 +2,4 @@ vendor
 dev
 .php-cs-fixer.cache
 build
+.env

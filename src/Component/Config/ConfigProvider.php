@@ -4,43 +4,32 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Config;
 
-use Monolog\Logger;
 use Psr\Log\LogLevel;
 
 final class ConfigProvider implements ConfigProviderInterface
 {
     public function getLogFilePath(): string
     {
-        return __DIR__ . '/../../../../logs/';
+        return $_ENV['LOG_PATH'] ?? '';
     }
 
     public function getJwtSecret(): string
     {
-        return 'todochangeme';
+        return $_ENV['JWT_SECRET'] ?? '';
     }
 
     public function getCookieName(): string
     {
-        return 'nekot';
+        return $_ENV['TOKEN_NAME'] ?? 'nekot';
     }
 
     public function getTokenLifetime(): int
     {
-        return 1086400;
+        return $_ENV['TOKEN_LIFETIME'] ?? 1086400;
     }
 
     public function getLogLevel(): string
     {
-        return LogLevel::DEBUG;
-    }
-
-    public function getDbDsn(): string
-    {
-        return 'sqlite:///'. __DIR__ .'/../../../../dev/db.sqlite';
-    }
-
-    public function getDbPassword(): string
-    {
-        return '';
+        return $_ENV['LOG_LEVEL'] ?? LogLevel::ERROR;
     }
 }

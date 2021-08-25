@@ -18,8 +18,4 @@ interface ConfigProviderInterface
      * @phpstan-return LogLevel::*
      */
     public function getLogLevel(): string;
-
-    public function getDbDsn(): string;
-
-    public function getDbPassword(): string;
 }
