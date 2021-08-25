@@ -66,7 +66,7 @@ final class Init
             },
             Dotenv::class => function (): Dotenv {
                 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-                $dotenv->safeLoad();
+                $dotenv->load();
                 return $dotenv;
             },
         ]);
