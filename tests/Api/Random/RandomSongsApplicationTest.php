@@ -9,6 +9,7 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
@@ -18,14 +19,18 @@ class RandomSongsApplicationTest extends MockeryTestCase
 {
     private MockInterface $songRepository;
 
+    private MockInterface $config;
+
     private RandomSongsApplication $subject;
 
     public function setUp(): void
     {
         $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
+        $this->config = \Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new RandomSongsApplication(
-            $this->songRepository
+            $this->songRepository,
+            $this->config
         );
     }
 
@@ -46,6 +51,12 @@ class RandomSongsApplicationTest extends MockeryTestCase
         $albumMbId = 'some-album-mbid';
         $artistId = 33;
         $albumId = 42;
+        $baseUrl = 'some-base-url';
+
+        $this->config->shouldReceive('getBaseUrl')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($baseUrl);
 
         $this->songRepository->shouldReceive('findAll')
             ->withNoArgs()
@@ -112,8 +123,8 @@ class RandomSongsApplicationTest extends MockeryTestCase
                     'artistName' => $artistTitle,
                     'albumName' => $albumTitle,
                     'trackNumber' => $songTrackNumber,
-                    'playUrl' => sprintf('http://localhost:8888/play/%d', $songId),
-                    'cover' => sprintf('http://localhost:8888/art/album/%s', $albumMbId),
+                    'playUrl' => sprintf($baseUrl . 'play/%d', $songId),
+                    'cover' => sprintf($baseUrl . 'art/album/%s', $albumMbId),
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ]]

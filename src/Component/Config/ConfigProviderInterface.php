@@ -20,4 +20,6 @@ interface ConfigProviderInterface
     public function getLogLevel(): string;
 
     public function getCorsOrigin(): string;
+
+    public function getBaseUrl(): string;
 }

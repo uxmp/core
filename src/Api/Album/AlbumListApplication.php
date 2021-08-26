@@ -7,12 +7,14 @@ namespace Uxmp\Core\Api\Album;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository
+        private AlbumRepositoryInterface $albumRepository,
+        private ConfigProviderInterface $config
     ) {
     }
 
@@ -22,6 +24,7 @@ final class AlbumListApplication extends AbstractApiApplication
         array $args
     ): ResponseInterface {
         $list = [];
+        $baseUrl = $this->config->getBaseUrl();
 
         foreach ($this->albumRepository->findBy([], ['title' => 'ASC']) as $album) {
             $artist = $album->getArtist();
@@ -31,7 +34,7 @@ final class AlbumListApplication extends AbstractApiApplication
                 'artistId' => $artist->getId(),
                 'artistName' => $artist->getTitle(),
                 'name' => $album->getTitle(),
-                'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid())
+                'cover' => sprintf('%sart/album/%s', $baseUrl, $album->getMbid())
             ];
         }
 

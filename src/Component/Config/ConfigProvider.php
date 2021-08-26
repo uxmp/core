@@ -37,4 +37,30 @@ final class ConfigProvider implements ConfigProviderInterface
     {
         return $_ENV['CORS_ORIGIN'] ?? '';
     }
+
+    public function getBaseUrl(): string
+    {
+        $hostname = $_ENV['HOSTNAME'];
+        $port = (int) $_ENV['PORT'];
+        $ssl = $_ENV['SSL'] === true;
+
+        $protocol = ($ssl === true)
+            ? 'https'
+            : 'http';
+
+        $port_string = '';
+        if (
+            $port !== 0 &&
+            !in_array($port, [80, 443], true)
+        ) {
+            $port_string = sprintf(':%d', $port);
+        }
+
+        return sprintf(
+            '%s://%s%s/',
+            $protocol,
+            $hostname,
+            $port_string
+        );
+    }
 }

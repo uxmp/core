@@ -7,6 +7,7 @@ namespace Uxmp\Core\Api\Random;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class RandomSongsApplication extends AbstractApiApplication
@@ -14,7 +15,8 @@ final class RandomSongsApplication extends AbstractApiApplication
     private const DEFAULT_LIMIT = 100;
 
     public function __construct(
-        private SongRepositoryInterface $songRepository
+        private SongRepositoryInterface $songRepository,
+        private ConfigProviderInterface $config
     ) {
     }
 
@@ -24,6 +26,7 @@ final class RandomSongsApplication extends AbstractApiApplication
         array $args
     ): ResponseInterface {
         $list = [];
+        $baseUrl = $this->config->getBaseUrl();
 
         $limit = (int) ($args['limit'] ?? self::DEFAULT_LIMIT);
 
@@ -39,8 +42,8 @@ final class RandomSongsApplication extends AbstractApiApplication
                 'artistName' => $artist->getTitle(),
                 'albumName' => $album->getTitle(),
                 'trackNumber' => $song->getTrackNumber(),
-                'playUrl' => sprintf('http://localhost:8888/play/%d', $songId),
-                'cover' => sprintf('http://localhost:8888/art/album/%s', $album->getMbid()),
+                'playUrl' => sprintf('%splay/%d', $baseUrl, $songId),
+                'cover' => sprintf('%sart/album/%s', $baseUrl, $album->getMbid()),
                 'artistId' => $artist->getId(),
                 'albumId' => $album->getId()
             ];

@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
@@ -21,14 +22,18 @@ class AlbumApplicationTest extends MockeryTestCase
 {
     private MockInterface $albumRepository;
 
+    private MockInterface $config;
+
     private AlbumApplication $subject;
 
     public function setUp(): void
     {
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new AlbumApplication(
-            $this->albumRepository
+            $this->albumRepository,
+            $this->config
         );
     }
 
@@ -72,6 +77,12 @@ class AlbumApplicationTest extends MockeryTestCase
         $albumMbId = 'some-album-mbid';
         $artistId = 21;
         $discId = 84;
+        $baseUrl = 'some-base-url';
+
+        $this->config->shouldReceive('getBaseUrl')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($baseUrl);
 
         $this->albumRepository->shouldReceive('find')
             ->with($albumId)
@@ -144,8 +155,8 @@ class AlbumApplicationTest extends MockeryTestCase
                     'artistName' => $artistTitle,
                     'albumName' => $albumTitle,
                     'trackNumber' => $trackNumber,
-                    'playUrl' => sprintf('http://localhost:8888/play/%d', $songId),
-                    'cover' => sprintf('http://localhost:8888/art/album/%s', $albumMbId),
+                    'playUrl' => sprintf('%splay/%d', $baseUrl, $songId),
+                    'cover' => sprintf('%sart/album/%s', $baseUrl, $albumMbId),
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ]]

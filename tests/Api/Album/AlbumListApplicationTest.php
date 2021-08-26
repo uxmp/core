@@ -10,6 +10,7 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
@@ -18,14 +19,18 @@ class AlbumListApplicationTest extends MockeryTestCase
 {
     private MockInterface $albumRepository;
 
+    private MockInterface $config;
+
     private AlbumListApplication $subject;
 
     public function setUp(): void
     {
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new AlbumListApplication(
-            $this->albumRepository
+            $this->albumRepository,
+            $this->config
         );
     }
 
@@ -42,6 +47,12 @@ class AlbumListApplicationTest extends MockeryTestCase
         $albumMbId = 'some-mbid';
         $albumName = 'some-album-name';
         $artistName = 'some-artist-name';
+        $baseUrl = 'some-base-url';
+
+        $this->config->shouldReceive('getBaseUrl')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($baseUrl);
 
         $this->albumRepository->shouldReceive('findBy')
             ->with([], ['title' => 'ASC'])
@@ -79,7 +90,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,
-            'cover' => sprintf('http://localhost:8888/art/album/%s', $albumMbId),
+            'cover' => sprintf($baseUrl . 'art/album/%s', $albumMbId),
         ]];
 
         $response->shouldReceive('getBody')
