@@ -32,4 +32,9 @@ final class ConfigProvider implements ConfigProviderInterface
     {
         return $_ENV['LOG_LEVEL'] ?? LogLevel::ERROR;
     }
+
+    public function getCorsOrigin(): string
+    {
+        return $_ENV['CORS_ORIGIN'] ?? '';
+    }
 }

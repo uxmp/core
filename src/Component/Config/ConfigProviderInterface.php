@@ -18,4 +18,6 @@ interface ConfigProviderInterface
      * @phpstan-return LogLevel::*
      */
     public function getLogLevel(): string;
+
+    public function getCorsOrigin(): string;
 }

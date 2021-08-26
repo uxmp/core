@@ -51,7 +51,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->add(new CorsMiddleware([
         'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
         'headers.allow' => ['Authorization', 'Content-Type'],
-        'origin' => ['*'],
+        'origin' => [$config->getCorsOrigin()],
         'logger' => $logger,
     ]));
 
