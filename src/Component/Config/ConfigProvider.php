@@ -52,7 +52,7 @@ final class ConfigProvider implements ConfigProviderInterface
     {
         $hostname = $_ENV['HOSTNAME'];
         $port = (int) $_ENV['PORT'];
-        $ssl = $_ENV['SSL'] === true;
+        $ssl = ((bool) $_ENV['SSL']) === true;
 
         $protocol = ($ssl === true)
             ? 'https'
