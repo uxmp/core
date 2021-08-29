@@ -90,7 +90,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,
-            'cover' => sprintf($baseUrl . 'art/album/%s', $albumMbId),
+            'cover' => sprintf($baseUrl . '/art/album/%s', $albumMbId),
         ]];
 
         $response->shouldReceive('getBody')

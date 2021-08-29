@@ -155,8 +155,8 @@ class AlbumApplicationTest extends MockeryTestCase
                     'artistName' => $artistTitle,
                     'albumName' => $albumTitle,
                     'trackNumber' => $trackNumber,
-                    'playUrl' => sprintf('%splay/%d', $baseUrl, $songId),
-                    'cover' => sprintf('%sart/album/%s', $baseUrl, $albumMbId),
+                    'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
+                    'cover' => sprintf('%s/art/album/%s', $baseUrl, $albumMbId),
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ]]

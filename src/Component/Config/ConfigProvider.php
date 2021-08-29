@@ -40,7 +40,7 @@ final class ConfigProvider implements ConfigProviderInterface
 
     public function getApiBasePath(): string
     {
-        return $_ENV['API_BASE_PATH'] ?? '/';
+        return $_ENV['API_BASE_PATH'] ?? '';
     }
 
     public function getAssetPath(): string
@@ -67,7 +67,7 @@ final class ConfigProvider implements ConfigProviderInterface
         }
 
         return sprintf(
-            '%s://%s%s/%s',
+            '%s://%s%s%s',
             $protocol,
             $hostname,
             $port_string,

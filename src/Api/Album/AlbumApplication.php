@@ -55,8 +55,8 @@ final class AlbumApplication extends AbstractApiApplication
                     'artistName' => $artistName,
                     'albumName' => $albumName,
                     'trackNumber' => $song->getTrackNumber(),
-                    'playUrl' => sprintf($baseUrl . 'play/%d', $songId),
-                    'cover' => sprintf($baseUrl . 'art/album/%s', $album->getMbid()),
+                    'playUrl' => sprintf($baseUrl . '/play/%d', $songId),
+                    'cover' => sprintf($baseUrl . '/art/album/%s', $album->getMbid()),
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ];
