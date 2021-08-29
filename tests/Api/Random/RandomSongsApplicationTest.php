@@ -123,8 +123,8 @@ class RandomSongsApplicationTest extends MockeryTestCase
                     'artistName' => $artistTitle,
                     'albumName' => $albumTitle,
                     'trackNumber' => $songTrackNumber,
-                    'playUrl' => sprintf($baseUrl . 'play/%d', $songId),
-                    'cover' => sprintf($baseUrl . 'art/album/%s', $albumMbId),
+                    'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
+                    'cover' => sprintf('%s/art/album/%s', $baseUrl, $albumMbId),
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ]]

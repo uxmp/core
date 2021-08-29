@@ -42,8 +42,8 @@ final class RandomSongsApplication extends AbstractApiApplication
                 'artistName' => $artist->getTitle(),
                 'albumName' => $album->getTitle(),
                 'trackNumber' => $song->getTrackNumber(),
-                'playUrl' => sprintf('%splay/%d', $baseUrl, $songId),
-                'cover' => sprintf('%sart/album/%s', $baseUrl, $album->getMbid()),
+                'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
+                'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid()),
                 'artistId' => $artist->getId(),
                 'albumId' => $album->getId()
             ];
