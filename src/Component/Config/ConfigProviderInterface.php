@@ -21,5 +21,9 @@ interface ConfigProviderInterface
 
     public function getCorsOrigin(): string;
 
+    public function getApiBasePath(): string;
+
+    public function getAssetPath(): string;
+
     public function getBaseUrl(): string;
 }

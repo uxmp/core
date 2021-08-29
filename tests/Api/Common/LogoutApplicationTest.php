@@ -40,6 +40,7 @@ class LogoutApplicationTest extends MockeryTestCase
 
         $sessionId = 666;
         $cookieName = 'some-cookie-name';
+        $apiBasePath = 'some-api-path';
 
         $request->shouldReceive('getAttribute')
             ->with('sessionId')
@@ -54,6 +55,10 @@ class LogoutApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($cookieName);
+        $this->configProvider->shouldReceive('getApiBasePath')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($apiBasePath);
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -66,12 +71,13 @@ class LogoutApplicationTest extends MockeryTestCase
         $response->shouldReceive('withHeader')
             ->with(
                 'Set-Cookie',
-                Mockery::on(function ($value) use ($cookieName) {
+                Mockery::on(function ($value) use ($cookieName, $apiBasePath) {
                     return str_starts_with(
                         $value,
                         sprintf(
-                            '%s=; path=/play; Expires=',
-                            $cookieName
+                            '%s=; path=%splay; Expires=',
+                            $cookieName,
+                            $apiBasePath
                         )
                     );
                 })

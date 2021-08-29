@@ -38,6 +38,16 @@ final class ConfigProvider implements ConfigProviderInterface
         return $_ENV['CORS_ORIGIN'] ?? '';
     }
 
+    public function getApiBasePath(): string
+    {
+        return $_ENV['API_BASE_PATH'] ?? '/';
+    }
+
+    public function getAssetPath(): string
+    {
+        return $_ENV['ASSET_PATH'] ?? '';
+    }
+
     public function getBaseUrl(): string
     {
         $hostname = $_ENV['HOSTNAME'];

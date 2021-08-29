@@ -8,13 +8,13 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 final class ArtApplication extends AbstractApiApplication
 {
     public function __construct(
         private Psr17Factory $psr17Factory,
-        private AlbumRepositoryInterface $albumRepository
+        private ConfigProviderInterface $config
     ) {
     }
 
@@ -28,7 +28,7 @@ final class ArtApplication extends AbstractApiApplication
         $filename = $albumId . '.jpg';
         $path = sprintf(
             '%s/%s',
-            realpath(__DIR__ . '/../../../../assets/img/album'),
+            realpath($this->config->getAssetPath() . '/img/album'),
             $filename
         );
 

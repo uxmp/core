@@ -26,9 +26,12 @@ Init::run(static function (ContainerInterface $dic): void {
     /** @var ConfigProviderInterface $config */
     $config = $dic->get(ConfigProviderInterface::class);
 
+    $apiBasePath = $config->getApiBasePath();
+
     $app = AppFactory::createFromContainer($dic);
     $app->addBodyParsingMiddleware();
     $app->addErrorMiddleware(true, true, true);
+    $app->setBasePath($apiBasePath);
 
     $logger = new Logger('slim');
     $rotating = new RotatingFileHandler(
@@ -43,7 +46,7 @@ Init::run(static function (ContainerInterface $dic): void {
 
     $app->add($dic->get(SessionValidatorMiddleware::class));
     $app->add(new JwtAuthentication([
-        'ignore' => ['/common', '/art'],
+        'ignore' => [$apiBasePath . '/common', $apiBasePath . '/art'],
         'cookie' => $config->getCookieName(),
         'secret' => $config->getJwtSecret(),
         'logger' => $logger,
