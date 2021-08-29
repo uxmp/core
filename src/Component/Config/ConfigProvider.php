@@ -67,10 +67,11 @@ final class ConfigProvider implements ConfigProviderInterface
         }
 
         return sprintf(
-            '%s://%s%s/',
+            '%s://%s%s/%s',
             $protocol,
             $hostname,
-            $port_string
+            $port_string,
+            $this->getApiBasePath()
         );
     }
 }
