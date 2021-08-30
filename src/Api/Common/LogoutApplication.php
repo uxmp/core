@@ -36,7 +36,7 @@ final class LogoutApplication extends AbstractApiApplication
             ->withHeader(
                 'Set-Cookie',
                 sprintf(
-                    '%s=; path=/%splay; Expires=%s',
+                    '%s=; path=%s/play; Expires=%s',
                     $this->configProvider->getCookieName(),
                     $this->configProvider->getApiBasePath(),
                     date(DATE_RFC1123)

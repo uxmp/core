@@ -62,7 +62,7 @@ final class LoginApplication extends AbstractApiApplication
             ->withHeader(
                 'Set-Cookie',
                 sprintf(
-                    '%s=%s; path=/%splay; Expires=%s',
+                    '%s=%s; path=%s/play; Expires=%s',
                     $this->configProvider->getCookieName(),
                     $token,
                     $this->configProvider->getApiBasePath(),
