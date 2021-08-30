@@ -56,6 +56,7 @@ Init::run(static function (ContainerInterface $dic): void {
         'headers.allow' => ['Authorization', 'Content-Type'],
         'origin' => [$config->getCorsOrigin()],
         'logger' => $logger,
+        'credentials' => true
     ]));
 
     $app->post('/common/login', LoginApplication::class);

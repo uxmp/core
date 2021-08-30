@@ -75,7 +75,7 @@ class LogoutApplicationTest extends MockeryTestCase
                     return str_starts_with(
                         $value,
                         sprintf(
-                            '%s=; path=%splay; Expires=',
+                            '%s=; path=/%splay; Expires=',
                             $cookieName,
                             $apiBasePath
                         )
