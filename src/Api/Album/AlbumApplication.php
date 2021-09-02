@@ -42,6 +42,7 @@ final class AlbumApplication extends AbstractApiApplication
         $artistName = $artist->getTitle();
 
         $baseUrl = $this->config->getBaseUrl();
+        $cover = sprintf('%s/art/album/%s', $baseUrl, $album->getMbid());
 
         foreach ($discs as $disc) {
             $songData = [];
@@ -56,7 +57,7 @@ final class AlbumApplication extends AbstractApiApplication
                     'albumName' => $albumName,
                     'trackNumber' => $song->getTrackNumber(),
                     'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
-                    'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid()),
+                    'cover' => $cover,
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                 ];
@@ -76,6 +77,7 @@ final class AlbumApplication extends AbstractApiApplication
                 'artistId' => $artistId,
                 'artistName' => $artistName,
                 'discs' => $discsData,
+                'cover' => $cover,
             ]
         );
     }
