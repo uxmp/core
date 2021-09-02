@@ -6,7 +6,6 @@ namespace Uxmp\Core\Component\Catalog\Scanner;
 
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
-use Uxmp\Core\Component\Event\EventEnum;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;

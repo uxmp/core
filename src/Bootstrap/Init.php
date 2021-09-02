@@ -12,7 +12,6 @@ use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminator;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
@@ -24,10 +23,8 @@ final class Init
 {
     /**
      * @param callable(ContainerInterface): mixed $app
-     *
-     * @return mixed
      */
-    public static function run(callable $app)
+    public static function run(callable $app): mixed
     {
         $builder = new ContainerBuilder();
         $builder->addDefinitions(require __DIR__ . '/../Api/Services.php');

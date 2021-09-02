@@ -8,7 +8,6 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Orm\Model\SongInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class PlaySongApplication extends AbstractApiApplication
