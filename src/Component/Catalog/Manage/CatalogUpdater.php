@@ -2,16 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Component\Catalog;
+namespace Uxmp\Core\Component\Catalog\Manage;
 
+use Ahc\Cli\IO\Interactor;
 use Generator;
 use getID3;
 use Uxmp\Core\Component\Catalog\Scanner\DiscCacheInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFile;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
+use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
-final class CatalogScanner implements CatalogScannerInterface
+final class CatalogUpdater implements CatalogUpdaterInterface
 {
     private const SUPPORTED_FORMATS = [
         'mp3',
@@ -19,6 +21,7 @@ final class CatalogScanner implements CatalogScannerInterface
     ];
 
     public function __construct(
+        private CatalogRepositoryInterface $catalogRepository,
         private getID3 $id3Analyzer,
         private SongRepositoryInterface $songRepository,
         private ExtractorDeterminatorInterface $extractorDeterminator,
@@ -26,19 +29,57 @@ final class CatalogScanner implements CatalogScannerInterface
     ) {
     }
 
-    public function scan(string $directory): void
+    public function update(Interactor $io, int $catalogId): void
     {
+        $catalog = $this->catalogRepository->find($catalogId);
+        if ($catalog === null) {
+            $io->error(
+                sprintf('Catalog `%d` not found', $catalogId),
+                true
+            );
+            return;
+        }
+
+        $directory = $catalog->getPath();
+
+        if (!is_dir($directory)) {
+            $io->error(
+                sprintf('The path `%s` is not accessible', $directory),
+                true
+            );
+            return;
+        }
+
+        $skipped = [];
+
+        $io->info(sprintf('Updating catalog from `%s`', $directory), true);
+
         foreach ($this->search($directory) as $filename) {
             $audioFile = (new AudioFile())->setFilename($filename);
 
             $analysisResult = $this->id3Analyzer->analyze($filename);
-            if (!in_array($analysisResult['fileformat'] ?? '', self::SUPPORTED_FORMATS, true)) {
-                // @todo skip
+
+            $fileFormat = $analysisResult['fileformat'] ?? '';
+
+            if (!in_array($fileFormat, self::SUPPORTED_FORMATS, true)) {
+                $skipped[] = sprintf(
+                    'Skipped `%s`: Unknown fileformat `%s`',
+                    $filename,
+                    $fileFormat
+                );
+
+                $io->error('.');
                 continue;
             }
 
             $extractor = $this->extractorDeterminator->determine($analysisResult['tags']);
             if ($extractor === null) {
+                $skipped[] = sprintf(
+                    'Skipped `%s`: Meta-Tag extraction failed',
+                    $filename,
+                );
+
+                $io->error('.');
                 continue;
             }
 
@@ -48,8 +89,16 @@ final class CatalogScanner implements CatalogScannerInterface
             );
 
             if ($audioFile->isValid() === false) {
+                $skipped[] = sprintf(
+                    'Skipped `%s`: Invalid Meta-Tags',
+                    $filename,
+                );
+
+                $io->error('.');
                 continue;
             }
+
+            $io->info('.');
 
             $song = $this->songRepository->findByMbId($audioFile->getMbid());
             if ($song === null) {
@@ -68,6 +117,14 @@ final class CatalogScanner implements CatalogScannerInterface
             ;
 
             $this->songRepository->save($song);
+        }
+
+        if ($skipped !== []) {
+            $io->error('The following errors occured', true);
+
+            foreach ($skipped as $error) {
+                $io->error($error, true);
+            }
         }
     }
 

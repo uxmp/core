@@ -2,42 +2,29 @@
 <?php
 declare(strict_types=1);
 
-use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
-use Uxmp\Core\Component\Catalog\CatalogScannerInterface;
+use Uxmp\Core\Component\Cli\CatalogAddCommand;
+use Uxmp\Core\Component\Cli\CatalogUpdateCommand;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-final class InitCommand extends Ahc\Cli\Input\Command
-{
-    public function __construct()
-    {
-        parent::__construct('catalog:scan', 'Scans the directory for new files');
+$app = new Ahc\Cli\Application(
+    'uxmp core',
+    'v0.0.1'
+);
 
-        $this
-            ->argument('<path>', 'Absolute folder path')
-            ->usage(
-                '<bold>  $0</end> <comment></end> ## Scan<eol/>'
-            );
-    }
+$app->add(new CatalogAddCommand(), 'ca');
+$app->add(new CatalogUpdateCommand(), 'cu');
 
-    public function execute($path)
-    {
-        $io = $this->app()->io();
-
-        Init::run(static function (ContainerInterface $dic) use ($path): void {
-            $dic->get(CatalogScannerInterface::class)->scan($path);
-        });
-    }
-}
-
-// Init App with name and version
-$app = new Ahc\Cli\Application('uxmp core', 'v0.0.1');
-
-// Add commands with optional aliases`
-$app->add(new InitCommand, 'i');
+$logo = <<<LOGO
+ _   ___  ___ __ ___  _ __  
+| | | \ \/ / '_ ` _ \| '_ \ 
+| |_| |>  <| | | | | | |_) |
+ \__,_/_/\_\_| |_| |_| .__/ 
+                     | |    
+                     |_|
+LOGO;
 
 // Set logo
-$app->logo('Ascii art logo of your app');
+$app->logo($logo);
 
-$app->handle($_SERVER['argv']); // if argv[1] is `i` or `init` it executes InitCommand
+$app->handle($_SERVER['argv']);

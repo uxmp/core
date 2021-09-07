@@ -8,12 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Orm\Model\Album;
 use Uxmp\Core\Orm\Model\Artist;
+use Uxmp\Core\Orm\Model\Catalog;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Session;
 use Uxmp\Core\Orm\Model\Song;
 use Uxmp\Core\Orm\Model\User;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
+use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
@@ -37,5 +39,8 @@ return [
     },
     UserRepositoryInterface::class => function (ContainerInterface $c): UserRepositoryInterface {
         return $c->get(EntityManagerInterface::class)->getRepository(User::class);
+    },
+    CatalogRepositoryInterface::class => function (ContainerInterface $c): CatalogRepositoryInterface {
+        return $c->get(EntityManagerInterface::class)->getRepository(Catalog::class);
     },
 ];
