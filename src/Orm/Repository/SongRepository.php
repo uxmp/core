@@ -26,6 +26,12 @@ final class SongRepository extends EntityRepository implements SongRepositoryInt
         $this->getEntityManager()->flush();
     }
 
+    public function delete(SongInterface $song): void
+    {
+        $this->getEntityManager()->remove($song);
+        $this->getEntityManager()->flush();
+    }
+
     public function findByMbId(string $mbid): ?SongInterface
     {
         return $this->findOneBy([

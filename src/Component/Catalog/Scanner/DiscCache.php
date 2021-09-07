@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Component\Catalog\Scanner;
 
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
+use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 
@@ -20,6 +21,7 @@ final class DiscCache implements DiscCacheInterface
     }
 
     public function retrieve(
+        CatalogInterface $catalog,
         AudioFileInterface $audioFile,
         array $analysisResult
     ): DiscInterface {
@@ -31,7 +33,7 @@ final class DiscCache implements DiscCacheInterface
             if ($disc === null) {
                 $disc = $this->discRepository->prototype()
                     ->setMbid($discMbId)
-                    ->setAlbum($this->albumCache->retrieve($audioFile, $analysisResult))
+                    ->setAlbum($this->albumCache->retrieve($catalog, $audioFile, $analysisResult))
                     ->setNumber($audioFile->getDiscNumber())
                 ;
 
@@ -40,7 +42,7 @@ final class DiscCache implements DiscCacheInterface
 
             $this->cache[$discMbId] = $disc;
         } else {
-            $this->albumCache->retrieve($audioFile, $analysisResult);
+            $this->albumCache->retrieve($catalog, $audioFile, $analysisResult);
         }
 
         return $disc;

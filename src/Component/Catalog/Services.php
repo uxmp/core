@@ -12,4 +12,5 @@ return [
     Scanner\DiscCacheInterface::class => autowire(Scanner\DiscCache::class),
     Manage\CatalogAdderInterface::class => autowire(Manage\CatalogAdder::class),
     Manage\CatalogUpdaterInterface::class => autowire(Manage\CatalogUpdater::class),
+    Manage\CatalogCleanerInterface::class => autowire(Manage\CatalogCleaner::class),
 ];

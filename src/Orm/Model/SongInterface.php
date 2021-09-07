@@ -29,4 +29,8 @@ interface SongInterface
     public function getDisc(): DiscInterface;
 
     public function setDisc(DiscInterface $disc): SongInterface;
+
+    public function getCatalog(): CatalogInterface;
+
+    public function setCatalog(CatalogInterface $catalog): SongInterface;
 }

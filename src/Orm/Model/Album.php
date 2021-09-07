@@ -31,6 +31,11 @@ class Album implements AlbumInterface
     private int $artist_id;
 
     /**
+     * @Column(type="integer")
+     */
+    private int $catalog_id;
+
+    /**
      * @Column(type="string", length="32", nullable="true", unique=true)
      */
     private ?string $mbid = null;
@@ -40,6 +45,12 @@ class Album implements AlbumInterface
      * @JoinColumn(name="artist_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private ArtistInterface $artist;
+
+    /**
+     * @ManyToOne(targetEntity="Catalog")
+     * @JoinColumn(name="catalog_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private CatalogInterface $catalog;
 
     /**
      * @OneToMany(targetEntity="Disc", mappedBy="album", cascade={"ALL"}, indexBy="id")
@@ -95,5 +106,16 @@ class Album implements AlbumInterface
     public function getDiscs(): iterable
     {
         return $this->discs;
+    }
+
+    public function getCatalog(): CatalogInterface
+    {
+        return $this->catalog;
+    }
+
+    public function setCatalog(CatalogInterface $catalog): AlbumInterface
+    {
+        $this->catalog = $catalog;
+        return $this;
     }
 }

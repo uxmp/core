@@ -105,7 +105,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 $song = $this->songRepository->prototype();
             }
 
-            $disc = $this->discCache->retrieve($audioFile, $analysisResult);
+            $disc = $this->discCache->retrieve($catalog, $audioFile, $analysisResult);
 
             $song
                 ->setTitle($audioFile->getTitle())
@@ -114,6 +114,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 ->setArtist($disc->getAlbum()->getArtist())
                 ->setFilename($audioFile->getFilename())
                 ->setMbid($audioFile->getMbid())
+                ->setCatalog($catalog)
             ;
 
             $this->songRepository->save($song);

@@ -8,4 +8,5 @@ use function DI\autowire;
 
 return [
     AlbumCoverUpdaterInterface::class => autowire(AlbumCoverUpdater::class),
+    AlbumDeleterInterface::class => autowire(AlbumDeleter::class),
 ];

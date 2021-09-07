@@ -14,5 +14,7 @@ interface SongRepositoryInterface extends ObjectRepository
 
     public function save(SongInterface $song): void;
 
+    public function delete(SongInterface $song): void;
+
     public function findByMbId(string $mbid): ?SongInterface;
 }

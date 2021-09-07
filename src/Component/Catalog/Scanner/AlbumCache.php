@@ -9,6 +9,7 @@ use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumCache implements AlbumCacheInterface
@@ -24,6 +25,7 @@ final class AlbumCache implements AlbumCacheInterface
     }
 
     public function retrieve(
+        CatalogInterface $catalog,
         AudioFileInterface $audioFile,
         array $analysisResult
     ): AlbumInterface {
@@ -37,6 +39,7 @@ final class AlbumCache implements AlbumCacheInterface
                     ->setTitle($audioFile->getAlbumTitle())
                     ->setArtist($this->artistCache->retrieve($audioFile))
                     ->setMbid($albumMbid)
+                    ->setCatalog($catalog)
                 ;
                 $this->albumRepository->save($album);
 

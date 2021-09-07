@@ -22,4 +22,8 @@ interface AlbumInterface
      * @return iterable<DiscInterface>
      */
     public function getDiscs(): iterable;
+
+    public function getCatalog(): CatalogInterface;
+
+    public function setCatalog(CatalogInterface $catalog): AlbumInterface;
 }

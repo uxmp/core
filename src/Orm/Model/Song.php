@@ -43,6 +43,11 @@ class Song implements SongInterface
     private string $filename;
 
     /**
+     * @Column(type="integer")
+     */
+    private int $catalog_id;
+
+    /**
      * @Column(type="string", length="32", nullable=true, unique=true)
      */
     private ?string $mbid = null;
@@ -58,6 +63,12 @@ class Song implements SongInterface
      * @JoinColumn(name="artist_id", referencedColumnName="id")
      */
     private ArtistInterface $artist;
+
+    /**
+     * @ManyToOne(targetEntity="Catalog")
+     * @JoinColumn(name="catalog_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private CatalogInterface $catalog;
 
     public function getId(): int
     {
@@ -127,6 +138,17 @@ class Song implements SongInterface
     public function setDisc(DiscInterface $disc): SongInterface
     {
         $this->disc = $disc;
+        return $this;
+    }
+
+    public function getCatalog(): CatalogInterface
+    {
+        return $this->catalog;
+    }
+
+    public function setCatalog(CatalogInterface $catalog): SongInterface
+    {
+        $this->catalog = $catalog;
         return $this;
     }
 }
