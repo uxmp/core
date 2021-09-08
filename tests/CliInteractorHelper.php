@@ -28,4 +28,14 @@ class CliInteractorHelper extends Interactor
             $eol
         );
     }
+
+    public function info(
+        string $text,
+        bool $eol = false
+    ): Writer {
+        return parent::info(
+            $text,
+            $eol
+        );
+    }
 }

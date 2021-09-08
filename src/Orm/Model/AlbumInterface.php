@@ -23,6 +23,8 @@ interface AlbumInterface
      */
     public function getDiscs(): iterable;
 
+    public function getDiscCount(): int;
+
     public function getCatalog(): CatalogInterface;
 
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;

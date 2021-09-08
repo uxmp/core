@@ -33,3 +33,21 @@ location @nested {
         rewrite /api/(.*)$ /api/index.php?/$1 last;
 }
 ```
+
+## Add a catalog
+
+uxmp organizes the music library in so called `catalogs`. To start over, simply
+use the cli tool to add a catalog.
+
+```shell
+./bin/cli catalog:add /path/to/music/library
+```
+
+This command will create the catalog and print its id.
+
+To run a catalog update (e.g. to add files after catalog creation), use the catalog update command
+and the id of the catalog:
+
+```shell
+./bin/cli catalog:update <catalogId>
+```

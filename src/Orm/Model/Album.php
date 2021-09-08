@@ -55,7 +55,7 @@ class Album implements AlbumInterface
     /**
      * @OneToMany(targetEntity="Disc", mappedBy="album", cascade={"ALL"}, indexBy="id")
      *
-     * @var iterable<DiscInterface>
+     * @var ArrayCollection<int, DiscInterface>
      */
     private iterable $discs;
 
@@ -106,6 +106,11 @@ class Album implements AlbumInterface
     public function getDiscs(): iterable
     {
         return $this->discs;
+    }
+
+    public function getDiscCount(): int
+    {
+        return $this->discs->count();
     }
 
     public function getCatalog(): CatalogInterface

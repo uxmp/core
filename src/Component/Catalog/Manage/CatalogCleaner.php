@@ -7,18 +7,18 @@ namespace Uxmp\Core\Component\Catalog\Manage;
 use Ahc\Cli\IO\Interactor;
 use Uxmp\Core\Component\Album\AlbumDeleterInterface;
 use Uxmp\Core\Component\Song\SongDeleterInterface;
-use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
+use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class CatalogCleaner implements CatalogCleanerInterface
 {
     public function __construct(
         private CatalogRepositoryInterface $catalogRepository,
-        private AlbumRepositoryInterface $albumRepository,
         private AlbumDeleterInterface $albumDeleter,
         private SongRepositoryInterface $songRepository,
         private SongDeleterInterface $songDeleter,
+        private DiscRepositoryInterface $discRepository,
     ) {
     }
 
@@ -48,14 +48,38 @@ final class CatalogCleaner implements CatalogCleanerInterface
         $songs = $this->songRepository->findBy(['catalog' => $catalog]);
 
         foreach ($songs as $song) {
+            if (!file_exists($song->getFilename())) {
+                $io->info(
+                    sprintf('Delete `%s - %s`', $song->getArtist()->getTitle(), $song->getTitle()),
+                    true
+                );
+
+                $this->songDeleter->delete($song);
+            }
+        }
+
+        $discs = $this->discRepository->findEmptyDiscs($catalog);
+
+        foreach ($discs as $disc) {
+            $album = $disc->getAlbum();
+
             $io->info(
-                sprintf('Delete `%s - %s`', $song->getArtist()->getTitle(), $song->getTitle()),
+                sprintf('Delete disc number `%d` of `%s`', $disc->getNumber(), $album->getTitle()),
                 true
             );
 
-            $this->songDeleter->delete($song);
+            $this->discRepository->delete($disc);
+
+            if ($album->getDiscCount() === 0) {
+                $io->info(
+                    sprintf('Delete orphaned album `%s`', $album->getTitle()),
+                    true
+                );
+
+                $this->albumDeleter->delete($album);
+            }
         }
 
-        // @todo remove orphaned albums and deactivate artists
+        $io->ok('Done', true);
     }
 }
