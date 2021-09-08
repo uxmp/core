@@ -60,6 +60,7 @@ final class AlbumApplication extends AbstractApiApplication
                     'cover' => $cover,
                     'artistId' => $artistId,
                     'albumId' => $albumId,
+                    'length' => $song->getLength(),
                 ];
             }
 

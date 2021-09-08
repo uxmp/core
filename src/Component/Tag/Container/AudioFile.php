@@ -26,6 +26,8 @@ final class AudioFile implements AudioFileInterface
 
     private int $discNumber;
 
+    private int $length;
+
     public function getTrackNumber(): int
     {
         return $this->trackNumber;

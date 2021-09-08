@@ -53,6 +53,11 @@ class Song implements SongInterface
     private ?string $mbid = null;
 
     /**
+     * @Column(type="integer", length="5")
+     */
+    private int $length;
+
+    /**
      * @ManyToOne(targetEntity="Disc", inversedBy="songs")
      * @JoinColumn(name="disc_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -149,6 +154,17 @@ class Song implements SongInterface
     public function setCatalog(CatalogInterface $catalog): SongInterface
     {
         $this->catalog = $catalog;
+        return $this;
+    }
+
+    public function getLength(): int
+    {
+        return $this->length;
+    }
+
+    public function setLength(int $length): SongInterface
+    {
+        $this->length = $length;
         return $this;
     }
 }

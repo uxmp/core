@@ -33,4 +33,8 @@ interface SongInterface
     public function getCatalog(): CatalogInterface;
 
     public function setCatalog(CatalogInterface $catalog): SongInterface;
+
+    public function getLength(): int;
+
+    public function setLength(int $length): SongInterface;
 }

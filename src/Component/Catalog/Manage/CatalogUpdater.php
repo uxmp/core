@@ -115,6 +115,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 ->setFilename($audioFile->getFilename())
                 ->setMbid($audioFile->getMbid())
                 ->setCatalog($catalog)
+                ->setLength((int) round($analysisResult['playtime_seconds']))
             ;
 
             $this->songRepository->save($song);
