@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Uxmp\Core\Component\Cli\CatalogAddCommand;
 use Uxmp\Core\Component\Cli\CatalogCleanCommand;
+use Uxmp\Core\Component\Cli\CatalogListCommand;
 use Uxmp\Core\Component\Cli\CatalogUpdateCommand;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -16,6 +17,7 @@ $app = new Ahc\Cli\Application(
 $app->add(new CatalogAddCommand(), 'ca');
 $app->add(new CatalogUpdateCommand(), 'cu');
 $app->add(new CatalogCleanCommand(), 'cc');
+$app->add(new CatalogListCommand(), 'cl');
 
 $logo = <<<LOGO
  _   ___  ___ __ ___  _ __  

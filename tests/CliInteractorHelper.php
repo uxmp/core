@@ -38,4 +38,9 @@ class CliInteractorHelper extends Interactor
             $eol
         );
     }
+
+    public function table(array $data, array $styles = []): Writer
+    {
+        return parent::table($data, $styles);
+    }
 }
