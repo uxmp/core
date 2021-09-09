@@ -46,7 +46,7 @@ final class Init
                     ]
                 );
             },
-            EntityManagerInterface::class => static function (ContainerInterface $c): EntityManagerInterface {
+            EntityManagerInterface::class => static function (): EntityManagerInterface {
                 $paths = [__DIR__ . '/../Orm/Model/'];
                 $isDevMode = true;
 
