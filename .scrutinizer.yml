@@ -11,22 +11,18 @@ build:
                         file: build/coverage-clover.xml
                         format: clover
 filter:
-    excluded_paths:
-        - 'vendor/*'
-        - '.github/*'
-        - 'tests/*'
-        - '.phpstorm.meta.php'
-    paths: {  }
+    dependency_paths:
+        - 'vendor/'
+    paths:
+        - 'src/'
 tools:
     php_mess_detector:
         enabled: true
         filter:
-            excluded_paths:
-                - 'vendor/*'
-                - '.github/*'
-                - 'tests/*'
-                - '.phpstorm.meta.php'
-            paths: {  }
+            dependency_paths:
+                - 'vendor/'
+            paths:
+                - 'src/'
     php_code_sniffer:
         enabled: false
     php_pdepend:
@@ -36,28 +32,19 @@ tools:
             - php
         excluded_dirs: {  }
         filter:
-            excluded_paths:
-                - 'vendor/*'
-                - '.github/*'
-                - 'tests/*'
-                - '.phpstorm.meta.php'
-            paths: {  }
+            dependency_paths:
+                - 'vendor/'
+            paths:
+                - 'src/'
     php_analyzer:
         enabled: true
         extensions:
             - php
-        dependency_paths:
-            - 'vendor/*'
-            - '.github/*'
-            - 'tests/*'
-            - '.phpstorm.meta.php'
         filter:
-            excluded_paths:
-                - 'vendor/*'
-                - '.github/*'
-                - 'tests/*'
-                - '.phpstorm.meta.php'
-            paths: {  }
+            dependency_paths:
+                - 'vendor/'
+            paths:
+                - 'src/'
         path_configs: {  }
     php_changetracking:
         enabled: true
@@ -67,26 +54,21 @@ tools:
             - '\badd(?:s|ed)?\b'
             - '\bimplement(?:s|ed)?\b'
         filter:
-            excluded_paths:
-                - 'vendor/*'
-                - '.github/*'
-                - 'tests/*'
-                - '.phpstorm.meta.php'
-            paths: {  }
+            dependency_paths:
+                - 'vendor/'
+            paths:
+                - 'src/'
     php_loc:
         enabled: true
         excluded_dirs:
             - 'vendor/*'
-            - '.github/*'
             - 'tests/*'
             - '.phpstorm.meta.php'
     php_cpd:
         enabled: true
         excluded_dirs: {  }
         filter:
-            excluded_paths:
-                - 'vendor/*'
-                - 'tests/*'
-                - '.github/*'
-                - '.phpstorm.meta.php'
-            paths: {  }
+            dependency_paths:
+                - 'vendor/'
+            paths:
+                - 'src/'
