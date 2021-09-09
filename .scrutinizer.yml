@@ -15,6 +15,7 @@ filter:
         - 'vendor/*'
         - '.github/*'
         - 'tests/*'
+        - '.phpstorm.meta.php'
     paths: {  }
 tools:
     php_mess_detector:
@@ -24,6 +25,7 @@ tools:
                 - 'vendor/*'
                 - '.github/*'
                 - 'tests/*'
+                - '.phpstorm.meta.php'
             paths: {  }
     php_code_sniffer:
         enabled: false
@@ -38,6 +40,7 @@ tools:
                 - 'vendor/*'
                 - '.github/*'
                 - 'tests/*'
+        - '.phpstorm.meta.php'
             paths: {  }
     php_analyzer:
         enabled: true
@@ -47,11 +50,13 @@ tools:
             - 'vendor/*'
             - '.github/*'
             - 'tests/*'
+            - '.phpstorm.meta.php'
         filter:
             excluded_paths:
                 - 'vendor/*'
                 - '.github/*'
                 - 'tests/*'
+                - '.phpstorm.meta.php'
             paths: {  }
         path_configs: {  }
     php_changetracking:
@@ -66,6 +71,7 @@ tools:
                 - 'vendor/*'
                 - '.github/*'
                 - 'tests/*'
+                - '.phpstorm.meta.php'
             paths: {  }
     php_loc:
         enabled: true
@@ -73,6 +79,7 @@ tools:
             - 'vendor/*'
             - '.github/*'
             - 'tests/*'
+            - '.phpstorm.meta.php'
     php_cpd:
         enabled: true
         excluded_dirs: {  }
@@ -81,4 +88,5 @@ tools:
                 - 'vendor/*'
                 - 'tests/*'
                 - '.github/*'
+                - '.phpstorm.meta.php'
             paths: {  }
