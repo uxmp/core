@@ -11,16 +11,12 @@ build:
                         file: build/coverage-clover.xml
                         format: clover
 filter:
-    dependency_paths:
-        - 'vendor/'
     paths:
         - 'src/'
 tools:
     php_mess_detector:
         enabled: true
         filter:
-            dependency_paths:
-                - 'vendor/'
             paths:
                 - 'src/'
     php_code_sniffer:
@@ -32,8 +28,6 @@ tools:
             - php
         excluded_dirs: {  }
         filter:
-            dependency_paths:
-                - 'vendor/'
             paths:
                 - 'src/'
     php_analyzer:
@@ -41,8 +35,6 @@ tools:
         extensions:
             - php
         filter:
-            dependency_paths:
-                - 'vendor/'
             paths:
                 - 'src/'
         path_configs: {  }
@@ -54,8 +46,6 @@ tools:
             - '\badd(?:s|ed)?\b'
             - '\bimplement(?:s|ed)?\b'
         filter:
-            dependency_paths:
-                - 'vendor/'
             paths:
                 - 'src/'
     php_loc:
@@ -68,7 +58,5 @@ tools:
         enabled: true
         excluded_dirs: {  }
         filter:
-            dependency_paths:
-                - 'vendor/'
             paths:
                 - 'src/'
