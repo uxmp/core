@@ -40,7 +40,7 @@ tools:
                 - 'vendor/*'
                 - '.github/*'
                 - 'tests/*'
-        - '.phpstorm.meta.php'
+                - '.phpstorm.meta.php'
             paths: {  }
     php_analyzer:
         enabled: true
