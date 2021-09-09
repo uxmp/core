@@ -13,6 +13,7 @@ use Uxmp\Core\Orm\Model\UserInterface;
  * @extends EntityRepository<UserInterface>
  *
  * @method null|UserInterface findOneBy(mixed[] $criteria)
+ * @method null|UserInterface find(mixed $id)
  */
 final class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
