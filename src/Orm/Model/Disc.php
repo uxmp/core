@@ -36,6 +36,11 @@ class Disc implements DiscInterface
     private ?string $mbid = null;
 
     /**
+     * @Column(type="integer", length="6")
+     */
+    private int $length = 0;
+
+    /**
      * @ManyToOne(targetEntity="Album", inversedBy="discs")
      * @JoinColumn(name="album_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -105,6 +110,17 @@ class Disc implements DiscInterface
     public function setAlbum(AlbumInterface $album): DiscInterface
     {
         $this->album = $album;
+        return $this;
+    }
+
+    public function getLength(): int
+    {
+        return $this->length;
+    }
+
+    public function setLength(int $length): DiscInterface
+    {
+        $this->length = $length;
         return $this;
     }
 }

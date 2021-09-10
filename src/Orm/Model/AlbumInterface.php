@@ -28,4 +28,6 @@ interface AlbumInterface
     public function getCatalog(): CatalogInterface;
 
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;
+
+    public function getLength(): int;
 }

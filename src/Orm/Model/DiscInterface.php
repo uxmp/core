@@ -26,4 +26,8 @@ interface DiscInterface
     public function getAlbum(): AlbumInterface;
 
     public function setAlbum(AlbumInterface $album): DiscInterface;
+
+    public function getLength(): int;
+
+    public function setLength(int $length): DiscInterface;
 }

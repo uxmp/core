@@ -55,7 +55,7 @@ class Song implements SongInterface
     /**
      * @Column(type="integer", length="5")
      */
-    private int $length;
+    private int $length = 0;
 
     /**
      * @ManyToOne(targetEntity="Disc", inversedBy="songs")

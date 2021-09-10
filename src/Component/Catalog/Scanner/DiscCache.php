@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Scanner;
 
+use Psr\Container\ContainerInterface;
+use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
+use Uxmp\Core\Component\Disc\DiscLengthUpdaterInterface;
+use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
@@ -16,7 +20,8 @@ final class DiscCache implements DiscCacheInterface
 
     public function __construct(
         private DiscRepositoryInterface $discRepository,
-        private AlbumCacheInterface $albumCache
+        private AlbumCacheInterface $albumCache,
+        private EventHandlerInterface $eventHandler
     ) {
     }
 
@@ -44,6 +49,12 @@ final class DiscCache implements DiscCacheInterface
         } else {
             $this->albumCache->retrieve($catalog, $audioFile, $analysisResult);
         }
+
+        $this->eventHandler->fire(
+            static function (ContainerInterface $c) use ($disc): void {
+                $c->get(DiscLengthUpdaterInterface::class)->update($disc);
+            }
+        );
 
         return $disc;
     }

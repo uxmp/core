@@ -123,4 +123,14 @@ class Album implements AlbumInterface
         $this->catalog = $catalog;
         return $this;
     }
+
+    public function getLength(): int
+    {
+        return array_sum(
+            array_map(
+                fn (DiscInterface $disc): int => $disc->getLength(),
+                $this->discs->toArray()
+            )
+        );
+    }
 }

@@ -42,12 +42,6 @@ final class AlbumCache implements AlbumCacheInterface
                     ->setCatalog($catalog)
                 ;
                 $this->albumRepository->save($album);
-
-                $this->eventHandler->fire(
-                    static function (ContainerInterface $c) use ($album, $analysisResult): void {
-                        $c->get(AlbumCoverUpdaterInterface::class)->update($album, $analysisResult);
-                    }
-                );
             }
             $this->eventHandler->fire(
                 static function (ContainerInterface $c) use ($album, $analysisResult): void {
