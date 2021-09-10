@@ -11,6 +11,7 @@ use Tuupola\Middleware\JwtAuthentication;
 use Uxmp\Core\Api\Album\AlbumApplication;
 use Uxmp\Core\Api\Album\AlbumListApplication;
 use Uxmp\Core\Api\Art\ArtApplication;
+use Uxmp\Core\Api\Artist\ArtistApplication;
 use Uxmp\Core\Api\Artist\ArtistListApplication;
 use Uxmp\Core\Api\Playback\PlaySongApplication;
 use Uxmp\Core\Api\Common\LoginApplication;
@@ -63,6 +64,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->post('/common/logout', LogoutApplication::class);
     $app->get('/play/{id}', PlaySongApplication::class);
     $app->get('/artists', ArtistListApplication::class);
+    $app->get('/artist/{artistId}', ArtistApplication::class);
     $app->get('/albums', AlbumListApplication::class);
     $app->get('/art/{type}/{id}', ArtApplication::class);
     $app->get('/album/{albumId}', AlbumApplication::class);
