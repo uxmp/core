@@ -166,9 +166,11 @@ class AlbumApplicationTest extends MockeryTestCase
                     'artistId' => $artistId,
                     'albumId' => $albumId,
                     'length' => $length,
-                ]]
+                ]],
+                'length' => $length,
             ]],
             'cover' => $cover,
+            'length' => $length,
         ];
 
         $response->shouldReceive('withHeader')

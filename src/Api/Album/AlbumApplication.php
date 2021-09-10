@@ -67,6 +67,7 @@ final class AlbumApplication extends AbstractApiApplication
             $discsData[] = [
                 'id' => $disc->getId(),
                 'songs' => $songData,
+                'length' => array_sum(array_map(fn (array $data): int => $data['length'], $songData))
             ];
         }
 
@@ -79,6 +80,7 @@ final class AlbumApplication extends AbstractApiApplication
                 'artistName' => $artistName,
                 'discs' => $discsData,
                 'cover' => $cover,
+                'length' => array_sum(array_map(fn (array $data): int => $data['length'], $discsData))
             ]
         );
     }

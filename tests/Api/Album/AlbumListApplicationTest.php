@@ -91,6 +91,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             'artistName' => $artistName,
             'name' => $albumName,
             'cover' => sprintf($baseUrl . '/art/album/%s', $albumMbId),
+            'length' => 0,
         ]];
 
         $response->shouldReceive('getBody')
@@ -111,6 +112,87 @@ class AlbumListApplicationTest extends MockeryTestCase
         $this->assertSame(
             $response,
             call_user_func($this->subject, $request, $response, [])
+        );
+    }
+
+    public function testRunReturnsListWithCertainArtist(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
+
+        $albumId = 666;
+        $artistId = 42;
+        $albumMbId = 'some-mbid';
+        $albumName = 'some-album-name';
+        $artistName = 'some-artist-name';
+        $baseUrl = 'some-base-url';
+
+        $this->config->shouldReceive('getBaseUrl')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($baseUrl);
+
+        $this->albumRepository->shouldReceive('findBy')
+            ->with(['artist_id' => $artistId], ['title' => 'ASC'])
+            ->once()
+            ->andReturn([$album]);
+
+        $album->shouldReceive('getArtist')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($artist);
+        $album->shouldReceive('getId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($albumId);
+        $album->shouldReceive('getTitle')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($albumName);
+        $album->shouldReceive('getMbid')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($albumMbId);
+
+        $artist->shouldReceive('getId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($artistId);
+        $artist->shouldReceive('getTitle')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($artistName);
+
+        $result = [[
+            'albumId' => $albumId,
+            'artistId' => $artistId,
+            'artistName' => $artistName,
+            'name' => $albumName,
+            'cover' => sprintf($baseUrl . '/art/album/%s', $albumMbId),
+            'length' => 0,
+        ]];
+
+        $response->shouldReceive('getBody')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($stream);
+        $response->shouldReceive('withHeader')
+            ->with('Content-Type', 'application/json')
+            ->once()
+            ->andReturnSelf();
+
+        $stream->shouldReceive('write')
+            ->with(
+                json_encode(['items' => $result], JSON_PRETTY_PRINT)
+            )
+            ->once();
+
+        $this->assertSame(
+            $response,
+            call_user_func($this->subject, $request, $response, ['artistId' => (string) $artistId])
         );
     }
 }

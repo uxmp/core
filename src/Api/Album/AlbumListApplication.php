@@ -23,10 +23,17 @@ final class AlbumListApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
+        $condition = [];
+        $artistId = $args['artistId'] ?? null;
+
+        if ($artistId !== null) {
+            $condition['artist_id'] = (int) $artistId;
+        }
+
         $list = [];
         $baseUrl = $this->config->getBaseUrl();
 
-        foreach ($this->albumRepository->findBy([], ['title' => 'ASC']) as $album) {
+        foreach ($this->albumRepository->findBy($condition, ['title' => 'ASC']) as $album) {
             $artist = $album->getArtist();
 
             $list[] = [
@@ -34,7 +41,8 @@ final class AlbumListApplication extends AbstractApiApplication
                 'artistId' => $artist->getId(),
                 'artistName' => $artist->getTitle(),
                 'name' => $album->getTitle(),
-                'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid())
+                'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid()),
+                'length' => 0
             ];
         }
 
