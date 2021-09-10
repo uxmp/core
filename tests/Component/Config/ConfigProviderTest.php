@@ -51,4 +51,52 @@ class ConfigProviderTest extends MockeryTestCase
             ['getAssetPath', 'ASSET_PATH', '', 'some-asset-path'],
         ];
     }
+
+    /**
+     * @dataProvider baseUrlDataProvider
+     */
+    public function testGetBaseUrlReturnsUrl(
+        string $basePath,
+        string $hostName,
+        int $port,
+        int $ssl,
+        string $url
+    ): void {
+        $_ENV['HOSTNAME'] = $hostName;
+        $_ENV['PORT'] = (string) $port;
+        $_ENV['SSL'] = $ssl;
+        $_ENV['API_BASE_PATH'] = $basePath;
+
+        $this->assertSame(
+            $url,
+            $this->subject->getBaseUrl()
+        );
+    }
+
+    public function baseUrlDataProvider(): array
+    {
+        return [
+            [
+                '/some-base-path',
+                'some-host-name',
+                80,
+                1,
+                'https://some-host-name/some-base-path'
+            ],
+            [
+                '',
+                'some-host-name',
+                666,
+                0,
+                'http://some-host-name:666'
+            ],
+            [
+                '/api',
+                'some-host-name',
+                443,
+                1,
+                'https://some-host-name/api'
+            ],
+        ];
+    }
 }
