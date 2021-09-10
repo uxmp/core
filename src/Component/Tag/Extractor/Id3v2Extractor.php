@@ -8,11 +8,13 @@ use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 
 final class Id3v2Extractor implements ExtractorInterface
 {
+    private const META_DATA_KEY = 'id3v2';
+
     public function extract(
         array $data,
         AudioFileInterface $audioFile
     ): void {
-        $tags = $data['id3v2'];
+        $tags = $data[self::META_DATA_KEY];
 
         $audioFile
             ->setMbid($tags['text']['MusicBrainz Release Track Id'] ?? '')
@@ -29,6 +31,6 @@ final class Id3v2Extractor implements ExtractorInterface
 
     public function applies(array $data): bool
     {
-        return array_key_exists('id3v2', $data);
+        return array_key_exists(self::META_DATA_KEY, $data);
     }
 }
