@@ -8,11 +8,13 @@ use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 
 final class VorbisExtractor implements ExtractorInterface
 {
+    private const META_DATA_KEY = 'vorbiscomment';
+
     public function extract(
         array $data,
         AudioFileInterface $audioFile
     ): void {
-        $tags = $data['vorbiscomment'];
+        $tags = $data[static::META_DATA_KEY];
 
         $audioFile
             ->setMbid(current($tags['musicbrainz_trackid']))
@@ -29,6 +31,6 @@ final class VorbisExtractor implements ExtractorInterface
 
     public function applies(array $data): bool
     {
-        return array_key_exists('vorbiscomment', $data);
+        return array_key_exists(static::META_DATA_KEY, $data);
     }
 }
