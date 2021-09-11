@@ -11,6 +11,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
+use Uxmp\Core\Api\Lib\SongListItemInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
@@ -24,16 +26,20 @@ class AlbumApplicationTest extends MockeryTestCase
 
     private MockInterface $config;
 
+    private MockInterface $resultItemFactory;
+
     private AlbumApplication $subject;
 
     public function setUp(): void
     {
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
         $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->resultItemFactory = Mockery::mock(ResultItemFactoryInterface::class);
 
         $this->subject = new AlbumApplication(
             $this->albumRepository,
-            $this->config
+            $this->config,
+            $this->resultItemFactory
         );
     }
 
@@ -67,19 +73,28 @@ class AlbumApplicationTest extends MockeryTestCase
         $song = Mockery::mock(SongInterface::class);
         $artist = Mockery::mock(ArtistInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
+        $songListItem = Mockery::mock(SongListItemInterface::class);
 
         $albumId = 666;
-        $songId = 42;
-        $songTitle = 'some-song-title';
         $artistTitle = 'some-artist-title';
         $albumTitle = 'some-album-title';
-        $trackNumber = 33;
         $albumMbId = 'some-album-mbid';
         $artistId = 21;
         $discId = 84;
         $baseUrl = 'some-base-url';
         $cover = sprintf('%s/art/album/%s', $baseUrl, $albumMbId);
         $length = 123;
+        $songResult = 'some-song-result';
+
+        $this->resultItemFactory->shouldReceive('createSongListItem')
+            ->with($song, $album)
+            ->once()
+            ->andReturn($songListItem);
+
+        $songListItem->shouldReceive('jsonSerialize')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($songResult);
 
         $this->config->shouldReceive('getBaseUrl')
             ->withNoArgs()
@@ -99,23 +114,6 @@ class AlbumApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($artist);
-
-        $song->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($songId);
-        $song->shouldReceive('getTitle')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($songTitle);
-        $song->shouldReceive('getTrackNumber')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($trackNumber);
-        $song->shouldReceive('getLength')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($length);
 
         $album->shouldReceive('getTitle')
             ->withNoArgs()
@@ -138,6 +136,10 @@ class AlbumApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([$song]);
+        $disc->shouldReceive('getLength')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($length);
 
         $artist->shouldReceive('getTitle')
             ->withNoArgs()
@@ -155,18 +157,7 @@ class AlbumApplicationTest extends MockeryTestCase
             'artistName' => $artistTitle,
             'discs' => [[
                 'id' => $discId,
-                'songs' => [[
-                    'id' => $songId,
-                    'name' => $songTitle,
-                    'artistName' => $artistTitle,
-                    'albumName' => $albumTitle,
-                    'trackNumber' => $trackNumber,
-                    'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
-                    'cover' => $cover,
-                    'artistId' => $artistId,
-                    'albumId' => $albumId,
-                    'length' => $length,
-                ]],
+                'songs' => [$songResult],
                 'length' => $length,
             ]],
             'cover' => $cover,

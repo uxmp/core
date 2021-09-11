@@ -7,12 +7,14 @@ namespace Uxmp\Core\Api\Artist;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtistListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository
+        private ArtistRepositoryInterface $artistRepository,
+        private ConfigProviderInterface $config
     ) {
     }
 
@@ -27,6 +29,7 @@ final class ArtistListApplication extends AbstractApiApplication
             $list[] = [
                 'id' => $artist->getId(),
                 'name' => $artist->getTitle(),
+                'cover' => sprintf('%s/art/artist/%s', $this->config->getBaseUrl(), $artist->getMbid()),
             ];
         }
 

@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
@@ -15,7 +16,8 @@ final class AlbumApplication extends AbstractApiApplication
 {
     public function __construct(
         private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config
+        private ConfigProviderInterface $config,
+        private ResultItemFactoryInterface $resultItemFactory
     ) {
     }
 
@@ -33,53 +35,35 @@ final class AlbumApplication extends AbstractApiApplication
         }
 
         $discs = $album->getDiscs();
-        $discsData = [];
-
         $artist = $album->getArtist();
-        $albumId = $album->getId();
-        $albumName = $album->getTitle();
-        $artistId = $artist->getId();
-        $artistName = $artist->getTitle();
-
-        $baseUrl = $this->config->getBaseUrl();
-        $cover = sprintf('%s/art/album/%s', $baseUrl, $album->getMbid());
+        $discsData = [];
 
         foreach ($discs as $disc) {
             $songData = [];
 
             foreach ($disc->getSongs() as $song) {
-                $songId = $song->getId();
-
-                $songData[] = [
-                    'id' => $songId,
-                    'name' => $song->getTitle(),
-                    'artistName' => $artistName,
-                    'albumName' => $albumName,
-                    'trackNumber' => $song->getTrackNumber(),
-                    'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
-                    'cover' => $cover,
-                    'artistId' => $artistId,
-                    'albumId' => $albumId,
-                    'length' => $song->getLength(),
-                ];
+                $songData[] = $this->resultItemFactory->createSongListItem(
+                    $song,
+                    $album
+                );
             }
 
             $discsData[] = [
                 'id' => $disc->getId(),
                 'songs' => $songData,
-                'length' => array_sum(array_map(fn (array $data): int => $data['length'], $songData))
+                'length' => $disc->getLength(),
             ];
         }
 
         return $this->asJson(
             $response,
             [
-                'id' => $albumId,
-                'name' => $albumName,
-                'artistId' => $artistId,
-                'artistName' => $artistName,
+                'id' => $album->getId(),
+                'name' => $album->getTitle(),
+                'artistId' => $artist->getId(),
+                'artistName' => $artist->getTitle(),
                 'discs' => $discsData,
-                'cover' => $cover,
+                'cover' => sprintf('%s/art/album/%s', $this->config->getBaseUrl(), $album->getMbid()),
                 'length' => array_sum(array_map(fn (array $data): int => $data['length'], $discsData))
             ]
         );

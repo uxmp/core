@@ -13,6 +13,7 @@ use Uxmp\Core\Api\Album\AlbumListApplication;
 use Uxmp\Core\Api\Art\ArtApplication;
 use Uxmp\Core\Api\Artist\ArtistApplication;
 use Uxmp\Core\Api\Artist\ArtistListApplication;
+use Uxmp\Core\Api\Artist\ArtistSongsApplication;
 use Uxmp\Core\Api\Playback\PlaySongApplication;
 use Uxmp\Core\Api\Common\LoginApplication;
 use Uxmp\Core\Api\Common\LogoutApplication;
@@ -65,6 +66,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/play/{id}', PlaySongApplication::class);
     $app->get('/artists', ArtistListApplication::class);
     $app->get('/artist/{artistId}', ArtistApplication::class);
+    $app->get('/artist/{artistId}/songs', ArtistSongsApplication::class);
     $app->get('/albums[/{artistId}]', AlbumListApplication::class);
     $app->get('/art/{type}/{id}', ArtApplication::class);
     $app->get('/album/{albumId}', AlbumApplication::class);

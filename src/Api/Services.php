@@ -13,10 +13,5 @@ use Uxmp\Core\Api\Common\LoginApplication;
 use function DI\autowire;
 
 return [
-    AlbumListApplication::class => autowire(),
-    ArtistListApplication::class => autowire(),
-    ArtistApplication::class => autowire(),
-    PlaySongApplication::class => autowire(),
-    ArtApplication::class => autowire(),
-    LoginApplication::class => autowire(),
+    Lib\ResultItemFactoryInterface::class => autowire(Lib\ResultItemFactory::class),
 ];

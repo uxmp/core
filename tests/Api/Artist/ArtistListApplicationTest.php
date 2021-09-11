@@ -10,6 +10,7 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
@@ -17,14 +18,18 @@ class ArtistListApplicationTest extends MockeryTestCase
 {
     private MockInterface $artistRepository;
 
+    private MockInterface $config;
+
     private ArtistListApplication $subject;
 
     public function setUp(): void
     {
         $this->artistRepository = Mockery::mock(ArtistRepositoryInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new ArtistListApplication(
-            $this->artistRepository
+            $this->artistRepository,
+            $this->config
         );
     }
 
@@ -37,6 +42,8 @@ class ArtistListApplicationTest extends MockeryTestCase
 
         $artistId = 666;
         $artistName = 'some-name';
+        $mbid = 'some-mbid';
+        $baseUrl = 'some-base-url';
 
         $artist->shouldReceive('getId')
             ->withNoArgs()
@@ -46,6 +53,15 @@ class ArtistListApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($artistName);
+        $artist->shouldReceive('getMbid')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($mbid);
+
+        $this->config->shouldReceive('getBaseUrl')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($baseUrl);
 
         $this->artistRepository->shouldReceive('findBy')
             ->with([], ['title' => 'ASC'])
@@ -64,7 +80,11 @@ class ArtistListApplicationTest extends MockeryTestCase
         $stream->shouldReceive('write')
             ->with(
                 json_encode(
-                    ['items' => [['id' => $artistId, 'name' => $artistName]]],
+                    ['items' => [[
+                        'id' => $artistId,
+                        'name' => $artistName,
+                        'cover' => sprintf('%s/art/artist/%s', $baseUrl, $mbid)
+                    ]]],
                     JSON_PRETTY_PRINT
                 )
             )
