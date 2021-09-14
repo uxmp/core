@@ -8,14 +8,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
-final class AlbumApplication extends AbstractApiApplication
+final class AlbumSongsApplication extends AbstractApiApplication
 {
     public function __construct(
         private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config,
+        private ResultItemFactoryInterface $resultItemFactory
     ) {
     }
 
@@ -32,18 +32,28 @@ final class AlbumApplication extends AbstractApiApplication
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
 
-        $artist = $album->getArtist();
+        $discsData = [];
+
+        foreach ($album->getDiscs() as $disc) {
+            $songData = [];
+
+            foreach ($disc->getSongs() as $song) {
+                $songData[] = $this->resultItemFactory->createSongListItem(
+                    $song,
+                    $album
+                );
+            }
+
+            $discsData[] = [
+                'id' => $disc->getId(),
+                'songs' => $songData,
+                'length' => $disc->getLength(),
+            ];
+        }
 
         return $this->asJson(
             $response,
-            [
-                'id' => $album->getId(),
-                'name' => $album->getTitle(),
-                'artistId' => $artist->getId(),
-                'artistName' => $artist->getTitle(),
-                'cover' => sprintf('%s/art/album/%s', $this->config->getBaseUrl(), $album->getMbid()),
-                'length' => $album->getLength()
-            ]
+            ['items' => $discsData]
         );
     }
 }

@@ -91,7 +91,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             ->andReturn($artistName);
 
         $result = [[
-            'albumId' => $albumId,
+            'id' => $albumId,
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,
@@ -177,7 +177,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             ->andReturn($artistName);
 
         $result = [[
-            'albumId' => $albumId,
+            'id' => $albumId,
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,

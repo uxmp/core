@@ -10,6 +10,7 @@ use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Uxmp\Core\Api\Album\AlbumApplication;
 use Uxmp\Core\Api\Album\AlbumListApplication;
+use Uxmp\Core\Api\Album\AlbumSongsApplication;
 use Uxmp\Core\Api\Art\ArtApplication;
 use Uxmp\Core\Api\Artist\ArtistApplication;
 use Uxmp\Core\Api\Artist\ArtistListApplication;
@@ -70,6 +71,7 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/albums[/{artistId}]', AlbumListApplication::class);
     $app->get('/art/{type}/{id}', ArtApplication::class);
     $app->get('/album/{albumId}', AlbumApplication::class);
+    $app->get('/album/{albumId}/songs', AlbumSongsApplication::class);
     $app->get('/random/songs[/{limit}]', RandomSongsApplication::class);
 
     $app->run();

@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Orm\Model\DiscInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumListApplication extends AbstractApiApplication
@@ -38,7 +37,7 @@ final class AlbumListApplication extends AbstractApiApplication
             $artist = $album->getArtist();
 
             $list[] = [
-                'albumId' => $album->getId(),
+                'id' => $album->getId(),
                 'artistId' => $artist->getId(),
                 'artistName' => $artist->getTitle(),
                 'name' => $album->getTitle(),
