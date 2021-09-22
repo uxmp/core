@@ -15,6 +15,8 @@ interface ArtistInterface
      */
     public function getAlbums(): iterable;
 
+    public function addAlbum(AlbumInterface $album): ArtistInterface;
+
     public function getMbid(): ?string;
 
     public function setMbid(?string $mbid): ArtistInterface;

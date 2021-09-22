@@ -24,11 +24,17 @@ final class ArtApplication extends AbstractApiApplication
         array $args
     ): ResponseInterface {
         $albumId = $args['id'];
+        $type = $args['type'];
+
+        $subPath = match ($type) {
+            'album' => 'album',
+            default => 'artist',
+        };
 
         $filename = $albumId . '.jpg';
         $path = sprintf(
             '%s/%s',
-            realpath($this->config->getAssetPath() . '/img/album'),
+            realpath($this->config->getAssetPath() . '/img/' . $subPath),
             $filename
         );
 

@@ -11,6 +11,8 @@ interface DiscInterface
      */
     public function getSongs(): iterable;
 
+    public function addSong(SongInterface $song): DiscInterface;
+
     public function getMbid(): ?string;
 
     public function setMbid(?string $mbid): DiscInterface;

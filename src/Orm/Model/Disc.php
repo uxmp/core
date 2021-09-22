@@ -49,9 +49,9 @@ class Disc implements DiscInterface
     /**
      * @OneToMany(targetEntity="Song", mappedBy="disc", cascade={"ALL"}, indexBy="id")
      *
-     * @var iterable<SongInterface>
+     * @var ArrayCollection<int, SongInterface>
      */
-    private iterable $songs;
+    private ArrayCollection $songs;
 
     #[Pure]
     public function __construct()
@@ -67,6 +67,12 @@ class Disc implements DiscInterface
     public function getSongs(): iterable
     {
         return $this->songs;
+    }
+
+    public function addSong(SongInterface $song): DiscInterface
+    {
+        $this->songs->add($song);
+        return $this;
     }
 
     public function getMbid(): ?string

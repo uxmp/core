@@ -35,6 +35,7 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Session/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Song/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Disc/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Artist/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),

@@ -23,6 +23,7 @@
         "symfony/cache": "^5.3",
         "tuupola/cors-middleware": "^1.2",
         "tuupola/slim-jwt-auth": "^3.5",
+        "tzsk/collage": "^5.1",
         "usox/json-schema-api": "^0.4.0",
         "vlucas/phpdotenv": "^5.3"
     },

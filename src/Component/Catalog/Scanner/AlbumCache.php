@@ -35,13 +35,17 @@ final class AlbumCache implements AlbumCacheInterface
         if ($album === null) {
             $album = $this->albumRepository->findByMbId($albumMbid);
             if ($album === null) {
+                $artist = $this->artistCache->retrieve($audioFile);
+
                 $album = $this->albumRepository->prototype()
                     ->setTitle($audioFile->getAlbumTitle())
-                    ->setArtist($this->artistCache->retrieve($audioFile))
+                    ->setArtist($artist)
                     ->setMbid($albumMbid)
                     ->setCatalog($catalog)
                 ;
                 $this->albumRepository->save($album);
+
+                $artist->addAlbum($album);
             }
             $this->eventHandler->fire(
                 static function (ContainerInterface $c) use ($album, $analysisResult): void {

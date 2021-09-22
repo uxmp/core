@@ -33,9 +33,9 @@ class Artist implements ArtistInterface
     /**
      * @OneToMany(targetEntity="Album", mappedBy="artist", cascade={"ALL"}, indexBy="id")
      *
-     * @var iterable<AlbumInterface>
+     * @var ArrayCollection<int, AlbumInterface>
      */
-    private iterable $albums;
+    private ArrayCollection $albums;
 
     #[Pure]
     public function __construct()
@@ -62,6 +62,12 @@ class Artist implements ArtistInterface
     public function getAlbums(): iterable
     {
         return $this->albums;
+    }
+
+    public function addAlbum(AlbumInterface $album): ArtistInterface
+    {
+        $this->albums->add($album);
+        return $this;
     }
 
     public function getMbid(): ?string

@@ -119,6 +119,8 @@ final class CatalogUpdater implements CatalogUpdaterInterface
             ;
 
             $this->songRepository->save($song);
+
+            $disc->addSong($song);
         }
 
         if ($skipped !== []) {
@@ -128,6 +130,8 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 $io->error($error, true);
             }
         }
+
+        $io->eol();
     }
 
     /**

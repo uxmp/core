@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Album;
 
+use Uxmp\Core\Component\Artist\ArtistCoverUpdaterInteface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 
 final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config
+        private ConfigProviderInterface $config,
+        private ArtistCoverUpdaterInteface $artistCoverUpdater
     ) {
     }
 
@@ -38,6 +40,8 @@ final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
                 }
 
                 file_put_contents($filename. '.' . $extension, $image['data']);
+
+                $this->artistCoverUpdater->update($album->getArtist());
             }
         }
     }

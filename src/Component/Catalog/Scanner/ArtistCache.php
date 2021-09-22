@@ -14,7 +14,7 @@ final class ArtistCache implements ArtistCacheInterface
     private array $cache = [];
 
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository
+        private ArtistRepositoryInterface $artistRepository,
     ) {
     }
 
