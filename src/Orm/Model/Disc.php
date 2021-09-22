@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -49,9 +50,9 @@ class Disc implements DiscInterface
     /**
      * @OneToMany(targetEntity="Song", mappedBy="disc", cascade={"ALL"}, indexBy="id")
      *
-     * @var ArrayCollection<int, SongInterface>
+     * @var Collection<int, SongInterface>
      */
-    private ArrayCollection $songs;
+    private Collection $songs;
 
     #[Pure]
     public function __construct()

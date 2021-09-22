@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
 
 /**
@@ -33,9 +34,9 @@ class Artist implements ArtistInterface
     /**
      * @OneToMany(targetEntity="Album", mappedBy="artist", cascade={"ALL"}, indexBy="id")
      *
-     * @var ArrayCollection<int, AlbumInterface>
+     * @var Collection<int, AlbumInterface>
      */
-    private ArrayCollection $albums;
+    private Collection $albums;
 
     #[Pure]
     public function __construct()
