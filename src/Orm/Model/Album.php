@@ -36,6 +36,11 @@ class Album implements AlbumInterface
     private int $catalog_id;
 
     /**
+     * @Column(type="datetime")
+     */
+    private \DateTimeInterface $last_modified;
+
+    /**
      * @Column(type="string", length="32", nullable="true", unique=true)
      */
     private ?string $mbid = null;
@@ -132,5 +137,16 @@ class Album implements AlbumInterface
                 $this->discs->toArray()
             )
         );
+    }
+
+    public function getLastModified(): \DateTimeInterface
+    {
+        return $this->last_modified;
+    }
+
+    public function setLastModified(\DateTimeInterface $last_modified): AlbumInterface
+    {
+        $this->last_modified = $last_modified;
+        return $this;
     }
 }

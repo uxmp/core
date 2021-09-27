@@ -42,6 +42,7 @@ final class AlbumCache implements AlbumCacheInterface
                     ->setArtist($artist)
                     ->setMbid($albumMbid)
                     ->setCatalog($catalog)
+                    ->setLastModified(new \DateTime())
                 ;
                 $this->albumRepository->save($album);
 

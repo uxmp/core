@@ -30,4 +30,8 @@ interface AlbumInterface
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;
 
     public function getLength(): int;
+
+    public function getLastModified(): \DateTimeInterface;
+
+    public function setLastModified(\DateTimeInterface $last_modified): AlbumInterface;
 }
