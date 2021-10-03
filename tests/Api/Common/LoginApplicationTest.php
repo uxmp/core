@@ -42,8 +42,23 @@ class LoginApplicationTest extends MockeryTestCase
     {
         $request = \Mockery::mock(ServerRequestInterface::class);
         $response = \Mockery::mock(ResponseInterface::class);
+        $stream = \Mockery::mock(StreamInterface::class);
 
-        $this->expectException(\InvalidArgumentException::class);
+        $response->shouldReceive('withHeader')
+            ->with('Content-Type', 'application/json')
+            ->once()
+            ->andReturnSelf();
+        $response->shouldReceive('getBody')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($stream);
+
+        $stream->shouldReceive('write')
+            ->with(json_encode(
+                ['data' => ['msg' => 'Username or password wrong']],
+                JSON_PRETTY_PRINT
+            ))
+            ->once();
 
         $request->shouldReceive('getParsedBody')
             ->withNoArgs()

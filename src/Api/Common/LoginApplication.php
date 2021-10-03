@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Common;
 
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
@@ -35,7 +34,10 @@ final class LoginApplication extends AbstractApiApplication
         $session = $this->sessionManager->login($username, $password);
 
         if ($session === null) {
-            throw new InvalidArgumentException();
+            return $this->asJson(
+                $response,
+                ['data' => ['msg' => 'Username or password wrong']]
+            );
         }
 
         $lifetime = time() + $this->configProvider->getTokenLifetime();
