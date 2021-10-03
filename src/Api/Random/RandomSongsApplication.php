@@ -7,7 +7,7 @@ namespace Uxmp\Core\Api\Random;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class RandomSongsApplication extends AbstractApiApplication
@@ -16,7 +16,7 @@ final class RandomSongsApplication extends AbstractApiApplication
 
     public function __construct(
         private SongRepositoryInterface $songRepository,
-        private ConfigProviderInterface $config
+        private ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 
@@ -26,27 +26,13 @@ final class RandomSongsApplication extends AbstractApiApplication
         array $args
     ): ResponseInterface {
         $list = [];
-        $baseUrl = $this->config->getBaseUrl();
 
         $limit = (int) ($args['limit'] ?? self::DEFAULT_LIMIT);
 
         foreach ($this->songRepository->findAll() as $song) {
             $album = $song->getDisc()->getAlbum();
 
-            $artist = $album->getArtist();
-            $songId = $song->getId();
-
-            $list[] = [
-                'id' => $songId,
-                'name' => $song->getTitle(),
-                'artistName' => $artist->getTitle(),
-                'albumName' => $album->getTitle(),
-                'trackNumber' => $song->getTrackNumber(),
-                'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
-                'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid()),
-                'artistId' => $artist->getId(),
-                'albumId' => $album->getId()
-            ];
+            $list[] = $this->resultItemFactory->createSongListItem($song, $album);
         }
 
         // @todo inefficient, but doctrine doesn't support RAND order natively
