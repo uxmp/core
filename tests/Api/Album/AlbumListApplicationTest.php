@@ -64,22 +64,18 @@ class AlbumListApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($artist);
-        $album->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumId);
         $album->shouldReceive('getTitle')
             ->withNoArgs()
             ->once()
             ->andReturn($albumName);
-        $album->shouldReceive('getMbid')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumMbId);
         $album->shouldReceive('getLength')
             ->withNoArgs()
             ->once()
             ->andReturn($length);
+        $album->shouldReceive('getId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($albumId);
 
         $artist->shouldReceive('getId')
             ->withNoArgs()
@@ -95,7 +91,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,
-            'cover' => sprintf($baseUrl . '/art/album/%s', $albumMbId),
+            'cover' => sprintf($baseUrl . '/art/album/%d', $albumId),
             'length' => $length,
         ]];
 
@@ -158,10 +154,6 @@ class AlbumListApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($albumName);
-        $album->shouldReceive('getMbid')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumMbId);
         $album->shouldReceive('getLength')
             ->withNoArgs()
             ->once()
@@ -181,7 +173,7 @@ class AlbumListApplicationTest extends MockeryTestCase
             'artistId' => $artistId,
             'artistName' => $artistName,
             'name' => $albumName,
-            'cover' => sprintf($baseUrl . '/art/album/%s', $albumMbId),
+            'cover' => sprintf($baseUrl . '/art/album/%d', $albumId),
             'length' => $length,
         ]];
 

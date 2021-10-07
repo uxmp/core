@@ -149,4 +149,16 @@ class Album implements AlbumInterface
         $this->last_modified = $last_modified;
         return $this;
     }
+
+    #[Pure]
+    public function getArtItemType(): string
+    {
+        return 'album';
+    }
+
+    #[Pure]
+    public function getArtItemId(): ?string
+    {
+        return $this->getMbid();
+    }
 }

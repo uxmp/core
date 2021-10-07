@@ -12,6 +12,7 @@ use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
+use Slim\HttpCache\CacheProvider;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminator;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
@@ -36,6 +37,7 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Song/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Disc/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Artist/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Art/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),
@@ -65,6 +67,9 @@ final class Init
                 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
                 $dotenv->load();
                 return $dotenv;
+            },
+            CacheProvider::class => function (): CacheProvider {
+                return new CacheProvider();
             },
         ]);
         $container = $builder->build();

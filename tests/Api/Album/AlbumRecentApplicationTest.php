@@ -66,10 +66,6 @@ class AlbumRecentApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($albumTitle);
-        $album->shouldReceive('getMbid')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($mbid);
         $album->shouldReceive('getLength')
             ->withNoArgs()
             ->once()
@@ -105,7 +101,7 @@ class AlbumRecentApplicationTest extends MockeryTestCase
                     'artistId' => $artistId,
                     'artistName' => $artistTitle,
                     'name' => $albumTitle,
-                    'cover' => sprintf('%s/art/album/%s', $baseUrl, $mbid),
+                    'cover' => sprintf('%s/art/album/%d', $baseUrl, $albumId),
                     'length' => $length
                 ]]], JSON_PRETTY_PRINT),
             )

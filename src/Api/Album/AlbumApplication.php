@@ -37,11 +37,11 @@ final class AlbumApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'id' => $album->getId(),
+                'id' => $albumId,
                 'name' => $album->getTitle(),
                 'artistId' => $artist->getId(),
                 'artistName' => $artist->getTitle(),
-                'cover' => sprintf('%s/art/album/%s', $this->config->getBaseUrl(), $album->getMbid()),
+                'cover' => sprintf('%s/art/album/%d', $this->config->getBaseUrl(), $albumId),
                 'length' => $album->getLength()
             ]
         );

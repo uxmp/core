@@ -44,10 +44,9 @@ class SongListItemTest extends MockeryTestCase
         $artistTitle = 'some-artist-title';
         $albumTitle = 'some-album-title';
         $trackNumber = 33;
-        $albumMbId = 'some-album-mbid';
         $artistId = 21;
         $baseUrl = 'some-base-url';
-        $cover = sprintf('%s/art/album/%s', $baseUrl, $albumMbId);
+        $cover = sprintf('%s/art/album/%d', $baseUrl, $albumId);
         $length = 123;
 
         $this->config->shouldReceive('getBaseUrl')
@@ -85,10 +84,6 @@ class SongListItemTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($albumId);
-        $this->album->shouldReceive('getMbid')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumMbId);
 
         $artist->shouldReceive('getTitle')
             ->withNoArgs()

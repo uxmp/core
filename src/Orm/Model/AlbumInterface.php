@@ -2,7 +2,10 @@
 
 namespace Uxmp\Core\Orm\Model;
 
-interface AlbumInterface
+use Uxmp\Core\Component\Art\CachableArtItemInterface;
+
+interface AlbumInterface extends
+    CachableArtItemInterface
 {
     public function getId(): int;
 

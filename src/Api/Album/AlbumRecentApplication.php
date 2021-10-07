@@ -31,12 +31,14 @@ final class AlbumRecentApplication extends AbstractApiApplication
         foreach ($this->albumRepository->findBy([], ['last_modified' => 'DESC'], static::ALBUM_LIMIT) as $album) {
             $artist = $album->getArtist();
 
+            $albumId = $album->getId();
+
             $list[] = [
-                'id' => $album->getId(),
+                'id' => $albumId,
                 'artistId' => $artist->getId(),
                 'artistName' => $artist->getTitle(),
                 'name' => $album->getTitle(),
-                'cover' => sprintf('%s/art/album/%s', $baseUrl, $album->getMbid()),
+                'cover' => sprintf('%s/art/album/%d', $baseUrl, $albumId),
                 'length' => $album->getLength(),
             ];
         }

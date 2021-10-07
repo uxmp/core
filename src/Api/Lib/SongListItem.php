@@ -20,6 +20,7 @@ final class SongListItem implements SongListItemInterface
     public function jsonSerialize()
     {
         $songId = $this->song->getId();
+        $albumId = $this->album->getId();
         $baseUrl = $this->config->getBaseUrl();
 
         $artist = $this->album->getArtist();
@@ -31,9 +32,9 @@ final class SongListItem implements SongListItemInterface
             'albumName' => $this->album->getTitle(),
             'trackNumber' => $this->song->getTrackNumber(),
             'playUrl' => sprintf('%s/play/%d', $baseUrl, $songId),
-            'cover' => sprintf('%s/art/album/%s', $baseUrl, $this->album->getMbid()),
+            'cover' => sprintf('%s/art/album/%d', $baseUrl, $albumId),
             'artistId' => $artist->getId(),
-            'albumId' => $this->album->getId(),
+            'albumId' => $albumId,
             'length' => $this->song->getLength(),
         ];
     }

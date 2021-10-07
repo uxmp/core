@@ -74,4 +74,9 @@ final class ConfigProvider implements ConfigProviderInterface
             $this->getApiBasePath()
         );
     }
+
+    public function getClientCacheMaxAge(): int
+    {
+        return 86400 * 100;
+    }
 }

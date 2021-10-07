@@ -26,10 +26,12 @@ final class ArtistListApplication extends AbstractApiApplication
         $list = [];
 
         foreach ($this->artistRepository->findBy([], ['title' => 'ASC']) as $artist) {
+            $artistId = $artist->getId();
+
             $list[] = [
-                'id' => $artist->getId(),
+                'id' => $artistId,
                 'name' => $artist->getTitle(),
-                'cover' => sprintf('%s/art/artist/%s', $this->config->getBaseUrl(), $artist->getMbid()),
+                'cover' => sprintf('%s/art/artist/%d', $this->config->getBaseUrl(), $artistId),
             ];
         }
 

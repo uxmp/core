@@ -81,4 +81,21 @@ class Artist implements ArtistInterface
         $this->mbid = $mbid;
         return $this;
     }
+
+    #[Pure]
+    public function getArtItemType(): string
+    {
+        return 'artist';
+    }
+
+    #[Pure]
+    public function getArtItemId(): ?string
+    {
+        return $this->getMbid();
+    }
+
+    public function getLastModified(): ?\DateTimeInterface
+    {
+        return null;
+    }
 }

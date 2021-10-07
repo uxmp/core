@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Art;
 
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Component\Art\CachableArtItemInterface;
+use Uxmp\Core\Component\Art\CachedArtResponseProviderInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtApplication extends AbstractApiApplication
 {
     public function __construct(
-        private Psr17Factory $psr17Factory,
-        private ConfigProviderInterface $config
+        private AlbumRepositoryInterface $albumRepository,
+        private CachedArtResponseProviderInterface $cachedArtResponseProvider,
+        private ArtistRepositoryInterface $artistRepository,
     ) {
     }
 
@@ -23,32 +27,18 @@ final class ArtApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        $albumId = $args['id'];
-        $type = $args['type'];
+        $itemId = (int) ($args['id'] ?? 0);
 
-        $subPath = match ($type) {
-            'album' => 'album',
-            default => 'artist',
+        $item = match ($args['type'] ?? null) {
+            default => null,
+            'album' => $this->albumRepository->find($itemId),
+            'artist' => $this->artistRepository->find($itemId),
         };
 
-        $filename = $albumId . '.jpg';
-        $path = sprintf(
-            '%s/%s',
-            realpath($this->config->getAssetPath() . '/img/' . $subPath),
-            $filename
-        );
+        if (!($item instanceof CachableArtItemInterface)) {
+            return $response->withStatus(StatusCode::NOT_FOUND);
+        }
 
-        $size = filesize($path);
-
-        return $response
-            ->withHeader('Content-Type', 'image/jpg')
-            ->withHeader('Content-Disposition', 'filename='.$filename)
-            ->withHeader('Content-Length', (string) $size)
-            ->withHeader('Cache-Control', 'no-cache')
-            ->withHeader('Content-Range', 'bytes '.$size)
-            ->withHeader('Accept-Ranges', 'bytes')
-            ->withBody(
-                $this->psr17Factory->createStreamFromFile($path)
-            );
+        return $this->cachedArtResponseProvider->withCachedArt($response, $item);
     }
 }

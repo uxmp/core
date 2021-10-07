@@ -19,6 +19,7 @@
         "php-di/php-di": "^6.3",
         "psr/cache": "^2",
         "psr/container": "^1",
+        "slim/http-cache": "^1.1",
         "slim/slim": "4.*",
         "symfony/cache": "^5.3",
         "tuupola/cors-middleware": "^1.2",
@@ -29,6 +30,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
+        "mikey179/vfsstream": "^1.6",
         "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^0.12.93",
         "phpstan/phpstan-mockery": "^0.12.14",

@@ -99,4 +99,12 @@ class ConfigProviderTest extends MockeryTestCase
             ],
         ];
     }
+
+    public function testGetClientCacheMaxAgeReturnsValue(): void
+    {
+        $this->assertSame(
+            100 * 86400,
+            $this->subject->getClientCacheMaxAge()
+        );
+    }
 }

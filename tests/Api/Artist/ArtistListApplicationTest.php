@@ -42,7 +42,6 @@ class ArtistListApplicationTest extends MockeryTestCase
 
         $artistId = 666;
         $artistName = 'some-name';
-        $mbid = 'some-mbid';
         $baseUrl = 'some-base-url';
 
         $artist->shouldReceive('getId')
@@ -53,10 +52,6 @@ class ArtistListApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($artistName);
-        $artist->shouldReceive('getMbid')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($mbid);
 
         $this->config->shouldReceive('getBaseUrl')
             ->withNoArgs()
@@ -83,7 +78,7 @@ class ArtistListApplicationTest extends MockeryTestCase
                     ['items' => [[
                         'id' => $artistId,
                         'name' => $artistName,
-                        'cover' => sprintf('%s/art/artist/%s', $baseUrl, $mbid)
+                        'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId)
                     ]]],
                     JSON_PRETTY_PRINT
                 )
