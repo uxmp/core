@@ -8,11 +8,13 @@ use Intervention\Image\Image;
 use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config
+        private ConfigProviderInterface $config,
+        private ArtistRepositoryInterface $artistRepository,
     ) {
     }
 
@@ -50,5 +52,9 @@ final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
             ->from($images);
 
         $image->save($artistDestination . '/' . $artist->getMbid() . '.jpg');
+
+        $artist->setLastModified(new \DateTime());
+
+        $this->artistRepository->save($artist);
     }
 }

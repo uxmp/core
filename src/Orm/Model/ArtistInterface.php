@@ -23,4 +23,6 @@ interface ArtistInterface extends
     public function getMbid(): ?string;
 
     public function setMbid(?string $mbid): ArtistInterface;
+
+    public function setLastModified(\DateTimeInterface $last_modified): ArtistInterface;
 }

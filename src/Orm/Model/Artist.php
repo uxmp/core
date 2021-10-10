@@ -38,6 +38,11 @@ class Artist implements ArtistInterface
      */
     private Collection $albums;
 
+    /**
+     * @Column(type="datetime", nullable=true)
+     */
+    private \DateTimeInterface $last_modified;
+
     #[Pure]
     public function __construct()
     {
@@ -96,6 +101,12 @@ class Artist implements ArtistInterface
 
     public function getLastModified(): ?\DateTimeInterface
     {
-        return null;
+        return $this->last_modified;
+    }
+
+    public function setLastModified(\DateTimeInterface $last_modified): ArtistInterface
+    {
+        $this->last_modified = $last_modified;
+        return $this;
     }
 }
