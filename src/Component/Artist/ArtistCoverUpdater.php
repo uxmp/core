@@ -15,6 +15,7 @@ final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
     public function __construct(
         private ConfigProviderInterface $config,
         private ArtistRepositoryInterface $artistRepository,
+        private MakeCollage $collageMaker,
     ) {
     }
 
@@ -22,9 +23,12 @@ final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
         ArtistInterface $artist
     ): void {
         $images = [];
+        $assetPath = $this->config->getAssetPath();
 
-        $albumDestination = realpath($this->config->getAssetPath() . '/img/album');
-        $artistDestination = realpath($this->config->getAssetPath() . '/img/artist');
+        $albumDestination = sprintf(
+            '%s/img/album',
+            $assetPath
+        );
 
         foreach ($artist->getAlbums() as $album) {
             $albumImage = sprintf('%s/%s.jpg', $albumDestination, $album->getMbid());
@@ -38,20 +42,30 @@ final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
             return;
         }
 
+        // MakeCollage only support up to 4 images, to take the first ones
         if (count($images) > 4) {
             $images = array_slice($images, 0, 4);
         }
 
-        $collage = new MakeCollage();
-
         /** @var Image $image */
-        $image = $collage
+        $image = $this->collageMaker
             ->make(600, 600)
             ->padding(10)
             ->background('#000')
             ->from($images);
 
-        $image->save($artistDestination . '/' . $artist->getMbid() . '.jpg');
+        $artistDestination = sprintf(
+            '%s/img/artist',
+            $assetPath
+        );
+
+        $image->save(
+            sprintf(
+                '%s/%s.jpg',
+                $artistDestination,
+                $artist->getMbid()
+            )
+        );
 
         $artist->setLastModified(new \DateTime());
 
