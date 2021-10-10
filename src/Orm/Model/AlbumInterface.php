@@ -32,6 +32,9 @@ interface AlbumInterface extends
 
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;
 
+    /**
+     * Returns the summarized length of all songs in this album
+     */
     public function getLength(): int;
 
     public function getLastModified(): \DateTimeInterface;

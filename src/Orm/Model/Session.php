@@ -54,7 +54,7 @@ class Session implements SessionInterface
         return $this;
     }
 
-    public function isActive(): bool
+    public function getActive(): bool
     {
         return $this->active;
     }

@@ -10,7 +10,7 @@ interface SessionInterface
 
     public function setSubject(string $subject): SessionInterface;
 
-    public function isActive(): bool;
+    public function getActive(): bool;
 
     public function setActive(bool $active): SessionInterface;
 
