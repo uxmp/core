@@ -9,7 +9,7 @@ use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 
-final class ArtistCoverUpdater implements ArtistCoverUpdaterInteface
+final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
 {
     public function __construct(
         private ConfigProviderInterface $config

@@ -7,5 +7,5 @@ namespace Uxmp\Core\Component\Artist;
 use function DI\autowire;
 
 return [
-    ArtistCoverUpdaterInteface::class => autowire(ArtistCoverUpdater::class),
+    ArtistCoverUpdaterInterface::class => autowire(ArtistCoverUpdater::class),
 ];

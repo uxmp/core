@@ -8,4 +8,5 @@ use function DI\autowire;
 
 return [
     CachedArtResponseProviderInterface::class => autowire(CachedArtResponseProvider::class),
+    ArtUpdaterInterface::class => autowire(ArtUpdater::class),
 ];
