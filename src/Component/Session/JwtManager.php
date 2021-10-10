@@ -10,12 +10,12 @@ use Uxmp\Core\Component\Config\ConfigProviderInterface;
 final class JwtManager implements JwtManagerInterface
 {
     public function __construct(
-        private ConfigProviderInterface $configProvider
+        private ConfigProviderInterface $config
     ) {
     }
 
     public function encode(array $payload): string
     {
-        return JWT::encode($payload, $this->configProvider->getJwtSecret());
+        return JWT::encode($payload, $this->config->getJwtSecret());
     }
 }
