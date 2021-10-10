@@ -39,8 +39,8 @@ class CliInteractorHelper extends Interactor
         );
     }
 
-    public function table(array $data, array $styles = []): Writer
+    public function table(array $rows, array $styles = []): Writer
     {
-        return parent::table($data, $styles);
+        return parent::table($rows, $styles);
     }
 }

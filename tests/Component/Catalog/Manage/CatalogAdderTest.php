@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Manage;
 
-use Ahc\Cli\IO\Interactor;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
-use PHPUnit\Framework\TestCase;
 use Uxmp\Core\CliInteractorHelper;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;

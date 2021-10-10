@@ -44,7 +44,6 @@ class AlbumListApplicationTest extends MockeryTestCase
 
         $albumId = 666;
         $artistId = 42;
-        $albumMbId = 'some-mbid';
         $albumName = 'some-album-name';
         $artistName = 'some-artist-name';
         $baseUrl = 'some-base-url';
@@ -126,7 +125,6 @@ class AlbumListApplicationTest extends MockeryTestCase
 
         $albumId = 666;
         $artistId = 42;
-        $albumMbId = 'some-mbid';
         $albumName = 'some-album-name';
         $artistName = 'some-artist-name';
         $baseUrl = 'some-base-url';

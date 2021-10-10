@@ -12,7 +12,6 @@ use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Api\Lib\SongListItemInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
-use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 

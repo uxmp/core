@@ -46,7 +46,6 @@ class AlbumRecentApplicationTest extends MockeryTestCase
         $artistId = 42;
         $artistTitle = 'some-artist-title';
         $albumTitle = 'some-album-title';
-        $mbid = 'some-mb-id';
         $length = 21;
 
         $this->config->shouldReceive('getBaseUrl')
