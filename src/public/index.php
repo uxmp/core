@@ -77,7 +77,11 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/random/songs[/{limit}]', RandomSongsApplication::class);
 
     // add http caching middleware
-    $app->add(new Cache('public', 86400));
+    $app->add(new Cache(
+        'public',
+        $config->getClientCacheMaxAge(),
+        true
+    ));
 
     $app->get('/art/{type}/{id}', ArtApplication::class);
 
