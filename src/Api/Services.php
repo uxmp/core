@@ -8,4 +8,5 @@ use function DI\autowire;
 
 return [
     Lib\ResultItemFactoryInterface::class => autowire(Lib\ResultItemFactory::class),
+    ApiApplication::class => autowire(),
 ];

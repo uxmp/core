@@ -11,7 +11,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Teapot\StatusCode;
 
-final class SessionValidatorMiddleware implements MiddlewareInterface
+class SessionValidatorMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private SessionManagerInterface $sessionManager,
