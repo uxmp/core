@@ -11,9 +11,7 @@ use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use Opis\JsonSchema\Keywords\OfTrait;
 use Psr\Container\ContainerInterface;
-use Slim\HttpCache\CacheProvider;
 use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminator;
@@ -70,7 +68,6 @@ final class Init
                 $dotenv->load();
                 return $dotenv;
             },
-            CacheProvider::class => autowire(),
             MakeCollage::class => autowire(),
         ]);
         $container = $builder->build();

@@ -2,15 +2,14 @@
 
 namespace Uxmp\Core\Component\Art;
 
+use DateTimeInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
-use Slim\HttpCache\CacheProvider;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 final class CachedArtResponseProvider implements CachedArtResponseProviderInterface
 {
     public function __construct(
-        private CacheProvider $cacheProvider,
         private ConfigProviderInterface $config,
         private Psr17Factory $psr17Factory,
     ) {
@@ -43,7 +42,7 @@ final class CachedArtResponseProvider implements CachedArtResponseProviderInterf
             $path,
             $mimeType,
             $filename,
-            $item->getLastModified()?->getTimestamp()
+            $item->getLastModified()
         );
     }
 
@@ -63,10 +62,15 @@ final class CachedArtResponseProvider implements CachedArtResponseProviderInterf
         string $path,
         string $mimeType,
         string $filename,
-        ?int $lastModified = null
+        ?DateTimeInterface $lastModified = null
     ): ResponseInterface {
-        return $this->cacheProvider
-            ->withEtag($response, md5((string) $lastModified))
+        if ($lastModified !== null) {
+            $response = $response
+                ->withHeader('Cache-Control', sprintf('public, max-age=%d', $this->config->getClientCacheMaxAge()))
+                ->withHeader('Last-Modified', $lastModified->format(DATE_RFC7231));
+        }
+
+        return $response
             ->withHeader('Content-Type', $mimeType)
             ->withHeader('Content-Disposition', 'filename='.$filename)
             ->withBody(

@@ -11,13 +11,10 @@ use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Slim\HttpCache\CacheProvider;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 class CachedArtResponseProviderTest extends MockeryTestCase
 {
-    private MockInterface $cacheProvider;
-
     private MockInterface $config;
 
     private MockInterface $psr17Factory;
@@ -28,13 +25,11 @@ class CachedArtResponseProviderTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->cacheProvider = \Mockery::mock(CacheProvider::class);
         $this->config = \Mockery::mock(ConfigProviderInterface::class);
         $this->psr17Factory = \Mockery::mock(Psr17Factory::class);
         $this->root = vfsStream::setup();
 
         $this->subject = new CachedArtResponseProvider(
-            $this->cacheProvider,
             $this->config,
             $this->psr17Factory
         );
@@ -50,11 +45,6 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturnNull();
-
-        $this->cacheProvider->shouldReceive('withEtag')
-            ->with($response, md5(''))
-            ->once()
-            ->andReturn($response);
 
         $response->shouldReceive('withHeader')
             ->with('Content-Type', 'image/png')
@@ -101,11 +91,6 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->once()
             ->andReturn($artItemType);
 
-        $this->cacheProvider->shouldReceive('withEtag')
-            ->with($response, md5(''))
-            ->once()
-            ->andReturn($response);
-
         $response->shouldReceive('withHeader')
             ->with('Content-Type', 'image/png')
             ->once()
@@ -147,6 +132,7 @@ class CachedArtResponseProviderTest extends MockeryTestCase
         $artItemType = 'some-art-item-type';
         $fileName = sprintf('%s.jpg', $artItemId);
         $timestamp = 123456;
+        $maxAge = 666;
 
         $lastModified = new \DateTime();
         $lastModified->setTimestamp($timestamp);
@@ -158,6 +144,11 @@ class CachedArtResponseProviderTest extends MockeryTestCase
         vfsStream::newFile($fileName)
             ->withContent('aggi')
             ->at($artTypeDir);
+
+        $this->config->shouldReceive('getClientCacheMaxAge')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($maxAge);
 
         $item->shouldReceive('getArtItemId')
             ->withNoArgs()
@@ -172,11 +163,14 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->once()
             ->andReturn($lastModified);
 
-        $this->cacheProvider->shouldReceive('withEtag')
-            ->with($response, md5((string) $timestamp))
+        $response->shouldReceive('withHeader')
+            ->with('Last-Modified', $lastModified->format(DATE_RFC7231))
             ->once()
-            ->andReturn($response);
-
+            ->andReturnSelf();
+        $response->shouldReceive('withHeader')
+            ->with('Cache-Control', sprintf('public, max-age=%d', $maxAge))
+            ->once()
+            ->andReturnSelf();
         $response->shouldReceive('withHeader')
             ->with('Content-Type', 'image/jpg')
             ->once()

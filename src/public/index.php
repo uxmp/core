@@ -6,7 +6,6 @@ use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Slim\Factory\AppFactory;
-use Slim\HttpCache\Cache;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Uxmp\Core\Api\Album\AlbumApplication;
@@ -75,14 +74,6 @@ Init::run(static function (ContainerInterface $dic): void {
     $app->get('/album/{albumId}', AlbumApplication::class);
     $app->get('/album/{albumId}/songs', AlbumSongsApplication::class);
     $app->get('/random/songs[/{limit}]', RandomSongsApplication::class);
-
-    // add http caching middleware
-    $app->add(new Cache(
-        'public',
-        $config->getClientCacheMaxAge(),
-        true
-    ));
-
     $app->get('/art/{type}/{id}', ArtApplication::class);
 
     $app->run();
