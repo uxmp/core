@@ -6,14 +6,13 @@ namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Input\Command;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Catalog\Manage\CatalogListerInterface;
-use Uxmp\Core\Component\Catalog\Manage\CatalogUpdaterInterface;
 
 final class CatalogListCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private ContainerInterface $dic
+    ) {
         parent::__construct(
             'catalog:list',
             'Lists all catalogs'
@@ -27,10 +26,6 @@ final class CatalogListCommand extends Command
 
     public function execute(): void
     {
-        Init::run(
-            function (ContainerInterface $dic): void {
-                $dic->get(CatalogListerInterface::class)->list($this->app()?->io());
-            }
-        );
+        $this->dic->get(CatalogListerInterface::class)->list($this->app()?->io());
     }
 }

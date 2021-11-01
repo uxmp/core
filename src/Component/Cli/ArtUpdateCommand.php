@@ -6,14 +6,13 @@ namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Input\Command;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Art\ArtUpdaterInterface;
-use Uxmp\Core\Component\Catalog\Manage\CatalogUpdaterInterface;
 
 final class ArtUpdateCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private ContainerInterface $dic,
+    ) {
         parent::__construct(
             'art:update',
             'Update artwork of known items'
@@ -31,10 +30,6 @@ final class ArtUpdateCommand extends Command
 
     public function execute(?int $catalogId): void
     {
-        Init::run(
-            function (ContainerInterface $dic) use ($catalogId): void {
-                $dic->get(ArtUpdaterInterface::class)->update((int) $catalogId);
-            }
-        );
+        $this->dic->get(ArtUpdaterInterface::class)->update((int) $catalogId);
     }
 }

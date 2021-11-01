@@ -6,13 +6,13 @@ namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Input\Command;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Catalog\Manage\CatalogUpdaterInterface;
 
 final class CatalogUpdateCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private ContainerInterface $dic
+    ) {
         parent::__construct(
             'catalog:update',
             'Updates the catalog'
@@ -30,10 +30,6 @@ final class CatalogUpdateCommand extends Command
 
     public function execute(?int $catalogId): void
     {
-        Init::run(
-            function (ContainerInterface $dic) use ($catalogId): void {
-                $dic->get(CatalogUpdaterInterface::class)->update($this->app()?->io(), (int) $catalogId);
-            }
-        );
+        $this->dic->get(CatalogUpdaterInterface::class)->update($this->app()?->io(), (int) $catalogId);
     }
 }

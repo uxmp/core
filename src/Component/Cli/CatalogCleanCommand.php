@@ -6,13 +6,13 @@ namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Input\Command;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Catalog\Manage\CatalogCleanerInterface;
 
 final class CatalogCleanCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private ContainerInterface $dic
+    ) {
         parent::__construct(
             'catalog:clean',
             'Cleans the catalog'
@@ -30,10 +30,6 @@ final class CatalogCleanCommand extends Command
 
     public function execute(?int $catalogId): void
     {
-        Init::run(
-            function (ContainerInterface $dic) use ($catalogId): void {
-                $dic->get(CatalogCleanerInterface::class)->clean($this->app()?->io(), (int) $catalogId);
-            }
-        );
+        $this->dic->get(CatalogCleanerInterface::class)->clean($this->app()?->io(), (int) $catalogId);
     }
 }

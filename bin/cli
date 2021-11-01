@@ -2,6 +2,8 @@
 <?php
 declare(strict_types=1);
 
+use Psr\Container\ContainerInterface;
+use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Cli\ArtUpdateCommand;
 use Uxmp\Core\Component\Cli\CatalogAddCommand;
 use Uxmp\Core\Component\Cli\CatalogCleanCommand;
@@ -9,28 +11,30 @@ use Uxmp\Core\Component\Cli\CatalogListCommand;
 use Uxmp\Core\Component\Cli\CatalogUpdateCommand;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+Init::run(
+    function (ContainerInterface $dic): void {
+        $app = new Ahc\Cli\Application(
+            'uxmp',
+            $_ENV['UXMP_VERSION']
+        );
 
-$app = new Ahc\Cli\Application(
-    'uxmp core',
-    'v0.0.1'
+        $app->add(new CatalogAddCommand($dic), 'ca');
+        $app->add(new CatalogUpdateCommand($dic), 'cu');
+        $app->add(new CatalogCleanCommand($dic), 'cc');
+        $app->add(new CatalogListCommand($dic), 'cl');
+        $app->add(new ArtUpdateCommand($dic), 'au');
+
+        $logo = <<<LOGO
+             _   ___  ___ __ ___  _ __  
+            | | | \ \/ / '_ ` _ \| '_ \ 
+            | |_| |>  <| | | | | | |_) |
+             \__,_/_/\_\_| |_| |_| .__/ 
+                                 | |    
+                                 |_|
+            LOGO;
+
+        $app->logo($logo);
+
+        $app->handle($_SERVER['argv']);
+    }
 );
-
-$app->add(new CatalogAddCommand(), 'ca');
-$app->add(new CatalogUpdateCommand(), 'cu');
-$app->add(new CatalogCleanCommand(), 'cc');
-$app->add(new CatalogListCommand(), 'cl');
-$app->add(new ArtUpdateCommand(), 'au');
-
-$logo = <<<LOGO
- _   ___  ___ __ ___  _ __  
-| | | \ \/ / '_ ` _ \| '_ \ 
-| |_| |>  <| | | | | | |_) |
- \__,_/_/\_\_| |_| |_| .__/ 
-                     | |    
-                     |_|
-LOGO;
-
-// Set logo
-$app->logo($logo);
-
-$app->handle($_SERVER['argv']);

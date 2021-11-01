@@ -6,13 +6,13 @@ namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Input\Command;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Catalog\Manage\CatalogAdderInterface;
 
 final class CatalogAddCommand extends Command
 {
-    public function __construct()
-    {
+    public function __construct(
+        private ContainerInterface $dic
+    ) {
         parent::__construct(
             'catalog:add',
             'Adds a folder as catalog'
@@ -30,10 +30,6 @@ final class CatalogAddCommand extends Command
 
     public function execute(?string $path): void
     {
-        Init::run(
-            function (ContainerInterface $dic) use ($path): void {
-                $dic->get(CatalogAdderInterface::class)->add($this->app()?->io(), (string) $path);
-            }
-        );
+        $this->dic->get(CatalogAdderInterface::class)->add($this->app()?->io(), (string) $path);
     }
 }
