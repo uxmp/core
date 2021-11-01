@@ -1,0 +1,67 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Album\\:\\:\\$artist_id is unused\\.$#"
+			count: 1
+			path: src/Orm/Model/Album.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Album\\:\\:\\$catalog_id is unused\\.$#"
+			count: 1
+			path: src/Orm/Model/Album.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Album\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Album.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Artist\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Artist.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Catalog\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Catalog.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Disc\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Disc.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Session\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Session.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Session\\:\\:\\$user_id is never read, only written\\.$#"
+			count: 1
+			path: src/Orm/Model/Session.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Song\\:\\:\\$artist_id is unused\\.$#"
+			count: 1
+			path: src/Orm/Model/Song.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Song\\:\\:\\$catalog_id is unused\\.$#"
+			count: 1
+			path: src/Orm/Model/Song.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Song\\:\\:\\$disc_id is unused\\.$#"
+			count: 1
+			path: src/Orm/Model/Song.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Song\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/Song.php
+
+		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\User\\:\\:\\$id is never written, only read\\.$#"
+			count: 1
+			path: src/Orm/Model/User.php
+

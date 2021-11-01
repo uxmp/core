@@ -31,11 +31,10 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "mikey179/vfsstream": "^1.6",
         "mockery/mockery": "^1.4",
-        "phpstan/phpstan": "^0.12.93",
-        "phpstan/phpstan-mockery": "^0.12.14",
-        "phpstan/phpstan-strict-rules": "^0.12.10",
-        "phpunit/phpunit": "^9.5",
-        "thecodingmachine/phpstan-strict-rules": "^0.12.1"
+        "phpstan/phpstan": "^1",
+        "phpstan/phpstan-mockery": "^1",
+        "phpstan/phpstan-strict-rules": "^1",
+        "phpunit/phpunit": "^9.5"
     },
     "license": "MIT",
     "authors": [
