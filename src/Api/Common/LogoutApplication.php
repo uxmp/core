@@ -18,14 +18,12 @@ final class LogoutApplication extends AbstractApiApplication
     ) {
     }
 
-    /**
-     * @param array<string, mixed> $args
-     */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
+        /** @var string|null $sessionId */
         $sessionId = $request->getAttribute('sessionId');
         if ($sessionId !== null) {
             $this->sessionManager->logout((int) $sessionId);

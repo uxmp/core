@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class AbstractApiApplication
 {
     /**
-     * @param array<string, mixed> $args
+     * @param array<string, scalar> $args
      */
     abstract protected function run(
         ServerRequestInterface $request,
@@ -19,7 +19,7 @@ abstract class AbstractApiApplication
     ): ResponseInterface;
 
     /**
-     * @param array<string, mixed> $args
+     * @param array<string, scalar> $args
      */
     public function __invoke(
         ServerRequestInterface $request,

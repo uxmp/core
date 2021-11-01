@@ -25,11 +25,11 @@ final class LoginApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        /** @var array<string, mixed> $body */
+        /** @var array<string, scalar> $body */
         $body = $request->getParsedBody();
 
-        $username = $body['username'] ?? '';
-        $password = $body['password'] ?? '';
+        $username = (string) ($body['username'] ?? '');
+        $password = (string) ($body['password'] ?? '');
 
         $session = $this->sessionManager->login($username, $password);
 

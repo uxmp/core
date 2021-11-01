@@ -14,16 +14,12 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
 use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
-use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminator;
-use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
-use Uxmp\Core\Component\Tag\Extractor\Id3v2Extractor;
-use Uxmp\Core\Component\Tag\Extractor\VorbisExtractor;
 use function DI\autowire;
 
 final class Init
 {
     /**
-     * @param callable(ContainerInterface): mixed $app
+     * @param callable(ContainerInterface):mixed $app
      */
     public static function run(callable $app): mixed
     {
@@ -39,18 +35,11 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Artist/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Art/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Setup/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Tag/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),
             getID3::class => autowire(),
-            ExtractorDeterminatorInterface::class => static function (ContainerInterface $c): ExtractorDeterminatorInterface {
-                return new ExtractorDeterminator(
-                    [
-                        $c->get(Id3v2Extractor::class),
-                        $c->get(VorbisExtractor::class),
-                    ]
-                );
-            },
             EntityManagerInterface::class => static function (): EntityManagerInterface {
                 $paths = [__DIR__ . '/../Orm/Model/'];
 
@@ -73,6 +62,8 @@ final class Init
             },
             MakeCollage::class => autowire(),
         ]);
+
+        /** @var ContainerInterface $container */
         $container = $builder->build();
 
         // @todo validate env variable

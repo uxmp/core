@@ -23,6 +23,7 @@ class SessionValidatorMiddleware implements MiddlewareInterface
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
     ): ResponseInterface {
+        /** @var null|array<scalar> $tokenData */
         $tokenData = $request->getAttribute('token');
         if ($tokenData !== null) {
             $session = $this->sessionManager->lookup((int) ($tokenData['sub'] ?? 0));
