@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Cli\ArtUpdateCommand;
+use Uxmp\Core\Component\Cli\BootstrapCommand;
 use Uxmp\Core\Component\Cli\CatalogAddCommand;
 use Uxmp\Core\Component\Cli\CatalogCleanCommand;
 use Uxmp\Core\Component\Cli\CatalogListCommand;
@@ -23,6 +24,7 @@ Init::run(
         $app->add(new CatalogCleanCommand($dic), 'cc');
         $app->add(new CatalogListCommand($dic), 'cl');
         $app->add(new ArtUpdateCommand($dic), 'au');
+        $app->add(new BootstrapCommand($dic), 'sb');
 
         $logo = <<<LOGO
              _   ___  ___ __ ___  _ __  

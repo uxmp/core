@@ -38,6 +38,7 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Disc/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Artist/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Art/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/Setup/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
         $builder->addDefinitions([
             Psr17Factory::class => autowire(),
@@ -52,6 +53,8 @@ final class Init
             },
             EntityManagerInterface::class => static function (): EntityManagerInterface {
                 $paths = [__DIR__ . '/../Orm/Model/'];
+
+                // @todo load from config
                 $isDevMode = true;
 
                 // the connection configuration
