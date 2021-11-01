@@ -15,4 +15,6 @@ interface AlbumRepositoryInterface extends ObjectRepository
     public function save(AlbumInterface $album): void;
 
     public function findByMbId(string $mbid): ?AlbumInterface;
+
+    public function delete(AlbumInterface $album): void;
 }

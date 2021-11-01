@@ -22,8 +22,10 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
 
     public function save(AlbumInterface $album): void
     {
-        $this->getEntityManager()->persist($album);
-        $this->getEntityManager()->flush();
+        $em = $this->getEntityManager();
+
+        $em->persist($album);
+        $em->flush();
     }
 
     public function findByMbId(string $mbid): ?AlbumInterface
@@ -31,5 +33,13 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
         return $this->findOneBy([
             'mbid' => $mbid
         ]);
+    }
+
+    public function delete(AlbumInterface $album): void
+    {
+        $em = $this->getEntityManager();
+
+        $em->remove($album);
+        $em->flush();
     }
 }

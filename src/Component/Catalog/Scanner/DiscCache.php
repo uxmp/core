@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Uxmp\Core\Component\Catalog\Scanner;
 
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
 use Uxmp\Core\Component\Disc\DiscLengthUpdaterInterface;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;

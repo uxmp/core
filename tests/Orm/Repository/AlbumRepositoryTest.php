@@ -82,4 +82,18 @@ class AlbumRepositoryTest extends MockeryTestCase
             $this->subject->findByMbId($mbid)
         );
     }
+
+    public function testDeleteDeletes(): void
+    {
+        $album = \Mockery::mock(AlbumInterface::class);
+
+        $this->entityManager->shouldReceive('remove')
+            ->with($album)
+            ->once();
+        $this->entityManager->shouldReceive('flush')
+            ->withNoArgs()
+            ->once();
+
+        $this->subject->delete($album);
+    }
 }
