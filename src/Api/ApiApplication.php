@@ -67,6 +67,7 @@ final class ApiApplication
         $app->get('/album/{albumId}/songs', Album\AlbumSongsApplication::class);
         $app->get('/random/songs[/{limit}]', Random\RandomSongsApplication::class);
         $app->get('/art/{type}/{id}', Art\ArtApplication::class);
+        $app->get('/user/favorites', User\FavoritesApplication::class);
 
         $app->run();
     }

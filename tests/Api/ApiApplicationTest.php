@@ -128,6 +128,9 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('get')
             ->with('/art/{type}/{id}', Art\ArtApplication::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/user/favorites', User\FavoritesApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();
