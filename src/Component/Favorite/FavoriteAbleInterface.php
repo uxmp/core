@@ -8,4 +8,6 @@ namespace Uxmp\Core\Component\Favorite;
 interface FavoriteAbleInterface
 {
     public function getId(): int;
+
+    public function getType(): string;
 }

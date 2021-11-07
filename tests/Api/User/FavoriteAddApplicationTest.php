@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\User;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -26,8 +27,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
-        $this->favoriteManager = \Mockery::mock(FavoriteManagerInterface::class);
+        $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
+        $this->favoriteManager = Mockery::mock(FavoriteManagerInterface::class);
 
         $this->subject = new FavoriteAddApplication(
             $this->songRepository,
@@ -37,8 +38,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
 
     public function testRunReturnsErrorResponseIfItemIsNotSupported(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $request->shouldReceive('getParsedBody')
             ->withNoArgs()
@@ -63,8 +64,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
 
     public function testRunReturnsErrorResponseIfItemWasNotfound(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $songId = 666;
 
@@ -105,14 +106,13 @@ class FavoriteAddApplicationTest extends MockeryTestCase
         string $itemType,
         string $repositoryName,
     ): void {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $obj = \Mockery::mock(FavoriteAbleInterface::class);
-        $user = \Mockery::mock(UserInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $obj = Mockery::mock(FavoriteAbleInterface::class);
+        $user = Mockery::mock(UserInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $songId = 666;
-        $userId = 42;
 
         $this->{$repositoryName}->shouldReceive('find')
             ->with($songId)
@@ -130,13 +130,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
             ->once()
             ->andReturn($user);
 
-        $user->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($userId);
-
         $this->favoriteManager->shouldReceive('add')
-            ->with($obj, $userId)
+            ->with($obj, $user)
             ->once()
             ->andReturnFalse();
 

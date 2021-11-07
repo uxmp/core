@@ -86,7 +86,6 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
         $stream = \Mockery::mock(StreamInterface::class);
 
         $songId = 666;
-        $userId = 42;
 
         $this->{$repositoryName}->shouldReceive('find')
             ->with($songId)
@@ -104,13 +103,8 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
             ->once()
             ->andReturn($user);
 
-        $user->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($userId);
-
         $this->favoriteManager->shouldReceive('remove')
-            ->with($obj, $userId)
+            ->with($obj, $user)
             ->once()
             ->andReturnFalse();
 

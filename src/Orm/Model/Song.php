@@ -167,4 +167,9 @@ class Song implements SongInterface
         $this->length = $length;
         return $this;
     }
+
+    public function getType(): string
+    {
+        return 'song';
+    }
 }

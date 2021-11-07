@@ -2,6 +2,9 @@ parameters:
 	level: 8
 	paths:
 		- src
+	ignoreErrors:
+		- '#Property Uxmp\\Core\\Orm\\Model\\(\w+)::\$(\w+) is unused#'
+		- '#Property Uxmp\\Core\\Orm\\Model\\(\w+)::\$id is never written, only read#'
 
 includes:
 	- vendor/phpstan/phpstan-mockery/extension.neon

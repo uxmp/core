@@ -27,4 +27,12 @@ class SongTest extends ModelTestCase
             ['Length', 42],
         ];
     }
+
+    public function testGetTypeReturnsType(): void
+    {
+        $this->assertSame(
+            'song',
+            $this->subject->getType()
+        );
+    }
 }
