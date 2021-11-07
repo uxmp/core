@@ -2,7 +2,9 @@
 
 namespace Uxmp\Core\Orm\Model;
 
-interface SongInterface
+use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
+
+interface SongInterface extends FavoriteAbleInterface
 {
     public function getId(): int;
 

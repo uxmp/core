@@ -9,13 +9,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 
-class FavoritesApplicationTest extends MockeryTestCase
+class FavoriteListApplicationTest extends MockeryTestCase
 {
-    private FavoritesApplication $subject;
+    private FavoriteListApplication $subject;
 
     public function setUp(): void
     {
-        $this->subject = new FavoritesApplication();
+        $this->subject = new FavoriteListApplication();
     }
 
     public function testRunReturnsData(): void
@@ -23,7 +23,6 @@ class FavoritesApplicationTest extends MockeryTestCase
         $request = \Mockery::mock(ServerRequestInterface::class);
         $response = \Mockery::mock(ResponseInterface::class);
         $stream = \Mockery::mock(StreamInterface::class);
-
 
         $result = [
             'albums' => [],

@@ -11,6 +11,8 @@ use Uxmp\Core\Orm\Model\SongInterface;
 
 /**
  * @extends EntityRepository<SongInterface>
+ *
+ * @method null|SongInterface find(int $id)
  */
 final class SongRepository extends EntityRepository implements SongRepositoryInterface
 {

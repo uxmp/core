@@ -7,6 +7,8 @@ use Uxmp\Core\Orm\Model\SongInterface;
 
 /**
  * @extends ObjectRepository<SongInterface>
+ *
+ * @method null|SongInterface find(int $id)
  */
 interface SongRepositoryInterface extends ObjectRepository
 {

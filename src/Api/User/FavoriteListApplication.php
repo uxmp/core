@@ -8,7 +8,10 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 
-final class FavoritesApplication extends AbstractApiApplication
+/**
+ * Returns three dictionaries containing information on a users favorites.
+ */
+final class FavoriteListApplication extends AbstractApiApplication
 {
     public function __construct(
     ) {

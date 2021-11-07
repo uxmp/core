@@ -13,6 +13,9 @@ use Teapot\StatusCode;
 
 class SessionValidatorMiddleware implements MiddlewareInterface
 {
+    public const SESSION_ID = 'sessionId';
+    public const USER = 'user';
+
     public function __construct(
         private SessionManagerInterface $sessionManager,
         private Psr17Factory $psr17Factory
@@ -36,8 +39,8 @@ class SessionValidatorMiddleware implements MiddlewareInterface
             }
 
             $request = $request
-                ->withAttribute('sessionId', $session->getId())
-                ->withAttribute('user', $session->getUser())
+                ->withAttribute(static::SESSION_ID, $session->getId())
+                ->withAttribute(static::USER, $session->getUser())
             ;
         }
 
