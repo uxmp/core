@@ -7,6 +7,8 @@ namespace Uxmp\Core\Orm\Repository;
 use Doctrine\ORM\EntityRepository;
 use Uxmp\Core\Orm\Model\Album;
 use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\Favorite;
+use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
  * @extends EntityRepository<AlbumInterface>
@@ -41,5 +43,34 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
 
         $em->remove($album);
         $em->flush();
+    }
+
+    public function getFavorites(UserInterface $user): iterable
+    {
+        $qb = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+        $qbSub = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+        $expr = $this->getEntityManager()->getExpressionBuilder();
+
+        $qb
+            ->select('a')
+            ->from(Album::class, 'a')
+            ->where(
+                $expr->in(
+                    'a.id',
+                    $qbSub
+                        ->select('fav.item_id')
+                        ->from(Favorite::class, 'fav')
+                        ->where($expr->eq('fav.user', '?1'))
+                        ->getDQL()
+                )
+            )
+            ->orderBy('a.title', 'ASC')
+            ->setParameter(1, $user);
+
+        return $qb->getQuery()->getResult();
     }
 }

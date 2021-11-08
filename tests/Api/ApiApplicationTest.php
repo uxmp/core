@@ -111,6 +111,9 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/artist/{artistId}/songs', Artist\ArtistSongsApplication::class)
             ->once();
         $app->shouldReceive('get')
+            ->with('/albums/favorite', Album\AlbumFavoriteApplication::class)
+            ->once();
+        $app->shouldReceive('get')
             ->with('/albums/recent', Album\AlbumRecentApplication::class)
             ->once();
         $app->shouldReceive('get')

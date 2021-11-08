@@ -62,6 +62,7 @@ final class ApiApplication
         $app->get('/artist/{artistId}', Artist\ArtistApplication::class);
         $app->get('/artist/{artistId}/songs', Artist\ArtistSongsApplication::class);
         $app->get('/albums/recent', Album\AlbumRecentApplication::class);
+        $app->get('/albums/favorite', Album\AlbumFavoriteApplication::class);
         $app->get('/albums[/{artistId}]', Album\AlbumListApplication::class);
         $app->get('/album/{albumId}', Album\AlbumApplication::class);
         $app->get('/album/{albumId}/songs', Album\AlbumSongsApplication::class);
