@@ -10,6 +10,7 @@ use Teapot\StatusCode;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 /**
@@ -19,10 +20,12 @@ final class FavoriteAddApplication extends AbstractFavoriteApplication
 {
     public function __construct(
         SongRepositoryInterface $songRepository,
+        AlbumRepositoryInterface $albumRepository,
         private FavoriteManagerInterface $favoriteManager,
     ) {
         parent::__construct(
-            $songRepository
+            $songRepository,
+            $albumRepository,
         );
     }
 

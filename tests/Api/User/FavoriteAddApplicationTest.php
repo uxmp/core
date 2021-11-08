@@ -15,6 +15,7 @@ use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 class FavoriteAddApplicationTest extends MockeryTestCase
@@ -23,15 +24,19 @@ class FavoriteAddApplicationTest extends MockeryTestCase
 
     private MockInterface $favoriteManager;
 
+    private MockInterface $albumRepository;
+
     private FavoriteAddApplication $subject;
 
     public function setUp(): void
     {
         $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
+        $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
         $this->favoriteManager = Mockery::mock(FavoriteManagerInterface::class);
 
         $this->subject = new FavoriteAddApplication(
             $this->songRepository,
+            $this->albumRepository,
             $this->favoriteManager,
         );
     }
@@ -165,6 +170,7 @@ class FavoriteAddApplicationTest extends MockeryTestCase
     {
         return [
             ['song', 'songRepository'],
+            ['album', 'albumRepository'],
         ];
     }
 }

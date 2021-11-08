@@ -161,4 +161,9 @@ class Album implements AlbumInterface
     {
         return $this->getMbid();
     }
+
+    public function getType(): string
+    {
+        return $this->getArtItemType();
+    }
 }

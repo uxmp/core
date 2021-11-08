@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\User;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -14,11 +15,14 @@ use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 class FavoriteRemoveApplicationTest extends MockeryTestCase
 {
     private MockInterface $songRepository;
+
+    private MockInterface $albumRepository;
 
     private MockInterface $favoriteManager;
 
@@ -26,19 +30,21 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
-        $this->favoriteManager = \Mockery::mock(FavoriteManagerInterface::class);
+        $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
+        $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
+        $this->favoriteManager = Mockery::mock(FavoriteManagerInterface::class);
 
         $this->subject = new FavoriteRemoveApplication(
             $this->songRepository,
+            $this->albumRepository,
             $this->favoriteManager,
         );
     }
 
     public function testRunReturnsErrorResponseIfItemWasNotfound(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $songId = 666;
 
@@ -79,11 +85,11 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
         string $itemType,
         string $repositoryName,
     ): void {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $obj = \Mockery::mock(FavoriteAbleInterface::class);
-        $user = \Mockery::mock(UserInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $obj = Mockery::mock(FavoriteAbleInterface::class);
+        $user = Mockery::mock(UserInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $songId = 666;
 
@@ -138,6 +144,7 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
     {
         return [
             ['song', 'songRepository'],
+            ['album', 'albumRepository'],
         ];
     }
 }

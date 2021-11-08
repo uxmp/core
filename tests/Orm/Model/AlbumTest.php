@@ -59,4 +59,12 @@ class AlbumTest extends ModelTestCase
             $this->subject->getArtItemId()
         );
     }
+
+    public function testGetTypeReturnsType(): void
+    {
+        $this->assertSame(
+            'album',
+            $this->subject->getType()
+        );
+    }
 }

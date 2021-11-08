@@ -3,9 +3,11 @@
 namespace Uxmp\Core\Orm\Model;
 
 use Uxmp\Core\Component\Art\CachableArtItemInterface;
+use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 
 interface AlbumInterface extends
-    CachableArtItemInterface
+    CachableArtItemInterface,
+    FavoriteAbleInterface
 {
     public function getId(): int;
 
