@@ -7,6 +7,8 @@ namespace Uxmp\Core\Component\Catalog\Manage;
 use Ahc\Cli\IO\Interactor;
 use Uxmp\Core\Component\Album\AlbumDeleterInterface;
 use Uxmp\Core\Component\Song\SongDeleterInterface;
+use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
@@ -19,6 +21,7 @@ final class CatalogCleaner implements CatalogCleanerInterface
         private SongRepositoryInterface $songRepository,
         private SongDeleterInterface $songDeleter,
         private DiscRepositoryInterface $discRepository,
+        private AlbumRepositoryInterface $albumRepository,
     ) {
     }
 
@@ -71,15 +74,26 @@ final class CatalogCleaner implements CatalogCleanerInterface
             $this->discRepository->delete($disc);
 
             if ($album->getDiscCount() === 0) {
-                $io->info(
-                    sprintf('Delete orphaned album `%s`', $album->getTitle()),
-                    true
-                );
-
-                $this->albumDeleter->delete($album);
+                $this->deleteAlbum($album, $io);
             }
         }
 
+        $albums = $this->albumRepository->findEmptyAlbums($catalog);
+
+        foreach ($albums as $album) {
+            $this->deleteAlbum($album, $io);
+        }
+
         $io->ok('Done', true);
+    }
+
+    private function deleteAlbum(AlbumInterface $album, Interactor $io): void
+    {
+        $io->info(
+            sprintf('Delete orphaned album `%s`', $album->getTitle()),
+            true
+        );
+
+        $this->albumDeleter->delete($album);
     }
 }

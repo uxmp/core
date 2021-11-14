@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Manage;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\CliInteractorHelper;
@@ -13,6 +14,7 @@ use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
@@ -29,6 +31,8 @@ class CatalogCleanerTest extends MockeryTestCase
 
     private MockInterface $discRepository;
 
+    private MockInterface $albumRepository;
+
     private CatalogCleaner $subject;
 
     public function setUp(): void
@@ -38,13 +42,15 @@ class CatalogCleanerTest extends MockeryTestCase
         $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
         $this->songDeleter = \Mockery::mock(SongDeleterInterface::class);
         $this->discRepository = \Mockery::mock(DiscRepositoryInterface::class);
+        $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
 
         $this->subject = new CatalogCleaner(
             $this->catalogRepository,
             $this->albumDeleter,
             $this->songRepository,
             $this->songDeleter,
-            $this->discRepository
+            $this->discRepository,
+            $this->albumRepository,
         );
     }
 
@@ -145,7 +151,7 @@ class CatalogCleanerTest extends MockeryTestCase
                 sprintf('Delete orphaned album `%s`', $albumTitle),
                 true
             )
-            ->once();
+            ->twice();
         $io->shouldReceive('ok')
             ->with('Done', true)
             ->once();
@@ -191,7 +197,7 @@ class CatalogCleanerTest extends MockeryTestCase
 
         $album->shouldReceive('getTitle')
             ->withNoArgs()
-            ->twice()
+            ->times(3)
             ->andReturn($albumTitle);
         $album->shouldReceive('getDiscCount')
             ->withNoArgs()
@@ -200,7 +206,12 @@ class CatalogCleanerTest extends MockeryTestCase
 
         $this->albumDeleter->shouldReceive('delete')
             ->with($album)
-            ->once();
+            ->twice();
+
+        $this->albumRepository->shouldReceive('findEmptyAlbums')
+            ->with($catalog)
+            ->once()
+            ->andReturn([$album]);
 
         $this->subject->clean($io, $catalogId);
     }

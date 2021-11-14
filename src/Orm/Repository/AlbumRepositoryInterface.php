@@ -4,6 +4,7 @@ namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\Persistence\ObjectRepository;
 use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
@@ -23,4 +24,9 @@ interface AlbumRepositoryInterface extends ObjectRepository
      * @return iterable<AlbumInterface>
      */
     public function getFavorites(UserInterface $user): iterable;
+
+    /**
+     * @return iterable<AlbumInterface>
+     */
+    public function findEmptyAlbums(CatalogInterface $catalog): iterable;
 }

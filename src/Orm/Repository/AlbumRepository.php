@@ -7,7 +7,10 @@ namespace Uxmp\Core\Orm\Repository;
 use Doctrine\ORM\EntityRepository;
 use Uxmp\Core\Orm\Model\Album;
 use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\CatalogInterface;
+use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
+use Uxmp\Core\Orm\Model\Song;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
@@ -72,5 +75,26 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
             ->setParameter(1, $user);
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findEmptyAlbums(CatalogInterface $catalog): iterable
+    {
+        $query = <<<SQL
+        SELECT album
+        FROM %s album
+        LEFT JOIN %s disc 
+        WITH disc.album_id = album.id
+        WHERE album.catalog_id = %d
+        GROUP BY album HAVING COUNT(disc.id) = 0
+        SQL;
+
+        return $this->getEntityManager()
+            ->createQuery(sprintf(
+                $query,
+                Album::class,
+                Disc::class,
+                $catalog->getId(),
+            ))
+            ->getResult();
     }
 }
