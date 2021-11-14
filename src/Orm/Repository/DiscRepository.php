@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Uxmp\Core\Orm\Model\Album;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\DiscInterface;
@@ -46,7 +47,9 @@ final class DiscRepository extends EntityRepository implements DiscRepositoryInt
         FROM %s disc
         LEFT JOIN %s song 
         WITH song.disc_id = disc.id
-        WHERE song.catalog_id = %d
+        LEFT JOIN %s album
+        WITH album.id = disc.album_id
+        WHERE album.catalog_id = %d
         GROUP BY disc HAVING COUNT(song.id) = 0
         SQL;
 
@@ -55,6 +58,7 @@ final class DiscRepository extends EntityRepository implements DiscRepositoryInt
                 $query,
                 Disc::class,
                 Song::class,
+                Album::class,
                 $catalog->getId(),
             ))
             ->getResult();
