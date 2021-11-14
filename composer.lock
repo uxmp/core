@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68ec57feb773be7cb9c3a9aadcbb337b",
+    "content-hash": "5c8e9f5a9ee2e696c339232aeb6bb035",
     "packages": [
         {
             "name": "adhocore/cli",
@@ -5518,16 +5518,16 @@
         },
         {
             "name": "usox/json-schema-api",
-            "version": "0.4.2",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usox/json-schema-api.git",
-                "reference": "16b90e3f2c172310e5bc22939d5cfd5b3c9cdbd8"
+                "reference": "f58a521a39349460fe754f09dc9f4f10e19a15d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usox/json-schema-api/zipball/16b90e3f2c172310e5bc22939d5cfd5b3c9cdbd8",
-                "reference": "16b90e3f2c172310e5bc22939d5cfd5b3c9cdbd8",
+                "url": "https://api.github.com/repos/usox/json-schema-api/zipball/f58a521a39349460fe754f09dc9f4f10e19a15d1",
+                "reference": "f58a521a39349460fe754f09dc9f4f10e19a15d1",
                 "shasum": ""
             },
             "require": {
@@ -5571,9 +5571,9 @@
             "description": "Json schema powered api creation for php",
             "support": {
                 "issues": "https://github.com/usox/json-schema-api/issues",
-                "source": "https://github.com/usox/json-schema-api/tree/0.4.2"
+                "source": "https://github.com/usox/json-schema-api/tree/0.5.0"
             },
-            "time": "2021-11-04T17:07:52+00:00"
+            "time": "2021-11-05T07:00:21+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

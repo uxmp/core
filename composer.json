@@ -18,13 +18,13 @@
         "nyholm/psr7-server": "^1.0",
         "php-di/php-di": "^6.3",
         "psr/cache": "^2",
-        "psr/container": "^1",
+        "psr/container": "^1||^2",
         "slim/slim": "4.*",
         "symfony/cache": "^5.3",
         "tuupola/cors-middleware": "^1.2",
         "tuupola/slim-jwt-auth": "^3.5",
         "tzsk/collage": "^5.1",
-        "usox/json-schema-api": "^0.4.0",
+        "usox/json-schema-api": "^0.5",
         "vlucas/phpdotenv": "^5.3"
     },
     "require-dev": {
