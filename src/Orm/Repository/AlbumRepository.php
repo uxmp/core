@@ -10,7 +10,6 @@ use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
-use Uxmp\Core\Orm\Model\Song;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 /**

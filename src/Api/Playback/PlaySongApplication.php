@@ -8,13 +8,17 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
+use Uxmp\Core\Orm\Model\UserInterface;
+use Uxmp\Core\Orm\Repository\PlaybackHistoryRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class PlaySongApplication extends AbstractApiApplication
 {
     public function __construct(
         private Psr17Factory $psr17Factory,
-        private SongRepositoryInterface $songRepository
+        private SongRepositoryInterface $songRepository,
+        private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
     ) {
     }
 
@@ -30,6 +34,17 @@ final class PlaySongApplication extends AbstractApiApplication
         if ($song === null) {
             throw new \RuntimeException('song not found');
         }
+
+        /** @var UserInterface $user */
+        $user = $request->getAttribute(SessionValidatorMiddleware::USER);
+
+        $history = $this->playbackHistoryRepository->prototype()
+            ->setUser($user)
+            ->setSong($song)
+            ->setPlayDate(new \DateTime());
+
+        $this->playbackHistoryRepository->save($history);
+
         $path = $song->getFilename();
 
         $size = filesize($path);
