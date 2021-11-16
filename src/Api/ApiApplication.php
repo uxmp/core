@@ -57,6 +57,7 @@ final class ApiApplication
 
         $app->post('/common/login', Common\LoginApplication::class);
         $app->post('/common/logout', Common\LogoutApplication::class);
+        $app->get('/play/history', Playback\PlaybackHistoryApplication::class);
         $app->get('/play/{id}', Playback\PlaySongApplication::class);
         $app->get('/artists', Artist\ArtistListApplication::class);
         $app->get('/artist/{artistId}', Artist\ArtistApplication::class);

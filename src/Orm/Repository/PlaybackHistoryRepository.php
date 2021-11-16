@@ -11,6 +11,8 @@ use Uxmp\Core\Orm\Model\SongInterface;
 
 /**
  * @extends EntityRepository<PlaybackHistoryInterface>
+ *
+ * @method PlaybackHistoryInterface[] findBy(mixed[] $criteria, null|array $order = null, null|int $limit = null, null|int $offset = null)
  */
 final class PlaybackHistoryRepository extends EntityRepository implements PlaybackHistoryRepositoryInterface
 {

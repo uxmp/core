@@ -99,6 +99,9 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/common/logout', Common\LogoutApplication::class)
             ->once();
         $app->shouldReceive('get')
+            ->with('/play/history', Playback\PlaybackHistoryApplication::class)
+            ->once();
+        $app->shouldReceive('get')
             ->with('/play/{id}', Playback\PlaySongApplication::class)
             ->once();
         $app->shouldReceive('get')
