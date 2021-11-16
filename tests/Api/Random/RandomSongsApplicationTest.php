@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Random;
 
+use JsonSerializable;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
-use Uxmp\Core\Api\Lib\SongListItemInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
@@ -41,7 +41,7 @@ class RandomSongsApplicationTest extends MockeryTestCase
         $request = \Mockery::mock(ServerRequestInterface::class);
         $album = \Mockery::mock(AlbumInterface::class);
         $stream = \Mockery::mock(StreamInterface::class);
-        $item = \Mockery::mock(SongListItemInterface::class);
+        $item = \Mockery::mock(JsonSerializable::class);
 
         $result = 'some-result';
 

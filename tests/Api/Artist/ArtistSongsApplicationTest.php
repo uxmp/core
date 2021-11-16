@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Artist;
 
+use JsonSerializable;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
-use Uxmp\Core\Api\Lib\SongListItemInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
@@ -43,7 +43,7 @@ class ArtistSongsApplicationTest extends MockeryTestCase
         $disc = \Mockery::mock(DiscInterface::class);
         $song = \Mockery::mock(SongInterface::class);
         $stream = \Mockery::mock(StreamInterface::class);
-        $item = \Mockery::mock(SongListItemInterface::class);
+        $item = \Mockery::mock(JsonSerializable::class);
 
         $artistId = 666;
         $result = 'some-result';

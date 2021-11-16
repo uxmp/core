@@ -7,6 +7,7 @@ namespace Uxmp\Core\Api\Playback;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Orm\Repository\PlaybackHistoryRepositoryInterface;
 
 final class PlaybackHistoryApplication extends AbstractApiApplication
@@ -15,6 +16,7 @@ final class PlaybackHistoryApplication extends AbstractApiApplication
 
     public function __construct(
         private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
+        private ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 
@@ -32,22 +34,12 @@ final class PlaybackHistoryApplication extends AbstractApiApplication
         $result = [];
 
         foreach ($history as $item) {
-            $song = $item->getSong();
-            $user = $item->getUser();
-
-            $result[] = [
-                'songId' => $song->getId(),
-                'songName' => $song->getTitle(),
-                'songArtistName' => $song->getArtist()->getTitle(),
-                'userId' => $user->getId(),
-                'userName' => $user->getName(),
-                'playDate' => $item->getPlayDate()->getTimestamp(),
-            ];
+            $result[] = $this->resultItemFactory->createPlaybackHistoryItem($item);
         }
 
         return $this->asJson(
             $response,
-            $result,
+            ['items' => $result],
         );
     }
 }

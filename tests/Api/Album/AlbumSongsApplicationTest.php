@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Album;
 
+use JsonSerializable;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -12,7 +13,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
-use Uxmp\Core\Api\Lib\SongListItemInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
@@ -66,7 +66,7 @@ class AlbumSongsApplicationTest extends MockeryTestCase
         $disc = Mockery::mock(DiscInterface::class);
         $song = Mockery::mock(SongInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
-        $songListItem = Mockery::mock(SongListItemInterface::class);
+        $songListItem = Mockery::mock(JsonSerializable::class);
 
         $albumId = 666;
         $discId = 84;

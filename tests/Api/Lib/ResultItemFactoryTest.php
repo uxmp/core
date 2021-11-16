@@ -8,6 +8,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
+use Uxmp\Core\Orm\Model\PlaybackHistoryInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 
 class ResultItemFactoryTest extends MockeryTestCase
@@ -32,6 +33,16 @@ class ResultItemFactoryTest extends MockeryTestCase
             $this->subject->createSongListItem(
                 \Mockery::mock(SongInterface::class),
                 \Mockery::mock(AlbumInterface::class),
+            )
+        );
+    }
+
+    public function testCreatePlaybackHistoryItemReturnsInstance(): void
+    {
+        $this->assertInstanceOf(
+            PlaybackHistoryItem::class,
+            $this->subject->createPlaybackHistoryItem(
+                \Mockery::mock(PlaybackHistoryInterface::class),
             )
         );
     }

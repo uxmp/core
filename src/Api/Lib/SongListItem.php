@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Lib;
 
+use JsonSerializable;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 
-final class SongListItem implements SongListItemInterface
+final class SongListItem implements JsonSerializable
 {
     public function __construct(
         private ConfigProviderInterface $config,
