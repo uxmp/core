@@ -6,7 +6,7 @@
         "sort-packages": true
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.0 || ^8.1",
         "ext-readline": "*",
         "adhocore/cli": "^0.9.0",
         "doctrine/orm": "^2.9",
