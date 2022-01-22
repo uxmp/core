@@ -10,8 +10,8 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Component\Catalog\Manage\CatalogAdderInterface;
 use Uxmp\Core\Component\Catalog\Manage\CatalogUpdaterInterface;
+use Uxmp\Core\Component\Event\EventHandlerInterface;
 
 class CatalogUpdateCommandTest extends MockeryTestCase
 {
@@ -36,6 +36,7 @@ class CatalogUpdateCommandTest extends MockeryTestCase
     {
         $catalogUpdater = Mockery::mock(CatalogUpdaterInterface::class);
         $interactor = Mockery::mock(Interactor::class);
+        $eventHandler = Mockery::mock(EventHandlerInterface::class);
 
         $catalogId = 666;
 
@@ -43,6 +44,10 @@ class CatalogUpdateCommandTest extends MockeryTestCase
             ->with(CatalogUpdaterInterface::class)
             ->once()
             ->andReturn($catalogUpdater);
+        $this->dic->shouldReceive('get')
+            ->with(EventHandlerInterface::class)
+            ->once()
+            ->andReturn($eventHandler);
 
         $catalogUpdater->shouldReceive('update')
             ->with($interactor, $catalogId)
@@ -52,6 +57,10 @@ class CatalogUpdateCommandTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($interactor);
+
+        $eventHandler->shouldReceive('run')
+            ->withNoArgs()
+            ->once();
 
         $this->subject->execute($catalogId);
     }
