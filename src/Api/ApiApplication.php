@@ -68,6 +68,7 @@ final class ApiApplication
         $app->get('/album/{albumId}', Album\AlbumApplication::class);
         $app->get('/album/{albumId}/songs', Album\AlbumSongsApplication::class);
         $app->get('/random/songs[/{limit}]', Random\RandomSongsApplication::class);
+        $app->get('/random/favorite[/{limit}]', Random\RandomFavoriteSongsApplication::class);
         $app->get('/art/{type}/{id}', Art\ArtApplication::class);
         $app->get('/user/favorite', User\FavoriteListApplication::class);
         $app->post('/user/favorite/{type}/add', User\FavoriteAddApplication::class);
