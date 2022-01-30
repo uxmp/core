@@ -56,12 +56,25 @@
         }
     },
     "scripts": {
-        "serve": "php -S localhost:8888 -t src/public",
-	"qa": "composer check-cs && composer stan && composer test",
-	"check-cs": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
-	"fix-cs": "./vendor/bin/php-cs-fixer fix",
-	"test": "./vendor/bin/phpunit tests",
-	"stan": "./vendor/bin/phpstan analyse",
-	"coverage": "./vendor/bin/phpunit --warm-coverage-cache tests && XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html build/coverage tests"
+        "serve": "@php -S localhost:8888 -t src/public",
+        "qa": [
+            "@composer check-cs",
+            "@composer stan",
+            "@composer test"
+        ],
+        "check-cs": "php-cs-fixer fix --dry-run --diff",
+        "fix-cs": "php-cs-fixer fix",
+        "test": "phpunit tests",
+        "stan": "phpstan analyse",
+        "coverage": "phpunit --warm-coverage-cache tests && XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html build/coverage tests"
+    },
+    "scripts-descriptions": {
+        "serve": "Spins up a local php server",
+        "qa": "Runs all QA related scripts",
+        "check-cs": "Executes code style checks",
+        "fix-cs": "Apply the code style rules onto the codebase",
+        "test": "Runs the unittests",
+        "stan": "Runs phpstan code analysis",
+        "coverage": "Runs the code coverage generation"
     }
 }
