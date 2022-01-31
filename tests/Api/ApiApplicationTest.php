@@ -146,6 +146,12 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('post')
             ->with('/user/favorite/{type}/remove', User\FavoriteRemoveApplication::class)
             ->once();
+        $app->shouldReceive('post')
+            ->with('/radiostation', RadioStation\RadioStationCreationApplication::class)
+            ->once();
+        $app->shouldReceive('get')
+            ->with('/radiostations', RadioStation\RadioStationListApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();
