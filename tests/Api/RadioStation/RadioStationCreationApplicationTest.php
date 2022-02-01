@@ -10,6 +10,7 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Orm\Model\RadioStationInterface;
 use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 
@@ -17,14 +18,18 @@ class RadioStationCreationApplicationTest extends MockeryTestCase
 {
     private MockInterface $radioStationRepository;
 
+    private MockInterface $schemaValidator;
+
     private RadioStationCreationApplication $subject;
 
     public function setUp(): void
     {
         $this->radioStationRepository = Mockery::mock(RadioStationRepositoryInterface::class);
+        $this->schemaValidator = Mockery::mock(SchemaValidatorInterface::class);
 
         $this->subject = new RadioStationCreationApplication(
-            $this->radioStationRepository
+            $this->radioStationRepository,
+            $this->schemaValidator
         );
     }
 
@@ -39,8 +44,11 @@ class RadioStationCreationApplicationTest extends MockeryTestCase
         $name = 'some-name';
         $url = 'url';
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with(
+                $request,
+                'RadioStationCreation.json',
+            )
             ->once()
             ->andReturn(['name' => $name, 'url' => $url]);
 

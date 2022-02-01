@@ -7,6 +7,7 @@ namespace Uxmp\Core\Api\RadioStation;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 
 /**
@@ -14,8 +15,12 @@ use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
  */
 final class RadioStationCreationApplication extends AbstractApiApplication
 {
+    /**
+     * @param SchemaValidatorInterface<array{name: string, url: string}> $schemaValidator
+     */
     public function __construct(
         private RadioStationRepositoryInterface $radioStationRepository,
+        private SchemaValidatorInterface $schemaValidator,
     ) {
     }
 
@@ -24,16 +29,14 @@ final class RadioStationCreationApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        /** @var array<string, mixed> $body */
-        $body = $request->getParsedBody();
-
-        // @todo add validation checks
-        $name = (string) ($body['name'] ?? '');
-        $url = (string) ($body['url'] ?? '');
+        $body = $this->schemaValidator->getValidatedBody(
+            $request,
+            'RadioStationCreation.json',
+        );
 
         $station = $this->radioStationRepository->prototype()
-            ->setName($name)
-            ->setUrl($url);
+            ->setName($body['name'])
+            ->setUrl($body['url']);
 
         $this->radioStationRepository->save($station);
 

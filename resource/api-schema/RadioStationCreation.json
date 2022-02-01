@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/RadioStationCreation.json",
+  "title": "Radio station creation",
+  "description": "Defines the radio station creation request",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 255
+    },
+    "url": {
+      "type": "string",
+      "format": "url"
+    }
+  },
+  "require": ["name", "url"]
+}
