@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Common;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\JwtManagerInterface;
 use Uxmp\Core\Component\Session\SessionManagerInterface;
@@ -23,26 +25,30 @@ class LoginApplicationTest extends MockeryTestCase
 
     private MockInterface $sessionManager;
 
+    private MockInterface $schemaValidator;
+
     private LoginApplication $subject;
 
     public function setUp(): void
     {
-        $this->jwtManager = \Mockery::mock(JwtManagerInterface::class);
-        $this->configProvider = \Mockery::mock(ConfigProviderInterface::class);
-        $this->sessionManager = \Mockery::mock(SessionManagerInterface::class);
+        $this->jwtManager = Mockery::mock(JwtManagerInterface::class);
+        $this->configProvider = Mockery::mock(ConfigProviderInterface::class);
+        $this->sessionManager = Mockery::mock(SessionManagerInterface::class);
+        $this->schemaValidator = Mockery::mock(SchemaValidatorInterface::class);
 
         $this->subject = new LoginApplication(
             $this->jwtManager,
             $this->configProvider,
-            $this->sessionManager
+            $this->sessionManager,
+            $this->schemaValidator,
         );
     }
 
     public function testRunThrowsExceptionIfLoginFails(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $response->shouldReceive('withHeader')
             ->with('Content-Type', 'application/json')
@@ -60,10 +66,10 @@ class LoginApplicationTest extends MockeryTestCase
             ))
             ->once();
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'Login.json')
             ->once()
-            ->andReturn([]);
+            ->andReturn(['username' => '', 'password' => '']);
 
         $this->sessionManager->shouldReceive('login')
             ->with('', '')
@@ -75,11 +81,11 @@ class LoginApplicationTest extends MockeryTestCase
 
     public function testRunLogsInAndReturnsResponse(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $user = \Mockery::mock(UserInterface::class);
-        $session = \Mockery::mock(SessionInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $user = Mockery::mock(UserInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $lifetime = 123456;
         $userId = 666;
@@ -88,14 +94,16 @@ class LoginApplicationTest extends MockeryTestCase
         $apiBasePath = 'some-api-base-path';
         $token = 'some-token';
         $sessionId = 42;
+        $loginUser = 'some-user';
+        $loginPassword = 'some-password';
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'Login.json')
             ->once()
-            ->andReturn([]);
+            ->andReturn(['username' => $loginUser, 'password' => $loginPassword]);
 
         $this->sessionManager->shouldReceive('login')
-            ->with('', '')
+            ->with($loginUser, $loginPassword)
             ->once()
             ->andReturn($session);
 
@@ -141,7 +149,7 @@ class LoginApplicationTest extends MockeryTestCase
         $response->shouldReceive('withHeader')
             ->with(
                 'Set-Cookie',
-                \Mockery::on(function (string $value) use ($token, $cookieName, $apiBasePath): bool {
+                Mockery::on(function (string $value) use ($token, $cookieName, $apiBasePath): bool {
                     $expect = sprintf(
                         '%s=%s; path=%s/play; Expires=',
                         $cookieName,
@@ -170,11 +178,13 @@ class LoginApplicationTest extends MockeryTestCase
             ->once();
 
         $this->jwtManager->shouldReceive('encode')
-            ->with(\Mockery::on(function (array $value) use ($lifetime, $sessionId): bool {
-                return $value['iat'] <= time() &&
+            ->with(
+                Mockery::on(function (array $value) use ($lifetime, $sessionId): bool {
+                    return $value['iat'] <= time() &&
                     $value['exp'] <= time() + $lifetime &&
                     $value['sub'] == (string) $sessionId;
-            }))
+                })
+            )
             ->once()
             ->andReturn($token);
 

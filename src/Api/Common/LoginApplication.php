@@ -7,16 +7,21 @@ namespace Uxmp\Core\Api\Common;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\JwtManagerInterface;
 use Uxmp\Core\Component\Session\SessionManagerInterface;
 
 final class LoginApplication extends AbstractApiApplication
 {
+    /**
+     * @param SchemaValidatorInterface<array{username: string, password: string}> $schemaValidator
+     */
     public function __construct(
         private JwtManagerInterface $jwtManager,
         private ConfigProviderInterface $configProvider,
-        private SessionManagerInterface $sessionManager
+        private SessionManagerInterface $sessionManager,
+        private SchemaValidatorInterface $schemaValidator,
     ) {
     }
 
@@ -25,13 +30,15 @@ final class LoginApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        /** @var array<string, scalar> $body */
-        $body = $request->getParsedBody();
+        $body = $this->schemaValidator->getValidatedBody(
+            $request,
+            'Login.json'
+        );
 
-        $username = (string) ($body['username'] ?? '');
-        $password = (string) ($body['password'] ?? '');
-
-        $session = $this->sessionManager->login($username, $password);
+        $session = $this->sessionManager->login(
+            $body['username'],
+            $body['password'],
+        );
 
         if ($session === null) {
             return $this->asJson(
