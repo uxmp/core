@@ -74,6 +74,7 @@ final class ApiApplication
         $app->post('/user/favorite/{type}/add', User\FavoriteAddApplication::class);
         $app->post('/user/favorite/{type}/remove', User\FavoriteRemoveApplication::class);
         $app->post('/radiostation', RadioStation\RadioStationCreationApplication::class);
+        $app->delete('/radiostation/{stationId}', RadioStation\RadioStationDeletionApplication::class);
         $app->get('/radiostations', RadioStation\RadioStationListApplication::class);
 
         $app->run();

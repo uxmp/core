@@ -51,4 +51,18 @@ class RadioStationRepositoryTest extends MockeryTestCase
 
         $this->subject->save($station);
     }
+
+    public function testDeleteDeletes(): void
+    {
+        $station = \Mockery::mock(RadioStationInterface::class);
+
+        $this->entityManager->shouldReceive('remove')
+            ->with($station)
+            ->once();
+        $this->entityManager->shouldReceive('flush')
+            ->withNoArgs()
+            ->once();
+
+        $this->subject->delete($station);
+    }
 }

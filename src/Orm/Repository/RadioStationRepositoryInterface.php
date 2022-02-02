@@ -12,7 +12,18 @@ use Uxmp\Core\Orm\Model\RadioStationInterface;
  */
 interface RadioStationRepositoryInterface extends ObjectRepository
 {
+    /**
+     * Create a new RadioStation instance
+     */
     public function prototype(): RadioStationInterface;
 
+    /**
+     * Saves the RadioStation
+     */
     public function save(RadioStationInterface $station): void;
+
+    /**
+     * Deletes the RadioStation
+     */
+    public function delete(RadioStationInterface $station): void;
 }
