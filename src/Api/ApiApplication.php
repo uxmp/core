@@ -76,6 +76,8 @@ final class ApiApplication
         $app->post('/radiostation', RadioStation\RadioStationCreationApplication::class);
         $app->delete('/radiostation/{stationId}', RadioStation\RadioStationDeletionApplication::class);
         $app->get('/radiostations', RadioStation\RadioStationListApplication::class);
+        $app->get('/radiostation/{stationId}', RadioStation\RadioStationRetrieveApplication::class);
+        $app->put('/radiostation/{stationId}', RadioStation\RadioStationEditApplication::class);
 
         $app->run();
     }

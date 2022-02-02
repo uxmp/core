@@ -155,6 +155,12 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('get')
             ->with('/radiostations', RadioStation\RadioStationListApplication::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/radiostation/{stationId}', RadioStation\RadioStationRetrieveApplication::class)
+            ->once();
+        $app->shouldReceive('put')
+            ->with('/radiostation/{stationId}', RadioStation\RadioStationEditApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();
