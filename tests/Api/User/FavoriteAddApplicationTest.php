@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
@@ -26,6 +27,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
 
     private MockInterface $albumRepository;
 
+    private MockInterface $schemaValidator;
+
     private FavoriteAddApplication $subject;
 
     public function setUp(): void
@@ -33,11 +36,13 @@ class FavoriteAddApplicationTest extends MockeryTestCase
         $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
         $this->favoriteManager = Mockery::mock(FavoriteManagerInterface::class);
+        $this->schemaValidator = Mockery::mock(SchemaValidatorInterface::class);
 
         $this->subject = new FavoriteAddApplication(
             $this->songRepository,
             $this->albumRepository,
             $this->favoriteManager,
+            $this->schemaValidator,
         );
     }
 
@@ -46,8 +51,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
         $request = Mockery::mock(ServerRequestInterface::class);
         $response = Mockery::mock(ResponseInterface::class);
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([]);
 
@@ -79,8 +84,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnNull();
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
                 'itemId' => (string) $songId
@@ -124,8 +129,8 @@ class FavoriteAddApplicationTest extends MockeryTestCase
             ->once()
             ->andReturn($obj);
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
                 'itemId' => (string) $songId

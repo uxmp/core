@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/AddRemoveFavoriteItem.json",
+  "title": "User login",
+  "description": "Defines the request for adding/removing favorite items",
+  "type": "object",
+  "properties": {
+    "itemId": {
+      "type": "number"
+    }
+  },
+  "require": ["itemId"],
+  "additionalProperties": false
+}

@@ -7,6 +7,7 @@ namespace Uxmp\Core\Api\User;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
@@ -22,10 +23,12 @@ final class FavoriteAddApplication extends AbstractFavoriteApplication
         SongRepositoryInterface $songRepository,
         AlbumRepositoryInterface $albumRepository,
         private FavoriteManagerInterface $favoriteManager,
+        SchemaValidatorInterface $schemaValidator,
     ) {
         parent::__construct(
             $songRepository,
             $albumRepository,
+            $schemaValidator,
         );
     }
 

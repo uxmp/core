@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 use Uxmp\Core\Component\Favorite\FavoriteManagerInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
@@ -26,6 +27,8 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
 
     private MockInterface $favoriteManager;
 
+    private MockInterface $schemaValidator;
+
     private FavoriteRemoveApplication $subject;
 
     public function setUp(): void
@@ -33,11 +36,13 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
         $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
         $this->favoriteManager = Mockery::mock(FavoriteManagerInterface::class);
+        $this->schemaValidator = Mockery::mock(SchemaValidatorInterface::class);
 
         $this->subject = new FavoriteRemoveApplication(
             $this->songRepository,
             $this->albumRepository,
             $this->favoriteManager,
+            $this->schemaValidator,
         );
     }
 
@@ -53,8 +58,8 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnNull();
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
                 'itemId' => (string) $songId
@@ -98,8 +103,8 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
             ->once()
             ->andReturn($obj);
 
-        $request->shouldReceive('getParsedBody')
-            ->withNoArgs()
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
                 'itemId' => (string) $songId
