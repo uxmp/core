@@ -78,6 +78,7 @@ final class ApiApplication
         $app->get('/radiostations', RadioStation\RadioStationListApplication::class);
         $app->get('/radiostation/{stationId}', RadioStation\RadioStationRetrieveApplication::class);
         $app->put('/radiostation/{stationId}', RadioStation\RadioStationEditApplication::class);
+        $app->get('/usersettings', User\RetrieveUserSettingsApplication::class);
 
         $app->run();
     }

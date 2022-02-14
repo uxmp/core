@@ -23,6 +23,11 @@ class User implements UserInterface
     private string $name = '';
 
     /**
+     * @Column(type="string", options={"default" : "en"})
+     */
+    private string $language = 'en';
+
+    /**
      * @Column(type="string")
      */
     private string $password = '';
@@ -51,6 +56,20 @@ class User implements UserInterface
     public function setPassword(string $password): UserInterface
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * Returns the language iso2 code
+     */
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(string $language): UserInterface
+    {
+        $this->language = $language;
         return $this;
     }
 }

@@ -19,6 +19,7 @@ class UserTest extends ModelTestCase
         return [
             ['Name', 'some-name'],
             ['Password', 'some-password'],
+            ['Language', 'some-language'],
         ];
     }
 }
