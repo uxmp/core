@@ -162,7 +162,10 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/radiostation/{stationId}', RadioStation\RadioStationEditApplication::class)
             ->once();
         $app->shouldReceive('get')
-            ->with('/usersettings', User\RetrieveUserSettingsApplication::class)
+            ->with('/usersettings', User\UserSettingsRetrieveApplication::class)
+            ->once();
+        $app->shouldReceive('put')
+            ->with('/usersettings', User\UserSettingsEditApplication::class)
             ->once();
         $app->shouldReceive('run')
             ->withNoArgs()

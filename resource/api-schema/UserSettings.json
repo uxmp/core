@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/UserSettings.json",
+  "title": "User-settings update",
+  "description": "Defines the user-settings update request",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["en", "de"],
+      "description": "iso2 code of the user language"
+    }
+  },
+  "require": ["language"]
+}

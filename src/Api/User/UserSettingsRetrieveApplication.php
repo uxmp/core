@@ -13,7 +13,7 @@ use Uxmp\Core\Orm\Model\UserInterface;
 /**
  * Delivers the user settings
  */
-final class RetrieveUserSettingsApplication extends AbstractApiApplication
+final class UserSettingsRetrieveApplication extends AbstractApiApplication
 {
     protected function run(
         ServerRequestInterface $request,

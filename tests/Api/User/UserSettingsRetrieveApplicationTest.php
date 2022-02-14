@@ -12,13 +12,13 @@ use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
 
-class RetrieveUserSettingsApplicationTest extends MockeryTestCase
+class UserSettingsRetrieveApplicationTest extends MockeryTestCase
 {
-    private RetrieveUserSettingsApplication $subject;
+    private UserSettingsRetrieveApplication $subject;
 
     public function setUp(): void
     {
-        $this->subject = new RetrieveUserSettingsApplication();
+        $this->subject = new UserSettingsRetrieveApplication();
     }
 
     public function testRunRetrieveSettings(): void
