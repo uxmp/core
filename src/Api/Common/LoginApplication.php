@@ -64,7 +64,11 @@ final class LoginApplication extends AbstractApiApplication
                 [
                     'data' => [
                         'token' => $token,
-                        'user' => ['id' => $user->getId(), 'name' => $user->getName()]
+                        'user' => [
+                            'id' => $user->getId(),
+                            'name' => $user->getName(),
+                            'language' => $user->getLanguage(),
+                        ]
                     ]
                 ]
             )

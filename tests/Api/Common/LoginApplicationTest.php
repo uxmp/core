@@ -96,6 +96,7 @@ class LoginApplicationTest extends MockeryTestCase
         $sessionId = 42;
         $loginUser = 'some-user';
         $loginPassword = 'some-password';
+        $language = 'some-language';
 
         $this->schemaValidator->shouldReceive('getValidatedBody')
             ->with($request, 'Login.json')
@@ -137,6 +138,10 @@ class LoginApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($userName);
+        $user->shouldReceive('getLanguage')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($language);
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -169,7 +174,7 @@ class LoginApplicationTest extends MockeryTestCase
                     [
                         'data' => [
                             'token' => $token,
-                            'user' => ['id' => $userId, 'name' => $userName]
+                            'user' => ['id' => $userId, 'name' => $userName, 'language' => $language]
                         ]
                     ],
                     JSON_PRETTY_PRINT
