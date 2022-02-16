@@ -26,6 +26,8 @@ final class AudioFile implements AudioFileInterface
 
     private int $discNumber = 0;
 
+    private ?int $year = null;
+
     public function getTrackNumber(): int
     {
         return $this->trackNumber;
@@ -139,5 +141,15 @@ final class AudioFile implements AudioFileInterface
     public function isValid(): bool
     {
         return $this->mbid !== '' && $this->artistMbid !== '' && $this->albumMbid !== '';
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(?int $year): void
+    {
+        $this->year = $year;
     }
 }

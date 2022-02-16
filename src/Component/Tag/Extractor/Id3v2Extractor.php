@@ -16,6 +16,8 @@ final class Id3v2Extractor implements ExtractorInterface
     ): void {
         $tags = $data[self::META_DATA_KEY];
 
+        $year = $tags['text']['originalyear'] ?? null;
+
         $audioFile
             ->setMbid($tags['text']['MusicBrainz Release Track Id'] ?? '')
             ->setTitle(current($tags['title']))
@@ -26,6 +28,7 @@ final class Id3v2Extractor implements ExtractorInterface
             ->setAlbumMbid($tags['text']['MusicBrainz Album Id'] ?? '')
             ->setDiscMbid($tags['text']['MusicBrainz Release Group Id'] ?? '')
             ->setDiscNumber((int) strstr((string) current($tags['part_of_a_set']), '/', true))
+            ->setYear($year === null ? null : (int) $year)
         ;
     }
 

@@ -27,6 +27,8 @@ class Id3v2ExtractorTest extends MockeryTestCase
 
     private string $discNumber = '1';
 
+    private string $year = '6666';
+
     private Id3v2Extractor $subject;
 
     public function setUp(): void
@@ -56,6 +58,7 @@ class Id3v2ExtractorTest extends MockeryTestCase
                 'MusicBrainz Album Artist Id' => $this->artistMbid,
                 'MusicBrainz Album Id' => $this->albumMbid,
                 'MusicBrainz Release Group Id' => $this->discMbid,
+                'originalyear' => $this->year,
             ],
             'title' => [$this->title],
             'track_number' => [$this->trackNumber],
@@ -100,6 +103,10 @@ class Id3v2ExtractorTest extends MockeryTestCase
             ->andReturnSelf();
         $audioFile->shouldReceive('setDiscNumber')
             ->with((int) $this->discNumber)
+            ->once()
+            ->andReturnSelf();
+        $audioFile->shouldReceive('setYear')
+            ->with((int) $this->year)
             ->once()
             ->andReturnSelf();
 

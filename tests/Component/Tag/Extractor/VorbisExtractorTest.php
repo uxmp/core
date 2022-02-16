@@ -43,6 +43,8 @@ class VorbisExtractorTest extends MockeryTestCase
         $albumMbid = 'some-album-mbid';
         $discMbId = 'some-disc-mbid';
         $discNumber = 42;
+        $year = '1234';
+
         $data = [
             'musicbrainz_trackid' => [$mbid],
             'title' => [$title],
@@ -53,6 +55,7 @@ class VorbisExtractorTest extends MockeryTestCase
             'musicbrainz_albumid' => [$albumMbid],
             'musicbrainz_releasegroupid' => [$discMbId],
             'discnumber' => [(string) $discNumber],
+            'originalyear' => [$year],
         ];
 
         $audioFile->shouldReceive('setMbid')
@@ -89,6 +92,10 @@ class VorbisExtractorTest extends MockeryTestCase
             ->andReturnSelf();
         $audioFile->shouldReceive('setDiscNumber')
             ->with($discNumber)
+            ->once()
+            ->andReturnSelf();
+        $audioFile->shouldReceive('setYear')
+            ->with($year)
             ->once()
             ->andReturnSelf();
 

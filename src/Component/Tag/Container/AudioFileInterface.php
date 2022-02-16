@@ -45,4 +45,8 @@ interface AudioFileInterface
     public function setDiscNumber(int $discNumber): AudioFileInterface;
 
     public function isValid(): bool;
+
+    public function getYear(): ?int;
+
+    public function setYear(?int $year): void;
 }

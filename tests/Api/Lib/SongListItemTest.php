@@ -48,6 +48,7 @@ class SongListItemTest extends MockeryTestCase
         $baseUrl = 'some-base-url';
         $cover = sprintf('%s/art/album/%d', $baseUrl, $albumId);
         $length = 123;
+        $year = 11;
 
         $this->config->shouldReceive('getBaseUrl')
             ->withNoArgs()
@@ -75,6 +76,10 @@ class SongListItemTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($length);
+        $this->song->shouldReceive('getYear')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($year);
 
         $this->album->shouldReceive('getTitle')
             ->withNoArgs()
@@ -106,6 +111,7 @@ class SongListItemTest extends MockeryTestCase
                 'artistId' => $artistId,
                 'albumId' => $albumId,
                 'length' => $length,
+                'year' => $year,
             ],
             $this->subject->jsonSerialize()
         );

@@ -58,6 +58,11 @@ class Song implements SongInterface
     private int $length = 0;
 
     /**
+     * @Column(type="integer", length="4", nullable=true)
+     */
+    private ?int $year = null;
+
+    /**
      * @ManyToOne(targetEntity="Disc", inversedBy="songs")
      * @JoinColumn(name="disc_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -171,5 +176,16 @@ class Song implements SongInterface
     public function getType(): string
     {
         return 'song';
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(?int $year): SongInterface
+    {
+        $this->year = $year;
+        return $this;
     }
 }

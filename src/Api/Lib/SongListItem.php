@@ -37,6 +37,7 @@ final class SongListItem implements JsonSerializable
             'artistId' => $artist->getId(),
             'albumId' => $albumId,
             'length' => $this->song->getLength(),
+            'year' => $this->song->getYear(),
         ];
     }
 }

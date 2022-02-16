@@ -39,4 +39,8 @@ interface SongInterface extends FavoriteAbleInterface
     public function getLength(): int;
 
     public function setLength(int $length): SongInterface;
+
+    public function getYear(): ?int;
+
+    public function setYear(?int $year): SongInterface;
 }

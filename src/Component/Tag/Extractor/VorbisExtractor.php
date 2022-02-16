@@ -16,6 +16,8 @@ final class VorbisExtractor implements ExtractorInterface
     ): void {
         $tags = $data[static::META_DATA_KEY];
 
+        $year = current($tags['originalyear'] ?? []);
+
         $audioFile
             ->setMbid(current($tags['musicbrainz_trackid']))
             ->setTitle(current($tags['title']))
@@ -26,6 +28,7 @@ final class VorbisExtractor implements ExtractorInterface
             ->setAlbumMbid(current($tags['musicbrainz_albumid']))
             ->setDiscMbid(current($tags['musicbrainz_releasegroupid']))
             ->setDiscNumber((int) current($tags['discnumber']))
+            ->setYear($year === false ? null : (int) $year)
         ;
     }
 

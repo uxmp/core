@@ -43,6 +43,7 @@ class AudioFileTest extends MockeryTestCase
             ['AlbumMbid', 'some-album-mbid'],
             ['DiscMbid', 'some-disc-mbid'],
             ['DiscNumber', 666],
+            ['Year', 42],
         ];
     }
 
