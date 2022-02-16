@@ -18,6 +18,8 @@ final class CatalogUpdater implements CatalogUpdaterInterface
     private const SUPPORTED_FORMATS = [
         'mp3',
         'flac',
+        'ogg',
+        'wav',
     ];
 
     public function __construct(
