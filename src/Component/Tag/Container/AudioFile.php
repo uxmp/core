@@ -6,25 +6,25 @@ namespace Uxmp\Core\Component\Tag\Container;
 
 final class AudioFile implements AudioFileInterface
 {
-    private string $title;
+    private string $title = '';
 
-    private int $trackNumber;
+    private int $trackNumber = 0;
 
-    private string $filename;
+    private string $filename = '';
 
-    private string $mbid;
+    private string $mbid = '';
 
-    private string $artistTitle;
+    private string $artistTitle = '';
 
-    private string $artistMbid;
+    private string $artistMbid = '';
 
-    private string $albumTitle;
+    private string $albumTitle = '';
 
-    private string $albumMbid;
+    private string $albumMbid = '';
 
-    private string $discMbid;
+    private string $discMbid = '';
 
-    private int $discNumber;
+    private int $discNumber = 0;
 
     public function getTrackNumber(): int
     {
