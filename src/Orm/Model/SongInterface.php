@@ -43,4 +43,8 @@ interface SongInterface extends FavoriteAbleInterface
     public function getYear(): ?int;
 
     public function setYear(?int $year): SongInterface;
+
+    public function getMimeType(): ?string;
+
+    public function setMimeType(?string $mimeType): SongInterface;
 }

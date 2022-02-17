@@ -50,7 +50,7 @@ final class PlaySongApplication extends AbstractApiApplication
         $size = filesize($path);
 
         return $response
-            ->withHeader('Content-Type', 'audio/mpeg, audio/x-mpeg, audio/x-mpeg-3, audio/mpeg3')
+            ->withHeader('Content-Type', (string) $song->getMimeType())
             ->withHeader('Content-Disposition', 'filename=song'.$songId.'.mp3')
             ->withHeader('Content-Length', (string) $size)
             ->withHeader('Cache-Control', 'no-cache')

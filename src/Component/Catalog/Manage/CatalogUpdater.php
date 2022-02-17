@@ -85,6 +85,8 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 continue;
             }
 
+            $audioFile->setMimeType((string) ($analysisResult['mime_type'] ?? ''));
+
             $extractor->extract(
                 $analysisResult['tags'],
                 $audioFile
@@ -119,6 +121,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 ->setCatalog($catalog)
                 ->setLength((int) round($analysisResult['playtime_seconds']))
                 ->setYear($audioFile->getYear())
+                ->setMimeType($audioFile->getMimeType())
             ;
 
             $this->songRepository->save($song);

@@ -26,6 +26,7 @@ class SongTest extends ModelTestCase
             ['Catalog', \Mockery::mock(CatalogInterface::class)],
             ['Length', 42],
             ['Year', 33],
+            ['MimeType', 'some-type'],
         ];
     }
 

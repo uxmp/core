@@ -48,5 +48,9 @@ interface AudioFileInterface
 
     public function getYear(): ?int;
 
-    public function setYear(?int $year): void;
+    public function setYear(?int $year): AudioFileInterface;
+
+    public function getMimeType(): string;
+
+    public function setMimeType(string $mimeType): AudioFileInterface;
 }

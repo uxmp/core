@@ -28,6 +28,8 @@ final class AudioFile implements AudioFileInterface
 
     private ?int $year = null;
 
+    private string $mimeType = '';
+
     public function getTrackNumber(): int
     {
         return $this->trackNumber;
@@ -140,7 +142,11 @@ final class AudioFile implements AudioFileInterface
 
     public function isValid(): bool
     {
-        return $this->mbid !== '' && $this->artistMbid !== '' && $this->albumMbid !== '';
+        return
+            $this->mbid !== '' &&
+            $this->artistMbid !== '' &&
+            $this->albumMbid !== '' &&
+            $this->mimeType !== '';
     }
 
     public function getYear(): ?int
@@ -148,8 +154,20 @@ final class AudioFile implements AudioFileInterface
         return $this->year;
     }
 
-    public function setYear(?int $year): void
+    public function setYear(?int $year): AudioFileInterface
     {
         $this->year = $year;
+        return $this;
+    }
+
+    public function getMimeType(): string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): AudioFileInterface
+    {
+        $this->mimeType = $mimeType;
+        return $this;
     }
 }

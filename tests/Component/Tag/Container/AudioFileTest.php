@@ -44,6 +44,7 @@ class AudioFileTest extends MockeryTestCase
             ['DiscMbid', 'some-disc-mbid'],
             ['DiscNumber', 666],
             ['Year', 42],
+            ['MimeType', 'some/type'],
         ];
     }
 
@@ -60,6 +61,7 @@ class AudioFileTest extends MockeryTestCase
             ->setMbid('some-mbid')
             ->setArtistMbid('some-artist-mbid')
             ->setAlbumMbid('some-album-mbid')
+            ->setMimeType('some/type')
         ;
 
         $this->assertTrue(
