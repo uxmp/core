@@ -49,7 +49,7 @@ final class FavoriteAddApplication extends AbstractFavoriteApplication
         return $this->asJson(
             $response,
             [
-                'result' => $this->favoriteManager->add($obj, $user)
+                'result' => $this->favoriteManager->add($obj, $user),
             ]
         );
     }

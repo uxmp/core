@@ -15,6 +15,5 @@ return [
         ->constructorParameter(
             'validator',
             get(Validator::class)
-        )
-    ,
+        ),
 ];

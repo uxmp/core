@@ -43,7 +43,7 @@ final class RadioStationCreationApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'result' => $station->getId()
+                'result' => $station->getId(),
             ]
         );
     }

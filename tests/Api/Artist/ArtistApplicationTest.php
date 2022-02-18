@@ -68,7 +68,7 @@ class ArtistApplicationTest extends MockeryTestCase
         $result = [
             'id' => $artistId,
             'name' => $title,
-            'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId)
+            'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId),
         ];
 
         $this->artistRepository->shouldReceive('find')

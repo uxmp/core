@@ -49,7 +49,7 @@ final class FavoriteRemoveApplication extends AbstractFavoriteApplication
         return $this->asJson(
             $response,
             [
-                'result' => $this->favoriteManager->remove($obj, $user)
+                'result' => $this->favoriteManager->remove($obj, $user),
             ]
         );
     }

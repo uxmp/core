@@ -36,22 +36,22 @@ final class DiscRepository extends EntityRepository implements DiscRepositoryInt
     public function findByMbId(string $mbid): ?DiscInterface
     {
         return $this->findOneBy([
-            'mbid' => $mbid
+            'mbid' => $mbid,
         ]);
     }
 
     public function findEmptyDiscs(CatalogInterface $catalog): array
     {
         $query = <<<SQL
-        SELECT disc
-        FROM %s disc
-        LEFT JOIN %s song 
-        WITH song.disc_id = disc.id
-        LEFT JOIN %s album
-        WITH album.id = disc.album_id
-        WHERE album.catalog_id = %d
-        GROUP BY disc HAVING COUNT(song.id) = 0
-        SQL;
+            SELECT disc
+            FROM %s disc
+            LEFT JOIN %s song 
+            WITH song.disc_id = disc.id
+            LEFT JOIN %s album
+            WITH album.id = disc.album_id
+            WHERE album.catalog_id = %d
+            GROUP BY disc HAVING COUNT(song.id) = 0
+            SQL;
 
         return $this->getEntityManager()
             ->createQuery(sprintf(

@@ -78,7 +78,7 @@ class ArtistListApplicationTest extends MockeryTestCase
                     ['items' => [[
                         'id' => $artistId,
                         'name' => $artistName,
-                        'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId)
+                        'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId),
                     ]]],
                     JSON_PRETTY_PRINT
                 )

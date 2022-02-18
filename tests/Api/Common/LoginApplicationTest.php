@@ -174,8 +174,8 @@ class LoginApplicationTest extends MockeryTestCase
                     [
                         'data' => [
                             'token' => $token,
-                            'user' => ['id' => $userId, 'name' => $userName, 'language' => $language]
-                        ]
+                            'user' => ['id' => $userId, 'name' => $userName, 'language' => $language],
+                        ],
                     ],
                     JSON_PRETTY_PRINT
                 )

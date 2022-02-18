@@ -46,7 +46,7 @@ final class UserSettingsEditApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'result' => true
+                'result' => true,
             ]
         );
     }

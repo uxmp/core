@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Session;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
+use Uxmp\Core\Component\User\PasswordVerificatorInterface;
 use Uxmp\Core\Orm\Model\SessionInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
@@ -17,16 +19,20 @@ class SessionManagerTest extends MockeryTestCase
 
     private MockInterface $userRepository;
 
+    private MockInterface $passwordVerificator;
+
     private SessionManager $subject;
 
     public function setUp(): void
     {
-        $this->sessionRepository = \Mockery::mock(SessionRepositoryInterface::class);
-        $this->userRepository = \Mockery::mock(UserRepositoryInterface::class);
+        $this->sessionRepository = Mockery::mock(SessionRepositoryInterface::class);
+        $this->userRepository = Mockery::mock(UserRepositoryInterface::class);
+        $this->passwordVerificator = Mockery::mock(PasswordVerificatorInterface::class);
 
         $this->subject = new SessionManager(
             $this->sessionRepository,
             $this->userRepository,
+            $this->passwordVerificator,
         );
     }
 
@@ -60,7 +66,7 @@ class SessionManagerTest extends MockeryTestCase
     {
         $sessionId = 666;
 
-        $session = \Mockery::mock(SessionInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
 
         $this->sessionRepository->shouldReceive('find')
             ->with($sessionId)
@@ -97,17 +103,17 @@ class SessionManagerTest extends MockeryTestCase
         $username = 'some-username';
         $password = 'some-password';
 
-        $user = \Mockery::mock(UserInterface::class);
+        $user = Mockery::mock(UserInterface::class);
 
         $this->userRepository->shouldReceive('findOneBy')
             ->with(['name' => $username])
             ->once()
             ->andReturn($user);
 
-        $user->shouldReceive('getPassword')
-            ->withNoArgs()
+        $this->passwordVerificator->shouldReceive('verify')
+            ->with($user, $password)
             ->once()
-            ->andReturn('something');
+            ->andReturnFalse();
 
         $this->assertNull(
             $this->subject->login($username, $password)
@@ -119,18 +125,18 @@ class SessionManagerTest extends MockeryTestCase
         $username = 'some-username';
         $password = 'some-password';
 
-        $user = \Mockery::mock(UserInterface::class);
-        $session = \Mockery::mock(SessionInterface::class);
+        $user = Mockery::mock(UserInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
 
         $this->userRepository->shouldReceive('findOneBy')
             ->with(['name' => $username])
             ->once()
             ->andReturn($user);
 
-        $user->shouldReceive('getPassword')
-            ->withNoArgs()
+        $this->passwordVerificator->shouldReceive('verify')
+            ->with($user, $password)
             ->once()
-            ->andReturn(password_hash($password, PASSWORD_DEFAULT));
+            ->andReturnTrue();
 
         $this->sessionRepository->shouldReceive('prototype->setActive')
             ->with(true)

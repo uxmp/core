@@ -52,7 +52,7 @@ final class ApiApplication
             'headers.allow' => ['Authorization', 'Content-Type'],
             'origin' => [$this->config->getCorsOrigin()],
             'logger' => $logger,
-            'credentials' => true
+            'credentials' => true,
         ]));
 
         $app->post('/common/login', Common\LoginApplication::class);

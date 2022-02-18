@@ -27,7 +27,7 @@ final class ArtistRepository extends EntityRepository implements ArtistRepositor
     public function findByMbId(string $mbid): ?ArtistInterface
     {
         return $this->findOneBy([
-            'mbid' => $mbid
+            'mbid' => $mbid,
         ]);
     }
 }

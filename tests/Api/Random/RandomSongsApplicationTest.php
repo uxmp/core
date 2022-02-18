@@ -77,8 +77,8 @@ class RandomSongsApplicationTest extends MockeryTestCase
         $stream->shouldReceive('write')
             ->with(json_encode([
                 'items' => [[
-                    $result
-                ]]
+                    $result,
+                ]],
             ], JSON_PRETTY_PRINT))
             ->once();
 

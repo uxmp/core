@@ -110,13 +110,13 @@ class AlbumRepositoryTest extends MockeryTestCase
         $result = [Mockery::mock(AlbumInterface::class)];
 
         $sql = <<<SQL
-        SELECT album
-        FROM %s album
-        LEFT JOIN %s disc 
-        WITH disc.album_id = album.id
-        WHERE album.catalog_id = %d
-        GROUP BY album HAVING COUNT(disc.id) = 0
-        SQL;
+            SELECT album
+            FROM %s album
+            LEFT JOIN %s disc 
+            WITH disc.album_id = album.id
+            WHERE album.catalog_id = %d
+            GROUP BY album HAVING COUNT(disc.id) = 0
+            SQL;
 
         $catalog->shouldReceive('getId')
             ->withNoArgs()

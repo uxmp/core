@@ -10,6 +10,7 @@ use Uxmp\Core\Component\Cli\CatalogAddCommand;
 use Uxmp\Core\Component\Cli\CatalogCleanCommand;
 use Uxmp\Core\Component\Cli\CatalogListCommand;
 use Uxmp\Core\Component\Cli\CatalogUpdateCommand;
+use Uxmp\Core\Component\Cli\UserAddCommand;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 Init::run(
@@ -25,6 +26,7 @@ Init::run(
         $app->add(new CatalogListCommand($dic), 'cl');
         $app->add(new ArtUpdateCommand($dic), 'au');
         $app->add(new BootstrapCommand($dic), 'sb');
+        $app->add(new UserAddCommand($dic), 'ua');
 
         $logo = <<<LOGO
              _   ___  ___ __ ___  _ __  

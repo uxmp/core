@@ -101,7 +101,7 @@ class AlbumRecentApplicationTest extends MockeryTestCase
                     'artistName' => $artistTitle,
                     'name' => $albumTitle,
                     'cover' => sprintf('%s/art/album/%d', $baseUrl, $albumId),
-                    'length' => $length
+                    'length' => $length,
                 ]]], JSON_PRETTY_PRINT),
             )
             ->once();

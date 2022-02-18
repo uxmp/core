@@ -39,7 +39,7 @@ final class RadioStationDeletionApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'result' => $result
+                'result' => $result,
             ]
         );
     }

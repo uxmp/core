@@ -35,7 +35,7 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
     public function findByMbId(string $mbid): ?AlbumInterface
     {
         return $this->findOneBy([
-            'mbid' => $mbid
+            'mbid' => $mbid,
         ]);
     }
 
@@ -79,13 +79,13 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
     public function findEmptyAlbums(CatalogInterface $catalog): iterable
     {
         $query = <<<SQL
-        SELECT album
-        FROM %s album
-        LEFT JOIN %s disc 
-        WITH disc.album_id = album.id
-        WHERE album.catalog_id = %d
-        GROUP BY album HAVING COUNT(disc.id) = 0
-        SQL;
+            SELECT album
+            FROM %s album
+            LEFT JOIN %s disc 
+            WITH disc.album_id = album.id
+            WHERE album.catalog_id = %d
+            GROUP BY album HAVING COUNT(disc.id) = 0
+            SQL;
 
         return $this->getEntityManager()
             ->createQuery(sprintf(

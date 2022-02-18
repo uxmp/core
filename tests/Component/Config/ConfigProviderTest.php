@@ -81,21 +81,21 @@ class ConfigProviderTest extends MockeryTestCase
                 'some-host-name',
                 80,
                 1,
-                'https://some-host-name/some-base-path'
+                'https://some-host-name/some-base-path',
             ],
             [
                 '',
                 'some-host-name',
                 666,
                 0,
-                'http://some-host-name:666'
+                'http://some-host-name:666',
             ],
             [
                 '/api',
                 'some-host-name',
                 443,
                 1,
-                'https://some-host-name/api'
+                'https://some-host-name/api',
             ],
         ];
     }

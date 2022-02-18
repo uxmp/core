@@ -41,7 +41,7 @@ final class RadioStationListApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'items' => $result
+                'items' => $result,
             ]
         );
     }

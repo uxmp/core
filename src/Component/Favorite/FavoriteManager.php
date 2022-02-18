@@ -49,7 +49,7 @@ final class FavoriteManager implements FavoriteManagerInterface
         $favorite = $this->favoriteRepository->findOneBy([
             'user' => $user,
             'item_id' => $obj->getId(),
-            'type' => $obj->getType()
+            'type' => $obj->getType(),
         ]);
 
         if ($favorite !== null) {

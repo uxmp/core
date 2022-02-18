@@ -51,7 +51,7 @@ final class RadioStationEditApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'result' => true
+                'result' => true,
             ]
         );
     }

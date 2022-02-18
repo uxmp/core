@@ -4,15 +4,20 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Session;
 
+use Uxmp\Core\Component\User\PasswordVerificatorInterface;
 use Uxmp\Core\Orm\Model\SessionInterface;
 use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
 use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 
+/**
+ * Handles session lookup and login/logout of users
+ */
 final class SessionManager implements SessionManagerInterface
 {
     public function __construct(
         private SessionRepositoryInterface $sessionRepository,
-        private UserRepositoryInterface $userRepository
+        private UserRepositoryInterface $userRepository,
+        private PasswordVerificatorInterface $passwordVerificator,
     ) {
     }
 
@@ -43,7 +48,7 @@ final class SessionManager implements SessionManagerInterface
             return null;
         }
 
-        if (password_verify($password, $user->getPassword()) === false) {
+        if ($this->passwordVerificator->verify($user, $password) === false) {
             return null;
         }
 

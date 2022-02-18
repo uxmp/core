@@ -39,7 +39,7 @@ final class SongRepository extends EntityRepository implements SongRepositoryInt
     public function findByMbId(string $mbid): ?SongInterface
     {
         return $this->findOneBy([
-            'mbid' => $mbid
+            'mbid' => $mbid,
         ]);
     }
 

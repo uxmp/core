@@ -68,8 +68,8 @@ final class LoginApplication extends AbstractApiApplication
                             'id' => $user->getId(),
                             'name' => $user->getName(),
                             'language' => $user->getLanguage(),
-                        ]
-                    ]
+                        ],
+                    ],
                 ]
             )
             ->withHeader(

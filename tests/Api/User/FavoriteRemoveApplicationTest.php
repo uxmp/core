@@ -62,7 +62,7 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
             ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
-                'itemId' => (string) $songId
+                'itemId' => (string) $songId,
             ]);
 
         $response->shouldReceive('withStatus')
@@ -77,7 +77,7 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
                 $request,
                 $response,
                 [
-                    'type' => 'song'
+                    'type' => 'song',
                 ]
             )
         );
@@ -107,7 +107,7 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
             ->with($request, 'AddRemoveFavoriteItem.json')
             ->once()
             ->andReturn([
-                'itemId' => (string) $songId
+                'itemId' => (string) $songId,
             ]);
         $request->shouldReceive('getAttribute')
             ->with(SessionValidatorMiddleware::USER)
@@ -139,7 +139,7 @@ class FavoriteRemoveApplicationTest extends MockeryTestCase
                 $request,
                 $response,
                 [
-                    'type' => $itemType
+                    'type' => $itemType,
                 ]
             )
         );
