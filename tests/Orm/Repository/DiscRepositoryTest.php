@@ -72,9 +72,10 @@ class DiscRepositoryTest extends MockeryTestCase
         $this->subject->delete($disc);
     }
 
-    public function testFindByMbIdReturnsValue(): void
+    public function testFindUniqDiscReturnsValue(): void
     {
         $mbid = 'some-mbid';
+        $discNumber = 666;
 
         $result = \Mockery::mock(DiscInterface::class);
         $unitOfWork = \Mockery::mock(UnitOfWork::class);
@@ -91,13 +92,24 @@ class DiscRepositoryTest extends MockeryTestCase
             ->andReturn($persister);
 
         $persister->shouldReceive('load')
-            ->with(['mbid' => $mbid], null, null, [], null, 1, null)
+            ->with(
+                [
+                    'mbid' => $mbid,
+                    'number' => $discNumber,
+                ],
+                null,
+                null,
+                [],
+                null,
+                1,
+                null
+            )
             ->once()
             ->andReturn($result);
 
         $this->assertSame(
             $result,
-            $this->subject->findByMbId($mbid)
+            $this->subject->findUniqueDisc($mbid, $discNumber)
         );
     }
 

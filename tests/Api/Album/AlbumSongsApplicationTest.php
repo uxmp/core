@@ -71,6 +71,7 @@ class AlbumSongsApplicationTest extends MockeryTestCase
         $albumId = 666;
         $discId = 84;
         $length = 123;
+        $number = 42;
         $songResult = 'some-song-result';
 
         $this->resultItemFactory->shouldReceive('createSongListItem')
@@ -105,12 +106,17 @@ class AlbumSongsApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($length);
+        $disc->shouldReceive('getNumber')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($number);
 
         $result = [
             'items' => [[
                 'id' => $discId,
                 'songs' => [$songResult],
                 'length' => $length,
+                'number' => $number,
             ]],
         ];
 

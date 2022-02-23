@@ -48,6 +48,7 @@ final class AlbumSongsApplication extends AbstractApiApplication
                 'id' => $disc->getId(),
                 'songs' => $songData,
                 'length' => $disc->getLength(),
+                'number' => $disc->getNumber(),
             ];
         }
 

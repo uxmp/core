@@ -59,6 +59,7 @@ class Album implements AlbumInterface
 
     /**
      * @OneToMany(targetEntity="Disc", mappedBy="album", cascade={"ALL"}, indexBy="id")
+     * @OrderBy({"number"="ASC"})
      *
      * @var ArrayCollection<int, DiscInterface>
      */

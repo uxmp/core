@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Uxmp\Core\Component\Catalog\Manage;
 
 use Ahc\Cli\IO\Interactor;
-use Generator;
 use getID3;
+use Uxmp\Core\Component\Catalog\Manage\Update\RecursiveFileReaderInterface;
 use Uxmp\Core\Component\Catalog\Scanner\DiscCacheInterface;
 use Uxmp\Core\Component\Tag\Container\AudioFile;
 use Uxmp\Core\Component\Tag\Extractor\ExtractorDeterminatorInterface;
@@ -27,7 +27,8 @@ final class CatalogUpdater implements CatalogUpdaterInterface
         private getID3 $id3Analyzer,
         private SongRepositoryInterface $songRepository,
         private ExtractorDeterminatorInterface $extractorDeterminator,
-        private DiscCacheInterface $discCache
+        private DiscCacheInterface $discCache,
+        private RecursiveFileReaderInterface $recursiveFileReader,
     ) {
     }
 
@@ -56,7 +57,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
 
         $io->info(sprintf('Updating catalog from `%s`', $directory), true);
 
-        foreach ($this->search($directory) as $filename) {
+        foreach ($this->recursiveFileReader->read($directory) as $filename) {
             $audioFile = (new AudioFile())->setFilename($filename);
 
             $analysisResult = $this->id3Analyzer->analyze($filename);
@@ -130,7 +131,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
         }
 
         if ($skipped !== []) {
-            $io->error('The following errors occured', true);
+            $io->error('The following errors occurred', true);
 
             foreach ($skipped as $error) {
                 $io->error($error, true);
@@ -138,24 +139,5 @@ final class CatalogUpdater implements CatalogUpdaterInterface
         }
 
         $io->eol();
-    }
-
-    /**
-     * @return Generator<string>
-     */
-    private function search(string $directory): Generator
-    {
-        $files = scandir($directory);
-
-        if ($files !== false) {
-            foreach ($files as $value) {
-                $path = (string) realpath($directory . DIRECTORY_SEPARATOR . $value);
-                if (!is_dir($path)) {
-                    yield $path;
-                } elseif ($value != '.' && $value != '..') {
-                    yield from $this->search($path);
-                }
-            }
-        }
     }
 }

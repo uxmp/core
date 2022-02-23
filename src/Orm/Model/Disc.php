@@ -10,7 +10,12 @@ use JetBrains\PhpStorm\Pure;
 
 /**
  * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\DiscRepository")
- * @Table(name="disc")
+ * @Table(
+ *     name="disc",
+ *     uniqueConstraints={
+ *        @UniqueConstraint(name="mbid_discnumber", columns={"mbid", "number"})
+ *    }
+ * )
  */
 class Disc implements DiscInterface
 {
@@ -32,7 +37,7 @@ class Disc implements DiscInterface
     private int $number;
 
     /**
-     * @Column(type="string", length="32", nullable="true", unique=true)
+     * @Column(type="string", length="32", nullable="true")
      */
     private ?string $mbid = null;
 

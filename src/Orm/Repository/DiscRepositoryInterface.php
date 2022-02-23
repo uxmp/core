@@ -17,7 +17,13 @@ interface DiscRepositoryInterface extends ObjectRepository
 
     public function delete(DiscInterface $disc): void;
 
-    public function findByMbId(string $mbid): ?DiscInterface;
+    /**
+     * Find a unique disc by its mbid and the disc number within a release group
+     */
+    public function findUniqueDisc(
+        string $musicBrainzDiscId,
+        int $discNumber,
+    ): ?DiscInterface;
 
     /**
      * Searches for discs without songs

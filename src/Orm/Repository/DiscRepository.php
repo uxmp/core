@@ -33,10 +33,16 @@ final class DiscRepository extends EntityRepository implements DiscRepositoryInt
         $this->getEntityManager()->flush();
     }
 
-    public function findByMbId(string $mbid): ?DiscInterface
-    {
+    /**
+     * Find a unique disc by its mbid and the disc number within a release group
+     */
+    public function findUniqueDisc(
+        string $musicBrainzDiscId,
+        int $discNumber
+    ): ?DiscInterface {
         return $this->findOneBy([
-            'mbid' => $mbid,
+            'mbid' => $musicBrainzDiscId,
+            'number' => $discNumber,
         ]);
     }
 
