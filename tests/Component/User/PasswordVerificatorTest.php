@@ -85,4 +85,16 @@ class PasswordVerificatorTest extends MockeryTestCase
             $this->subject->verify($user, $password)
         );
     }
+
+    public function testHashReturnsHashedPassword(): void
+    {
+        $password = '12345';
+
+        $this->assertTrue(
+            password_verify(
+                $password,
+                $this->subject->hash($password)
+            )
+        );
+    }
 }
