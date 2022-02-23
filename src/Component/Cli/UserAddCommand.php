@@ -24,7 +24,7 @@ final class UserAddCommand extends Command
                 'User name'
             )
             ->usage(
-                '<bold>  $0 cl</end> <comment></end> ## Adds an user<eol/>'
+                '<bold>  $0 ua some-username</end> <comment></end> ## Adds user with name `some-username`<eol/>'
             );
     }
 
