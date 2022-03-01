@@ -31,6 +31,7 @@ final class DiscCache implements DiscCacheInterface
     ): DiscInterface {
         $discMbId = $audioFile->getDiscMbid();
         $discNumber = $audioFile->getDiscNumber();
+        $album = $this->albumCache->retrieve($catalog, $audioFile, $analysisResult);
 
         $cacheKey = sprintf('%s_%d', $discMbId, $discNumber);
 
@@ -38,18 +39,17 @@ final class DiscCache implements DiscCacheInterface
         if ($disc === null) {
             $disc = $this->discRepository->findUniqueDisc($discMbId, $discNumber);
             if ($disc === null) {
-                $disc = $this->discRepository->prototype()
-                    ->setMbid($discMbId)
-                    ->setAlbum($this->albumCache->retrieve($catalog, $audioFile, $analysisResult))
-                    ->setNumber($discNumber)
-                ;
-
-                $this->discRepository->save($disc);
+                $disc = $this->discRepository->prototype();
             }
 
+            $disc->setMbid($discMbId)
+                ->setAlbum($album)
+                ->setNumber($discNumber)
+            ;
+
+            $this->discRepository->save($disc);
+
             $this->cache[$cacheKey] = $disc;
-        } else {
-            $this->albumCache->retrieve($catalog, $audioFile, $analysisResult);
         }
 
         $this->eventHandler->fire(
