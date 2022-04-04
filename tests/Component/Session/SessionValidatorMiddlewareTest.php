@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Session;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
@@ -24,8 +25,8 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->sessionManager = \Mockery::mock(SessionManagerInterface::class);
-        $this->psr17Factory = \Mockery::mock(Psr17Factory::class);
+        $this->sessionManager = Mockery::mock(SessionManagerInterface::class);
+        $this->psr17Factory = Mockery::mock(Psr17Factory::class);
 
         $this->subject = new SessionValidatorMiddleware(
             $this->sessionManager,
@@ -35,9 +36,9 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
 
     public function testProcessJustHandlesNextHandler(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $handler = \Mockery::mock(RequestHandlerInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $handler = Mockery::mock(RequestHandlerInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $request->shouldReceive('getAttribute')
             ->with('token')
@@ -57,9 +58,9 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
 
     public function testProcessReturnsForbiddenResponse(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $handler = \Mockery::mock(RequestHandlerInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $handler = Mockery::mock(RequestHandlerInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $request->shouldReceive('getAttribute')
             ->with('token')
@@ -82,13 +83,46 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
         );
     }
 
+    public function testProcessReturnsForbiddenResponseIfSessionIsNotActive(): void
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $handler = Mockery::mock(RequestHandlerInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
+
+        $request->shouldReceive('getAttribute')
+            ->with('token')
+            ->once()
+            ->andReturn([]);
+
+        $this->sessionManager->shouldReceive('lookup')
+            ->with(0)
+            ->once()
+            ->andReturn($session);
+
+        $session->shouldReceive('getActive')
+            ->withNoArgs()
+            ->once()
+            ->andReturnFalse();
+
+        $this->psr17Factory->shouldReceive('createResponse')
+            ->with(StatusCode::FORBIDDEN, 'Session expired')
+            ->once()
+            ->andReturn($response);
+
+        $this->assertSame(
+            $response,
+            $this->subject->process($request, $handler)
+        );
+    }
+
     public function testProcessEnrichesRequestWithSessionDate(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $handler = \Mockery::mock(RequestHandlerInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $session = \Mockery::mock(SessionInterface::class);
-        $user = \Mockery::mock(UserInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $handler = Mockery::mock(RequestHandlerInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
+        $user = Mockery::mock(UserInterface::class);
 
         $sessionId = 666;
 
@@ -100,6 +134,10 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($user);
+        $session->shouldReceive('getActive')
+            ->withNoArgs()
+            ->once()
+            ->andReturnTrue();
 
         $request->shouldReceive('getAttribute')
             ->with('token')

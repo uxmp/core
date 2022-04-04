@@ -31,7 +31,7 @@ class SessionValidatorMiddleware implements MiddlewareInterface
         if ($tokenData !== null) {
             $session = $this->sessionManager->lookup((int) ($tokenData['sub'] ?? 0));
 
-            if ($session === null) {
+            if ($session === null || !$session->getActive()) {
                 return $this->psr17Factory->createResponse(
                     StatusCode::FORBIDDEN,
                     'Session expired'

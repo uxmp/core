@@ -42,7 +42,7 @@ final class ApiApplication
 
         $app->add($this->sessionValidatorMiddleware);
         $app->add(new JwtAuthentication([
-            'ignore' => [$apiBasePath . '/common', $apiBasePath . '/art'],
+            'ignore' => [$apiBasePath . '/common/login', $apiBasePath . '/art'],
             'cookie' => $this->config->getCookieName(),
             'secret' => $this->config->getJwtSecret(),
             'logger' => $logger,
@@ -50,7 +50,7 @@ final class ApiApplication
         $app->add(new CorsMiddleware([
             'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
             'headers.allow' => ['Authorization', 'Content-Type'],
-            'origin' => [$this->config->getCorsOrigin()],
+            'origin' => [$this->config->getCorsOrigin(),],
             'logger' => $logger,
             'credentials' => true,
         ]));

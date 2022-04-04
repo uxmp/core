@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\SessionManagerInterface;
+use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
 final class LogoutApplication extends AbstractApiApplication
 {
@@ -24,7 +25,7 @@ final class LogoutApplication extends AbstractApiApplication
         array $args
     ): ResponseInterface {
         /** @var string|null $sessionId */
-        $sessionId = $request->getAttribute('sessionId');
+        $sessionId = $request->getAttribute(SessionValidatorMiddleware::SESSION_ID);
         if ($sessionId !== null) {
             $this->sessionManager->logout((int) $sessionId);
         }
