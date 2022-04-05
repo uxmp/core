@@ -71,6 +71,7 @@ class AlbumApplicationTest extends MockeryTestCase
         $baseUrl = 'some-base-url';
         $cover = sprintf('%s/art/album/%d', $baseUrl, $albumId);
         $length = 123;
+        $mbId = 'some-mbid';
 
         $this->config->shouldReceive('getBaseUrl')
             ->withNoArgs()
@@ -94,7 +95,10 @@ class AlbumApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($length);
-
+        $album->shouldReceive('getMbid')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($mbId);
 
         $artist->shouldReceive('getTitle')
             ->withNoArgs()
@@ -112,6 +116,7 @@ class AlbumApplicationTest extends MockeryTestCase
             'artistName' => $artistTitle,
             'cover' => $cover,
             'length' => $length,
+            'mbId' => $mbId,
         ];
 
         $response->shouldReceive('withHeader')

@@ -64,11 +64,13 @@ class ArtistApplicationTest extends MockeryTestCase
         $artistId = 666;
         $title = 'some-title';
         $baseUrl = 'some-base-url';
+        $mbId = 'some-mbid';
 
         $result = [
             'id' => $artistId,
             'name' => $title,
             'cover' => sprintf('%s/art/artist/%d', $baseUrl, $artistId),
+            'mbId' => $mbId,
         ];
 
         $this->artistRepository->shouldReceive('find')
@@ -98,6 +100,10 @@ class ArtistApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($title);
+        $artist->shouldReceive('getMbid')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($mbId);
 
         $this->assertSame(
             $response,

@@ -43,6 +43,7 @@ final class AlbumApplication extends AbstractApiApplication
                 'artistName' => $artist->getTitle(),
                 'cover' => sprintf('%s/art/album/%d', $this->config->getBaseUrl(), $albumId),
                 'length' => $album->getLength(),
+                'mbId' => $album->getMbid(),
             ]
         );
     }

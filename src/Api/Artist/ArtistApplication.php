@@ -38,6 +38,7 @@ final class ArtistApplication extends AbstractApiApplication
                 'id' => $artistId,
                 'name' => $artist->getTitle(),
                 'cover' => sprintf('%s/art/artist/%d', $this->config->getBaseUrl(), $artistId),
+                'mbId' => $artist->getMbid(),
             ]
         );
     }
