@@ -12,6 +12,8 @@ use Uxmp\Core\Orm\Model\Catalog;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
 use Uxmp\Core\Orm\Model\PlaybackHistory;
+use Uxmp\Core\Orm\Model\Playlist;
+use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\RadioStation;
 use Uxmp\Core\Orm\Model\Session;
 use Uxmp\Core\Orm\Model\Song;
@@ -22,6 +24,7 @@ use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
 use Uxmp\Core\Orm\Repository\PlaybackHistoryRepositoryInterface;
+use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
@@ -47,4 +50,5 @@ return [
     PlaybackHistoryRepositoryInterface::class => fn (ContainerInterface $c): PlaybackHistoryRepositoryInterface =>
         $c->get(EntityManagerInterface::class)->getRepository(PlaybackHistory::class),
     RadioStationRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(RadioStation::class),
+    PlaylistRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(Playlist::class),
 ];
