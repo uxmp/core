@@ -11,5 +11,6 @@
       "description": "iso2 code of the user language"
     }
   },
-  "require": ["language"]
+  "additionalProperties": false,
+  "required": ["language"]
 }

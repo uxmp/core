@@ -16,5 +16,6 @@
       "maxLength": 50
     }
   },
-  "require": ["username", "password"]
+  "additionalProperties": false,
+  "required": ["username", "password"]
 }

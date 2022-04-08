@@ -9,6 +9,6 @@
       "type": "number"
     }
   },
-  "require": ["itemId"],
+  "required": ["itemId"],
   "additionalProperties": false
 }
