@@ -103,6 +103,7 @@ final class ApiApplication
 
         // playlist
         $app->get('/playlists', Playlist\PlaylistListApplication::class);
+        $app->get('/playlists/user', Playlist\PlaylistListByUserApplication::class);
         $app->post('/playlist', Playlist\PlaylistCreationApplication::class);
         $app->put('/playlist/{playlistId}', Playlist\PlaylistEditApplication::class);
         $app->get('/playlist/{playlistId}', Playlist\PlaylistRetrieveApplication::class);
