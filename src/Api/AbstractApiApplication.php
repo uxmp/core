@@ -6,6 +6,7 @@ namespace Uxmp\Core\Api;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Uxmp\Core\Orm\Model\UserInterface;
 
 abstract class AbstractApiApplication
 {

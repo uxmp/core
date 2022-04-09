@@ -31,7 +31,7 @@ class Playlist implements PlaylistInterface
      * @ManyToOne(targetEntity="User")
      * @JoinColumn(name="owner_user_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    private ?UserInterface $owner_user = null;
+    private UserInterface $owner;
 
     public function getId(): int
     {
@@ -49,14 +49,14 @@ class Playlist implements PlaylistInterface
         return $this;
     }
 
-    public function getOwnerUser(): ?UserInterface
+    public function getOwner(): UserInterface
     {
-        return $this->owner_user;
+        return $this->owner;
     }
 
-    public function setOwnerUser(UserInterface $owner_user): PlaylistInterface
+    public function setOwner(UserInterface $owner): PlaylistInterface
     {
-        $this->owner_user = $owner_user;
+        $this->owner = $owner;
         return $this;
     }
 }

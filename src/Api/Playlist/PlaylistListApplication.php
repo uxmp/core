@@ -29,13 +29,13 @@ final class PlaylistListApplication extends AbstractApiApplication
 
         $result = array_map(
             static function (PlaylistInterface $playlist): array {
-                $owner = $playlist->getOwnerUser();
+                $owner = $playlist->getOwner();
 
                 return [
                     'id' => $playlist->getId(),
                     'name' => $playlist->getName(),
-                    'user_name' => $owner?->getName(),
-                    'user_id' => $owner?->getId(),
+                    'user_name' => $owner->getName(),
+                    'user_id' => $owner->getId(),
                 ];
             },
             $playlists

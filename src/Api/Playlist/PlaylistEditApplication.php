@@ -8,15 +8,19 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\Component\OwnerValidationTrait;
+use Uxmp\Core\Api\Lib\Exception\AccessViolation;
+use Uxmp\Core\Api\Lib\Exception\ValidatorException;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 
 /**
- * Adds a playlist
+ * Edits a playlist
  */
-final class PlaylistCreationApplication extends AbstractApiApplication
+final class PlaylistEditApplication extends AbstractApiApplication
 {
+    use OwnerValidationTrait;
+
     /**
      * @param SchemaValidatorInterface<array{name: string, url: string}> $schemaValidator
      */
@@ -26,27 +30,38 @@ final class PlaylistCreationApplication extends AbstractApiApplication
     ) {
     }
 
+    /**
+     * @throws ValidatorException
+     * @throws AccessViolation
+     */
     protected function run(
         ServerRequestInterface $request,
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
+        $playlistId = (int) ($args['playlistId'] ?? 0);
+
+        $playlist = $this->playlistRepository->find($playlistId);
+        if ($playlist === null) {
+            return $response->withStatus(StatusCode::NOT_FOUND);
+        }
+
+        $this->validateOwner($request, $playlist);
+
         $body = $this->schemaValidator->getValidatedBody(
             $request,
             'PlaylistCreation.json',
         );
 
-        $playlist = $this->playlistRepository->prototype()
-            ->setName($body['name'])
-            ->setOwner($request->getAttribute(SessionValidatorMiddleware::USER))
-        ;
+        $playlist
+            ->setName($body['name']);
 
         $this->playlistRepository->save($playlist);
 
         return $this->asJson(
-            $response->withStatus(StatusCode::CREATED),
+            $response,
             [
-                'result' => $playlist->getId(),
+                'result' => true,
             ]
         );
     }

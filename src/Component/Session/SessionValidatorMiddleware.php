@@ -15,6 +15,7 @@ class SessionValidatorMiddleware implements MiddlewareInterface
 {
     public const SESSION_ID = 'sessionId';
     public const USER = 'user';
+    public const USER_ID = 'userId';
 
     public function __construct(
         private SessionManagerInterface $sessionManager,
@@ -38,9 +39,12 @@ class SessionValidatorMiddleware implements MiddlewareInterface
                 );
             }
 
+            $user = $session->getUser();
+
             $request = $request
                 ->withAttribute(static::SESSION_ID, $session->getId())
-                ->withAttribute(static::USER, $session->getUser())
+                ->withAttribute(static::USER, $user)
+                ->withAttribute(static::USER_ID, $user->getId())
             ;
         }
 

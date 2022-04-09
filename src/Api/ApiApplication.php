@@ -91,9 +91,9 @@ final class ApiApplication
         $app->post('/user/favorite/{type}/remove', User\FavoriteRemoveApplication::class);
 
         // radio stations
+        $app->get('/radiostations', RadioStation\RadioStationListApplication::class);
         $app->post('/radiostation', RadioStation\RadioStationCreationApplication::class);
         $app->delete('/radiostation/{stationId}', RadioStation\RadioStationDeletionApplication::class);
-        $app->get('/radiostations', RadioStation\RadioStationListApplication::class);
         $app->get('/radiostation/{stationId}', RadioStation\RadioStationRetrieveApplication::class);
         $app->put('/radiostation/{stationId}', RadioStation\RadioStationEditApplication::class);
 
@@ -102,8 +102,11 @@ final class ApiApplication
         $app->put('/usersettings', User\UserSettingsEditApplication::class);
 
         // playlist
-        $app->post('/playlist', Playlist\PlaylistCreationApplication::class);
         $app->get('/playlists', Playlist\PlaylistListApplication::class);
+        $app->post('/playlist', Playlist\PlaylistCreationApplication::class);
+        $app->put('/playlist/{playlistId}', Playlist\PlaylistEditApplication::class);
+        $app->get('/playlist/{playlistId}', Playlist\PlaylistRetrieveApplication::class);
+        $app->delete('/playlist/{playlistId}', Playlist\PlaylistDeletionApplication::class);
 
         $app->run();
     }

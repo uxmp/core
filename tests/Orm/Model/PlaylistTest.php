@@ -20,7 +20,7 @@ class PlaylistTest extends ModelTestCase
     {
         return [
             ['Name', 'some-name'],
-            ['OwnerUser', Mockery::mock(UserInterface::class)],
+            ['Owner', Mockery::mock(UserInterface::class)],
         ];
     }
 }

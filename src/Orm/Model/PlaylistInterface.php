@@ -2,7 +2,9 @@
 
 namespace Uxmp\Core\Orm\Model;
 
-interface PlaylistInterface
+use Uxmp\Core\Component\User\OwnerProviderInterface;
+
+interface PlaylistInterface extends OwnerProviderInterface
 {
     public function getId(): int;
 
@@ -10,7 +12,5 @@ interface PlaylistInterface
 
     public function setName(string $name): PlaylistInterface;
 
-    public function getOwnerUser(): ?UserInterface;
-
-    public function setOwnerUser(UserInterface $owner_user): PlaylistInterface;
+    public function setOwner(UserInterface $owner): PlaylistInterface;
 }

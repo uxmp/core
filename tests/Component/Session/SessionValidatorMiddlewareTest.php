@@ -125,6 +125,12 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
         $user = Mockery::mock(UserInterface::class);
 
         $sessionId = 666;
+        $userId = 42;
+
+        $user->shouldReceive('getId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($userId);
 
         $session->shouldReceive('getId')
             ->withNoArgs()
@@ -149,6 +155,10 @@ class SessionValidatorMiddlewareTest extends MockeryTestCase
             ->andReturnSelf();
         $request->shouldReceive('withAttribute')
             ->with('user', $user)
+            ->once()
+            ->andReturnSelf();
+        $request->shouldReceive('withAttribute')
+            ->with('userId', $userId)
             ->once()
             ->andReturnSelf();
 

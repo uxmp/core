@@ -10,71 +10,74 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Uxmp\Core\Orm\Model\PlaylistInterface;
-use Uxmp\Core\Orm\Model\UserInterface;
+use Teapot\StatusCode;
+use Uxmp\Core\Orm\Model\RadioStationInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 
-class PlaylistListApplicationTest extends MockeryTestCase
+class PlaylistRetrieveApplicationTest extends MockeryTestCase
 {
     private MockInterface $playlistRepository;
 
-    private PlaylistListApplication $subject;
+    private PlaylistRetrieveApplication $subject;
 
     public function setUp(): void
     {
         $this->playlistRepository = Mockery::mock(PlaylistRepositoryInterface::class);
 
-        $this->subject = new PlaylistListApplication(
-            $this->playlistRepository
+        $this->subject = new PlaylistRetrieveApplication(
+            $this->playlistRepository,
         );
     }
 
-    public function testRunReturnsData(): void
+    public function testRunReturnsNotFoundIfStatioWasNotFound(): void
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+
+        $this->playlistRepository->shouldReceive('find')
+            ->with(0)
+            ->once()
+            ->andReturnNull();
+
+        $response->shouldReceive('withStatus')
+            ->with(StatusCode::NOT_FOUND)
+            ->once()
+            ->andReturnSelf();
+
+        $this->assertSame(
+            $response,
+            call_user_func($this->subject, $request, $response, [])
+        );
+    }
+
+    public function testRunReturnsStation(): void
     {
         $request = Mockery::mock(ServerRequestInterface::class);
         $response = Mockery::mock(ResponseInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
-        $playlist = Mockery::mock(PlaylistInterface::class);
-        $user = Mockery::mock(UserInterface::class);
+        $playlist = Mockery::mock(RadioStationInterface::class);
 
-        $id = 666;
+        $playlistId = 666;
         $name = 'some-name';
-        $user_id = 42;
-        $user_name = 'some-username';
 
-        $result = [[
-            'id' => $id,
+        $result = [
+            'id' => $playlistId,
             'name' => $name,
-            'user_name' => $user_name,
-            'user_id' => $user_id,
-        ]];
-
-        $this->playlistRepository->shouldReceive('findBy')
-            ->with([], ['name' => 'ASC'])
-            ->once()
-            ->andReturn([$playlist]);
+        ];
 
         $playlist->shouldReceive('getId')
             ->withNoArgs()
             ->once()
-            ->andReturn($id);
+            ->andReturn($playlistId);
         $playlist->shouldReceive('getName')
             ->withNoArgs()
             ->once()
             ->andReturn($name);
-        $playlist->shouldReceive('getOwner')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($user);
 
-        $user->shouldReceive('getName')
-            ->withNoArgs()
+        $this->playlistRepository->shouldReceive('find')
+            ->with($playlistId)
             ->once()
-            ->andReturn($user_name);
-        $user->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($user_id);
+            ->andReturn($playlist);
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -87,13 +90,13 @@ class PlaylistListApplicationTest extends MockeryTestCase
 
         $stream->shouldReceive('write')
             ->with(
-                json_encode(['items' => $result], JSON_PRETTY_PRINT)
+                json_encode($result, JSON_PRETTY_PRINT)
             )
             ->once();
 
         $this->assertSame(
             $response,
-            call_user_func($this->subject, $request, $response, [])
+            call_user_func($this->subject, $request, $response, ['playlistId' => (string) $playlistId])
         );
     }
 }
