@@ -8,6 +8,7 @@ use JsonSerializable;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\PlaybackHistoryInterface;
+use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 
 final class ResultItemFactory implements ResultItemFactoryInterface
@@ -34,6 +35,14 @@ final class ResultItemFactory implements ResultItemFactoryInterface
         return new PlaybackHistoryItem(
             $this->config,
             $playbackHistory,
+        );
+    }
+
+    public function createPlaylistItem(
+        PlaylistInterface $playlist
+    ): JsonSerializable {
+        return new PlaylistItem(
+            $playlist
         );
     }
 }

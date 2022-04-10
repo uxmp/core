@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Playlist;
 
+use JsonSerializable;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
@@ -19,14 +21,18 @@ class PlaylistListByUserApplicationTest extends MockeryTestCase
 {
     private MockInterface $playlistRepository;
 
+    private MockInterface $resultItemFactory;
+
     private PlaylistListByUserApplication $subject;
 
     public function setUp(): void
     {
         $this->playlistRepository = Mockery::mock(PlaylistRepositoryInterface::class);
+        $this->resultItemFactory = Mockery::mock(ResultItemFactoryInterface::class);
 
         $this->subject = new PlaylistListByUserApplication(
-            $this->playlistRepository
+            $this->playlistRepository,
+            $this->resultItemFactory
         );
     }
 
@@ -37,18 +43,9 @@ class PlaylistListByUserApplicationTest extends MockeryTestCase
         $stream = Mockery::mock(StreamInterface::class);
         $playlist = Mockery::mock(PlaylistInterface::class);
         $user = Mockery::mock(UserInterface::class);
+        $item = Mockery::mock(JsonSerializable::class);
 
-        $id = 666;
-        $name = 'some-name';
-        $user_id = 42;
-        $user_name = 'some-username';
-
-        $result = [[
-            'id' => $id,
-            'name' => $name,
-            'user_name' => $user_name,
-            'user_id' => $user_id,
-        ]];
+        $result = ['some-result'];
 
         $request->shouldReceive('getAttribute')
             ->with(SessionValidatorMiddleware::USER)
@@ -60,27 +57,15 @@ class PlaylistListByUserApplicationTest extends MockeryTestCase
             ->once()
             ->andReturn([$playlist]);
 
-        $playlist->shouldReceive('getId')
-            ->withNoArgs()
+        $this->resultItemFactory->shouldReceive('createPlaylistItem')
+            ->with($playlist)
             ->once()
-            ->andReturn($id);
-        $playlist->shouldReceive('getName')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($name);
-        $playlist->shouldReceive('getOwner')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($user);
+            ->andReturn($item);
 
-        $user->shouldReceive('getName')
+        $item->shouldReceive('jsonSerialize')
             ->withNoArgs()
             ->once()
-            ->andReturn($user_name);
-        $user->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($user_id);
+            ->andReturn($result);
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -93,7 +78,7 @@ class PlaylistListByUserApplicationTest extends MockeryTestCase
 
         $stream->shouldReceive('write')
             ->with(
-                json_encode(['items' => $result], JSON_PRETTY_PRINT)
+                json_encode(['items' => [$result]], JSON_PRETTY_PRINT)
             )
             ->once();
 
