@@ -4,65 +4,49 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Uxmp\Core\Orm\Repository\AlbumRepository;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\AlbumRepository")
- * @Table(name="album")
- */
+#[ORM\Table(name: 'album')]
+#[ORM\Entity(repositoryClass: AlbumRepository::class)]
 class Album implements AlbumInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $title = null;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $artist_id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $catalog_id;
 
-    /**
-     * @Column(type="datetime")
-     */
-    private \DateTimeInterface $last_modified;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private DateTimeInterface $last_modified;
 
-    /**
-     * @Column(type="string", length="32", nullable="true", unique=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 32, unique: true, nullable: true)]
     private ?string $mbid = null;
 
-    /**
-     * @ManyToOne(targetEntity="Artist", inversedBy="albums")
-     * @JoinColumn(name="artist_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Artist::class, inversedBy: 'albums')]
+    #[ORM\JoinColumn(name: 'artist_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ArtistInterface $artist;
 
-    /**
-     * @ManyToOne(targetEntity="Catalog")
-     * @JoinColumn(name="catalog_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Catalog::class)]
+    #[ORM\JoinColumn(name: 'catalog_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private CatalogInterface $catalog;
 
     /**
-     * @OneToMany(targetEntity="Disc", mappedBy="album", cascade={"ALL"}, indexBy="id")
-     * @OrderBy({"number"="ASC"})
-     *
      * @var ArrayCollection<int, DiscInterface>
      */
+    #[ORM\OneToMany(mappedBy: 'album', targetEntity: Disc::class, cascade: ['ALL'], indexBy: 'id')]
+    #[ORM\OrderBy(['number' => 'ASC'])]
     private iterable $discs;
 
     #[Pure]
@@ -140,12 +124,12 @@ class Album implements AlbumInterface
         );
     }
 
-    public function getLastModified(): \DateTimeInterface
+    public function getLastModified(): DateTimeInterface
     {
         return $this->last_modified;
     }
 
-    public function setLastModified(\DateTimeInterface $last_modified): AlbumInterface
+    public function setLastModified(DateTimeInterface $last_modified): AlbumInterface
     {
         $this->last_modified = $last_modified;
         return $this;

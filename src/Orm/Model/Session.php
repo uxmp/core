@@ -4,38 +4,29 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\SessionRepository")
- * @Table(name="session")
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\SessionRepository;
+
+#[ORM\Entity(repositoryClass: SessionRepository::class)]
+#[ORM\Table(name: 'session')]
 class Session implements SessionInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $subject = '';
 
-    /**
-     * @Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $user_id = 0;
 
-    /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private UserInterface $user;
 
     public function getId(): int

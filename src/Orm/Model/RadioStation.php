@@ -4,27 +4,22 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\RadioStationRepository")
- * @Table(name="radiostation")
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\RadioStationRepository;
+
+#[ORM\Entity(repositoryClass: RadioStationRepository::class)]
+#[ORM\Table(name: 'radiostation')]
 class RadioStation implements RadioStationInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $name = '';
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $url = '';
 
     public function getId(): int

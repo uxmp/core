@@ -26,7 +26,7 @@ return [
                 'url' => $_ENV['DATABASE_DSN'],
                 'password' => $_ENV['DATABASE_PASSWORD'],
             ],
-            Setup::createAnnotationMetadataConfiguration(
+            Setup::createAttributeMetadataConfiguration(
                 [__DIR__ . '/../Orm/Model/'],
                 (bool) ($_ENV['DEBUG_MODE'] ?? false),
             )

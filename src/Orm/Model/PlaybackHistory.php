@@ -4,46 +4,37 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\PlaybackHistoryRepository;
+
 /**
  * Describes the database model which contains the playback history of all users
- *
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\PlaybackHistoryRepository")
- * @Table(name="playback_history")
  */
+#[ORM\Entity(repositoryClass: PlaybackHistoryRepository::class)]
+#[ORM\Table(name: 'playback_history')]
 class PlaybackHistory implements PlaybackHistoryInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $song_id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $user_id;
 
-    /**
-     * @Column(type="datetime")
-     */
-    private \DateTimeInterface $play_date;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private DateTimeInterface $play_date;
 
-    /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private UserInterface $user;
 
-    /**
-     * @ManyToOne(targetEntity="Song")
-     * @JoinColumn(name="song_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Song::class)]
+    #[ORM\JoinColumn(name: 'song_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private SongInterface $song;
 
     public function getId(): int
@@ -73,12 +64,12 @@ class PlaybackHistory implements PlaybackHistoryInterface
         return $this;
     }
 
-    public function getPlayDate(): \DateTimeInterface
+    public function getPlayDate(): DateTimeInterface
     {
         return $this->play_date;
     }
 
-    public function setPlayDate(\DateTimeInterface $play_date): PlaybackHistoryInterface
+    public function setPlayDate(DateTimeInterface $play_date): PlaybackHistoryInterface
     {
         $this->play_date = $play_date;
         return $this;

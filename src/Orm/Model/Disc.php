@@ -6,57 +6,40 @@ namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Uxmp\Core\Orm\Repository\DiscRepository;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\DiscRepository")
- * @Table(
- *     name="disc",
- *     uniqueConstraints={
- *        @UniqueConstraint(name="mbid_discnumber", columns={"mbid", "number"})
- *    }
- * )
- */
+#[ORM\Entity(repositoryClass: DiscRepository::class)]
+#[ORM\Table(name: 'disc')]
+#[ORM\UniqueConstraint(name: 'mbid_discnumber', columns: ['mbid', 'number'])]
 class Disc implements DiscInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $album_id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $number;
 
-    /**
-     * @Column(type="string", length="32", nullable="true")
-     */
+    #[ORM\Column(type: Types::STRING, length: 32, nullable: true)]
     private ?string $mbid = null;
 
-    /**
-     * @Column(type="integer", length="6")
-     */
+    #[ORM\Column(type: Types::INTEGER, length: 6)]
     private int $length = 0;
 
-    /**
-     * @ManyToOne(targetEntity="Album", inversedBy="discs")
-     * @JoinColumn(name="album_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Album::class, inversedBy: 'discs')]
+    #[ORM\JoinColumn(name: 'album_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private AlbumInterface $album;
 
     /**
-     * @OneToMany(targetEntity="Song", mappedBy="disc", cascade={"ALL"}, indexBy="id")
-     *
      * @var Collection<int, SongInterface>
      */
+    #[ORM\OneToMany(mappedBy: 'disc', targetEntity: Song::class, cascade: ['ALL'], indexBy: 'id')]
     private Collection $songs;
 
     #[Pure]

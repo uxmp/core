@@ -4,85 +4,58 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\SongRepository")
- * @Table(name="song")
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\SongRepository;
+
+#[ORM\Entity(repositoryClass: SongRepository::class)]
+#[ORM\Table(name: 'song')]
 class Song implements SongInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $title = '';
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $track_number = 0;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $artist_id;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $disc_id;
 
-    /**
-     * @Column(type="text")
-     */
+    #[ORM\Column(type: Types::TEXT)]
     private string $filename;
 
-    /**
-     * @Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $catalog_id;
 
-    /**
-     * @Column(type="string", length="32", nullable=true, unique=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 32, unique: true, nullable: true)]
     private ?string $mbid = null;
 
-    /**
-     * @Column(type="integer", length="5")
-     */
+    #[ORM\Column(type: Types::INTEGER, length: 5)]
     private int $length = 0;
 
-    /**
-     * @Column(type="integer", length="4", nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, length: 4, nullable: true)]
     private ?int $year = null;
 
-    /**
-     * @Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $mimeType = null;
 
-    /**
-     * @ManyToOne(targetEntity="Disc", inversedBy="songs")
-     * @JoinColumn(name="disc_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Disc::class, inversedBy: 'songs')]
+    #[ORM\JoinColumn(name: 'disc_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private DiscInterface $disc;
 
-    /**
-     * @ManyToOne(targetEntity="Artist")
-     * @JoinColumn(name="artist_id", referencedColumnName="id")
-     */
+    #[ORM\ManyToOne(targetEntity: Artist::class)]
+    #[ORM\JoinColumn(name: 'artist_id', referencedColumnName: 'id')]
     private ArtistInterface $artist;
 
-    /**
-     * @ManyToOne(targetEntity="Catalog")
-     * @JoinColumn(name="catalog_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: Catalog::class)]
+    #[ORM\JoinColumn(name: 'catalog_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private CatalogInterface $catalog;
 
     public function getId(): int

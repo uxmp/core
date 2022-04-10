@@ -4,45 +4,33 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\PlaylistRepository")
- * @Table(name="playlist")
- */
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\PlaylistRepository;
+
+#[ORM\Entity(repositoryClass: PlaylistRepository::class)]
+#[ORM\Table(name: 'playlist')]
 class Playlist implements PlaylistInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $name = '';
 
-    /**
-     * @Column(type="integer", options={"default" : 0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $owner_user_id = 0;
 
-    /**
-     * @Column(type="integer", options={"default" : 0})
-     */
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $song_count = 0;
 
-    /**
-     * @Column(type="json", options={"default" : "[]"})
-     *
-     * @var array<int>
-     */
+    /** @var array<int> */
+    #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
     private array $song_list = [];
 
-    /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="owner_user_id", referencedColumnName="id", onDelete="CASCADE")
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'owner_user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private UserInterface $owner;
 
     public function getId(): int

@@ -7,40 +7,31 @@ namespace Uxmp\Core\Orm\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Orm\Repository\ArtistRepository;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\ArtistRepository")
- * @Table(name="artist")
- */
+#[ORM\Entity(repositoryClass: ArtistRepository::class)]
+#[ORM\Table(name: 'artist')]
 class Artist implements ArtistInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string", nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $title = null;
 
-    /**
-     * @Column(type="string", length="32", nullable=true, unique=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 32, unique: true, nullable: true)]
     private ?string $mbid = null;
 
     /**
-     * @OneToMany(targetEntity="Album", mappedBy="artist", cascade={"ALL"}, indexBy="id")
-     *
      * @var Collection<int, AlbumInterface>
      */
+    #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Album::class, cascade: ['ALL'], indexBy: 'id')]
     private Collection $albums;
 
-    /**
-     * @Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private \DateTimeInterface $last_modified;
 
     #[Pure]

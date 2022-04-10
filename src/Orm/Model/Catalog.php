@@ -4,22 +4,19 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
-/**
- * @Entity(repositoryClass="\Uxmp\Core\Orm\Repository\CatalogRepository")
- * @Table(name="catalog")
- */
+use Doctrine\DBAL\Types\Types;
+use Uxmp\Core\Orm\Repository\CatalogRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: CatalogRepository::class)]
+#[ORM\Table(name: 'catalog')]
 class Catalog implements CatalogInterface
 {
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
+    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    /**
-     * @Column(type="string")
-     */
+    #[ORM\Column(type: Types::STRING)]
     private string $path = '';
 
     public function getId(): int
