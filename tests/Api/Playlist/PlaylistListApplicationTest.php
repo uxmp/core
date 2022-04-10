@@ -39,14 +39,16 @@ class PlaylistListApplicationTest extends MockeryTestCase
 
         $id = 666;
         $name = 'some-name';
-        $user_id = 42;
-        $user_name = 'some-username';
+        $userId = 42;
+        $userName = 'some-username';
+        $songCount = 33;
 
         $result = [[
             'id' => $id,
             'name' => $name,
-            'user_name' => $user_name,
-            'user_id' => $user_id,
+            'song_count' => $songCount,
+            'user_name' => $userName,
+            'user_id' => $userId,
         ]];
 
         $this->playlistRepository->shouldReceive('findBy')
@@ -66,15 +68,19 @@ class PlaylistListApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($user);
+        $playlist->shouldReceive('getSongCount')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($songCount);
 
         $user->shouldReceive('getName')
             ->withNoArgs()
             ->once()
-            ->andReturn($user_name);
+            ->andReturn($userName);
         $user->shouldReceive('getId')
             ->withNoArgs()
             ->once()
-            ->andReturn($user_id);
+            ->andReturn($userId);
 
         $response->shouldReceive('getBody')
             ->withNoArgs()

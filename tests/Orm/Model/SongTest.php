@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use Mockery;
+
 class SongTest extends ModelTestCase
 {
     /** @var mixed|Song */
@@ -35,6 +37,24 @@ class SongTest extends ModelTestCase
         $this->assertSame(
             'song',
             $this->subject->getType()
+        );
+    }
+
+    public function testGetAlbumReturnsInstance(): void
+    {
+        $disc = Mockery::mock(DiscInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
+
+        $disc->shouldReceive('getAlbum')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($album);
+
+        $this->subject->setDisc($disc);
+
+        $this->assertSame(
+            $album,
+            $this->subject->getAlbum(),
         );
     }
 }

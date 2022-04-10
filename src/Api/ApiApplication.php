@@ -109,6 +109,7 @@ final class ApiApplication
         $app->get('/playlist/{playlistId}', Playlist\PlaylistRetrieveApplication::class);
         $app->delete('/playlist/{playlistId}', Playlist\PlaylistDeletionApplication::class);
         $app->post('/playlist/{playlistId}/songs', Playlist\PlaylistAddMediaApplication::class);
+        $app->get('/playlist/{playlistId}/songs', Playlist\PlaylistSongListApplication::class);
 
         $app->run();
     }

@@ -23,4 +23,5 @@ return [
                 HandlerTypeEnum::SONG => get(MediaAddition\Handler\SongHandler::class),
             ]
         ),
+    PlaylistSongRetrieverInterface::class => autowire(PlaylistSongRetriever::class),
 ];

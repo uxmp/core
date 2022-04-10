@@ -34,6 +34,7 @@ final class PlaylistListApplication extends AbstractApiApplication
                 return [
                     'id' => $playlist->getId(),
                     'name' => $playlist->getName(),
+                    'song_count' => $playlist->getSongCount(),
                     'user_name' => $owner->getName(),
                     'user_id' => $owner->getId(),
                 ];

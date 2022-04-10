@@ -204,4 +204,9 @@ class Song implements SongInterface
         $this->mimeType = $mimeType;
         return $this;
     }
+
+    public function getAlbum(): AlbumInterface
+    {
+        return $this->getDisc()->getAlbum();
+    }
 }
