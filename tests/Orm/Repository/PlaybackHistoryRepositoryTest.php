@@ -10,7 +10,6 @@ use Doctrine\ORM\Persisters\Entity\EntityPersister;
 use Doctrine\ORM\UnitOfWork;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
-use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\PlaybackHistory;
 use Uxmp\Core\Orm\Model\PlaybackHistoryInterface;
 use Uxmp\Core\Orm\Model\SongInterface;

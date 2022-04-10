@@ -10,7 +10,6 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
-use Uxmp\Core\Component\Catalog\Manage\CatalogAdderInterface;
 use Uxmp\Core\Component\Catalog\Manage\CatalogListerInterface;
 
 class CatalogListCommandTest extends MockeryTestCase

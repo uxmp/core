@@ -9,7 +9,6 @@ use Uxmp\Core\Orm\Model\CatalogInterface;
  * @extends ObjectRepository<CatalogInterface>
  *
  * @method null|CatalogInterface findOneBy(mixed[] $criteria)
- * @method null|CatalogInterface find(int $id)
  */
 interface CatalogRepositoryInterface extends ObjectRepository
 {

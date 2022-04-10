@@ -35,7 +35,7 @@ interface AlbumInterface extends
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;
 
     /**
-     * Returns the summarized length of all songs in this album
+     * Returns the summarized length of all songs on this album
      */
     public function getLength(): int;
 

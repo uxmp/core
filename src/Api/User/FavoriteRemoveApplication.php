@@ -15,7 +15,7 @@ use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 /**
- * Remove a item from the users favorites
+ * Remove an item from the users favorites
  */
 final class FavoriteRemoveApplication extends AbstractFavoriteApplication
 {

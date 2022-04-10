@@ -10,7 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\Lib\Exception\AccessViolation;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Component\User\OwnerProviderInterface;
-use Uxmp\Core\Orm\Model\UserInterface;
 
 class UserValidationTraitTest extends MockeryTestCase
 {

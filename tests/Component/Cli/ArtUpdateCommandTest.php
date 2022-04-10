@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Uxmp\Core\Component\Cli;
 
 use Ahc\Cli\Application;
-use Ahc\Cli\IO\Interactor;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;

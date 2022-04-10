@@ -11,5 +11,5 @@ interface UserCreatorInterface
     /**
      * Creates a user with default settings
      */
-    public function create(string $username, string $passwordHash): UserInterface;
+    public function create(string $username, string $password): UserInterface;
 }

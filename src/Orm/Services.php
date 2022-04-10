@@ -13,7 +13,6 @@ use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
 use Uxmp\Core\Orm\Model\PlaybackHistory;
 use Uxmp\Core\Orm\Model\Playlist;
-use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\RadioStation;
 use Uxmp\Core\Orm\Model\Session;
 use Uxmp\Core\Orm\Model\Song;

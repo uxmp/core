@@ -14,7 +14,7 @@ interface PlaylistRepositoryInterface extends ObjectRepository
 {
     public function prototype(): PlaylistInterface;
 
-    public function save(PlaylistInterface $user): void;
+    public function save(PlaylistInterface $playlist): void;
 
-    public function delete(PlaylistInterface $user): void;
+    public function delete(PlaylistInterface $playlist): void;
 }
