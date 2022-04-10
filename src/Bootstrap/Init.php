@@ -5,16 +5,9 @@ declare(strict_types=1);
 namespace Uxmp\Core\Bootstrap;
 
 use DI\ContainerBuilder;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
-use getID3;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Container\ContainerInterface;
-use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
-use function DI\autowire;
 
 final class Init
 {
@@ -24,6 +17,7 @@ final class Init
     public static function run(callable $app): mixed
     {
         $builder = new ContainerBuilder();
+        $builder->addDefinitions(require __DIR__ . '/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Api/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Album/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Catalog/Services.php');
@@ -41,34 +35,6 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/User/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Playlist/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
-        $builder->addDefinitions([
-            Psr17Factory::class => autowire(),
-            getID3::class => autowire(),
-            EntityManagerInterface::class => static function (): EntityManagerInterface {
-                $paths = [__DIR__ . '/../Orm/Model/'];
-
-                // @todo load from config
-                $isDevMode = true;
-
-                // the connection configuration
-                $dbParams = [
-                    'url' => $_ENV['DATABASE_DSN'],
-                    'password' => $_ENV['DATABASE_PASSWORD'],
-                ];
-
-                $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
-                return EntityManager::create($dbParams, $config);
-            },
-            Dotenv::class => function (): Dotenv {
-                $dotenv = Dotenv::createImmutable(
-                    __DIR__ . '/../../',
-                    ['.env', '.env.dist']
-                );
-                $dotenv->load();
-                return $dotenv;
-            },
-            MakeCollage::class => autowire(),
-        ]);
 
         /** @var ContainerInterface $container */
         $container = $builder->build();

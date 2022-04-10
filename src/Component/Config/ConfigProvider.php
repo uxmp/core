@@ -48,6 +48,11 @@ final class ConfigProvider implements ConfigProviderInterface
         return $_ENV['ASSET_PATH'] ?? '';
     }
 
+    public function getDebugMode(): bool
+    {
+        return (bool) ($_ENV['DEBUG_MODE'] ?? false);
+    }
+
     public function getBaseUrl(): string
     {
         $hostname = $_ENV['HOSTNAME'];

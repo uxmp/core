@@ -23,6 +23,7 @@
 		</include>
 		<exclude>
 			<directory suffix="Services.php">src</directory>
+			<directory>src/public</directory>
 		</exclude>
 	</coverage>
 </phpunit>

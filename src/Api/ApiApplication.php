@@ -29,10 +29,6 @@ final class ApiApplication
     ): void {
         $apiBasePath = $this->config->getApiBasePath();
 
-        $app->addBodyParsingMiddleware();
-        $app->addErrorMiddleware(true, true, true);
-        $app->setBasePath($apiBasePath);
-
         $rotating = new RotatingFileHandler(
             sprintf(
                 '%s/router.log',
@@ -42,6 +38,15 @@ final class ApiApplication
             $this->config->getLogLevel()
         );
         $logger->pushHandler($rotating);
+
+        $app->addBodyParsingMiddleware();
+        $app->addErrorMiddleware(
+            $this->config->getDebugMode(),
+            true,
+            true,
+            $logger
+        );
+        $app->setBasePath($apiBasePath);
 
         $app->add($this->sessionValidatorMiddleware);
         $app->add(new JwtAuthentication([

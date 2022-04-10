@@ -25,6 +25,8 @@ interface ConfigProviderInterface
 
     public function getAssetPath(): string;
 
+    public function getDebugMode(): bool;
+
     public function getBaseUrl(): string;
 
     public function getClientCacheMaxAge(): int;

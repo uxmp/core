@@ -42,6 +42,7 @@ class ApiApplicationTest extends MockeryTestCase
         $basePath = 'some-base-path';
         $logFilePath = '/tmp';
         $logLevel = 666;
+        $debugMode = true;
 
         $this->config->shouldReceive('getApiBasePath')
             ->withNoArgs()
@@ -67,6 +68,10 @@ class ApiApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn('some-cors-origin');
+        $this->config->shouldReceive('getDebugMode')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($debugMode);
 
         $logger->shouldReceive('pushHandler')
             ->with(Mockery::type(RotatingFileHandler::class))
@@ -76,7 +81,7 @@ class ApiApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once();
         $app->shouldReceive('addErrorMiddleware')
-            ->with(true, true, true)
+            ->with($debugMode, true, true, $logger)
             ->once();
         $app->shouldReceive('setBasePath')
             ->with($basePath)

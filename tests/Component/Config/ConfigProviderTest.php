@@ -49,6 +49,7 @@ class ConfigProviderTest extends MockeryTestCase
             ['getCorsOrigin', 'CORS_ORIGIN', '', 'some-cors-origin'],
             ['getApiBasePath', 'API_BASE_PATH', '', 'some-base-path'],
             ['getAssetPath', 'ASSET_PATH', '', 'some-asset-path'],
+            ['getDebugMode', 'DEBUG_MODE', false, false],
         ];
     }
 
