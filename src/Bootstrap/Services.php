@@ -28,7 +28,7 @@ return [
             ],
             Setup::createAnnotationMetadataConfiguration(
                 [__DIR__ . '/../Orm/Model/'],
-                (bool) $_ENV['DEBUG_MODE'],
+                (bool) ($_ENV['DEBUG_MODE'] ?? false),
             )
         );
     },
