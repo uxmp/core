@@ -185,6 +185,9 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('delete')
             ->with('/playlist/{playlistId}', Playlist\PlaylistDeletionApplication::class)
             ->once();
+        $app->shouldReceive('post')
+            ->with('/playlist/{playlistId}/songs', Playlist\PlaylistAddMediaApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();

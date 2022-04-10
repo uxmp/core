@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/PlaylistMediaAddition.json",
+  "title": "Playlist creation",
+  "description": "Defines the playlist media addition request",
+  "type": "object",
+  "properties": {
+    "mediaId": {
+      "type": "integer",
+      "description": "Id of the media whose songs should be added"
+    },
+    "mediaType": {
+      "type": "string",
+      "enum": ["artist", "album", "song"],
+      "description": "Type of the media"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["mediaId", "mediaType"]
+}

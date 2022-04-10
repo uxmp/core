@@ -13,4 +13,27 @@ interface PlaylistInterface extends OwnerProviderInterface
     public function setName(string $name): PlaylistInterface;
 
     public function setOwner(UserInterface $owner): PlaylistInterface;
+
+    /**
+     * @return array<int>
+     */
+    public function getSongList(): array;
+
+    /**
+     * @param array<int> $songList
+     */
+    public function setSongList(array $songList): PlaylistInterface;
+
+    public function getSongCount(): int;
+
+    public function setSongCount(int $songCount): PlaylistInterface;
+
+    /**
+     * Updates the song list and also sets the song count
+     *
+     * @param array<int> $songList
+     */
+    public function updateSongList(
+        array $songList
+    ): PlaylistInterface;
 }

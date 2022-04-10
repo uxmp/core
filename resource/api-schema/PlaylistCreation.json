@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://uxmp/PlaylistCreation.schema.json",
+  "$id": "https://uxmp/PlaylistCreation.json",
   "title": "Playlist creation",
   "description": "Defines the playlist creation request",
   "type": "object",

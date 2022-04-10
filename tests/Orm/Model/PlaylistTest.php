@@ -21,6 +21,24 @@ class PlaylistTest extends ModelTestCase
         return [
             ['Name', 'some-name'],
             ['Owner', Mockery::mock(UserInterface::class)],
+            ['SongList', [666]],
+            ['SongCount', 42],
         ];
+    }
+
+    public function testUpdateSongListSetsData(): void
+    {
+        $list = [42];
+
+        $this->subject->updateSongList($list);
+
+        $this->assertSame(
+            $list,
+            $this->subject->getSongList()
+        );
+        $this->assertSame(
+            1,
+            $this->subject->getSongCount()
+        );
     }
 }
