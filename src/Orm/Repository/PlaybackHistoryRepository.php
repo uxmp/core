@@ -26,6 +26,24 @@ final class PlaybackHistoryRepository extends EntityRepository implements Playba
         return $this->findBy(['song' => $song]);
     }
 
+    /**
+     * @param int $number Amount of items to retrieve
+     *
+     * @return iterable<array{cnt: int, song_id: int}>
+     */
+    public function getMostPlayed(int $number = 10): iterable
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('COUNT(c) as cnt, c.song_id')
+            ->from(PlaybackHistory::class, 'c')
+            ->groupBy('c.song_id')
+            ->orderBy('cnt', 'DESC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(PlaybackHistoryInterface $playbackHistory): void
     {
         $em = $this->getEntityManager();

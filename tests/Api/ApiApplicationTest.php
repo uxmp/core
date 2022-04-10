@@ -107,6 +107,9 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/play/history', Playback\PlaybackHistoryApplication::class)
             ->once();
         $app->shouldReceive('get')
+            ->with('/play/mostplayed', Playback\MostPlayedApplication::class)
+            ->once();
+        $app->shouldReceive('get')
             ->with('/play/{id}', Playback\PlaySongApplication::class)
             ->once();
         $app->shouldReceive('get')

@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
+use Uxmp\Core\Api\Playback\MostPlayedApplication;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
@@ -69,6 +70,7 @@ final class ApiApplication
 
         // playback
         $app->get('/play/history', Playback\PlaybackHistoryApplication::class);
+        $app->get('/play/mostplayed', MostPlayedApplication::class);
         $app->get('/play/{id}', Playback\PlaySongApplication::class);
 
         // artists
