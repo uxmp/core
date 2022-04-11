@@ -28,6 +28,10 @@ interface PlaylistInterface extends OwnerProviderInterface
 
     public function setSongCount(int $songCount): PlaylistInterface;
 
+    public function getType(): int;
+
+    public function setType(int $type): PlaylistInterface;
+
     /**
      * Updates the song list and also sets the song count
      *

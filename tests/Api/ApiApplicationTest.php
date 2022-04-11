@@ -199,6 +199,9 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('get')
             ->with('/playlist/{playlistId}/songs', Playlist\PlaylistSongListApplication::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();

@@ -25,6 +25,8 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
 
     private PlaylistCreationApplication $subject;
 
+    private array $handlerTypes = [42 => true];
+
     public function setUp(): void
     {
         $this->playlistRepository = Mockery::mock(PlaylistRepositoryInterface::class);
@@ -32,7 +34,35 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
 
         $this->subject = new PlaylistCreationApplication(
             $this->playlistRepository,
-            $this->schemaValidator
+            $this->schemaValidator,
+            $this->handlerTypes,
+        );
+    }
+
+    public function testRunErrorOnUnknownType(): void
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+
+        $name = 'some-name';
+        $typeId = 33;
+
+        $this->schemaValidator->shouldReceive('getValidatedBody')
+            ->with(
+                $request,
+                'PlaylistCreation.json',
+            )
+            ->once()
+            ->andReturn(['name' => $name, 'typeId' => $typeId,]);
+
+        $response->shouldReceive('withStatus')
+            ->with(StatusCode::BAD_REQUEST)
+            ->once()
+            ->andReturnSelf();
+
+        $this->assertSame(
+            $response,
+            call_user_func($this->subject, $request, $response, [])
         );
     }
 
@@ -46,6 +76,7 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
 
         $id = 666;
         $name = 'some-name';
+        $typeId = 42;
 
         $this->schemaValidator->shouldReceive('getValidatedBody')
             ->with(
@@ -53,7 +84,7 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
                 'PlaylistCreation.json',
             )
             ->once()
-            ->andReturn(['name' => $name,]);
+            ->andReturn(['name' => $name, 'typeId' => $typeId,]);
 
         $request->shouldReceive('getAttribute')
             ->with(SessionValidatorMiddleware::USER)
@@ -70,6 +101,10 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
 
         $playlist->shouldReceive('setName')
             ->with($name)
+            ->once()
+            ->andReturnSelf();
+        $playlist->shouldReceive('setType')
+            ->with($typeId)
             ->once()
             ->andReturnSelf();
         $playlist->shouldReceive('setOwner')

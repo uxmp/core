@@ -10,7 +10,9 @@ use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Component\Playlist\PlaylistSongRetrieverInterface;
+use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 
 /**
@@ -37,10 +39,13 @@ final class PlaylistSongListApplication extends AbstractApiApplication
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
 
+        /** @var UserInterface $user */
+        $user = $request->getAttribute(SessionValidatorMiddleware::USER);
+
         $result = [];
 
         /** @var SongInterface $song */
-        foreach ($this->playlistSongRetriever->retrieve($playlist) as $song) {
+        foreach ($this->playlistSongRetriever->retrieve($playlist, $user) as $song) {
             $result[] = $this->resultItemFactory->createSongListItem($song, $song->getAlbum());
         }
 

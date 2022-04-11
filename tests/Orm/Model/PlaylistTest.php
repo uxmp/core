@@ -23,6 +23,7 @@ class PlaylistTest extends ModelTestCase
             ['Owner', Mockery::mock(UserInterface::class)],
             ['SongList', [666]],
             ['SongCount', 42],
+            ['Type', 21],
         ];
     }
 

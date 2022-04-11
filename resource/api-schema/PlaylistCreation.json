@@ -9,6 +9,10 @@
       "type": "string",
       "minLength": 2,
       "maxLength": 255
+    },
+    "typeId": {
+      "type": "integer",
+      "descrption": "Type of the playlist"
     }
   },
   "additionalProperties": false,

@@ -15,9 +15,11 @@ use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Component\Playlist\PlaylistSongRetrieverInterface;
+use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
+use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 
 class PlaylistSongListApplicationTest extends MockeryTestCase
@@ -73,6 +75,7 @@ class PlaylistSongListApplicationTest extends MockeryTestCase
         $song = Mockery::mock(SongInterface::class);
         $album = Mockery::mock(AlbumInterface::class);
         $songListItem = Mockery::mock(JsonSerializable::class);
+        $user = Mockery::mock(UserInterface::class);
 
         $playlistId = 666;
         $result = 'some-result';
@@ -87,7 +90,7 @@ class PlaylistSongListApplicationTest extends MockeryTestCase
         };
 
         $this->playlistSongRetriever->shouldReceive('retrieve')
-            ->with($playlist)
+            ->with($playlist, $user)
             ->once()
             ->andReturn($generator($song));
 
@@ -114,6 +117,11 @@ class PlaylistSongListApplicationTest extends MockeryTestCase
             ->with('Content-Type', 'application/json')
             ->once()
             ->andReturnSelf();
+
+        $request->shouldReceive('getAttribute')
+            ->with(SessionValidatorMiddleware::USER)
+            ->once()
+            ->andReturn($user);
 
         $stream->shouldReceive('write')
             ->with(

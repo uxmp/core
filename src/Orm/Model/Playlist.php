@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
 use Uxmp\Core\Orm\Repository\PlaylistRepository;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
@@ -24,6 +25,9 @@ class Playlist implements PlaylistInterface
 
     #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $song_count = 0;
+
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => PlaylistTypeEnum::STATIC])]
+    private int $type = PlaylistTypeEnum::STATIC;
 
     /** @var array<int> */
     #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
@@ -85,6 +89,17 @@ class Playlist implements PlaylistInterface
     public function setSongCount(int $songCount): PlaylistInterface
     {
         $this->song_count = $songCount;
+        return $this;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): PlaylistInterface
+    {
+        $this->type = $type;
         return $this;
     }
 

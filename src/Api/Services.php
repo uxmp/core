@@ -16,4 +16,9 @@ return [
             'validator',
             get(Validator::class)
         ),
+    PlaylistTypes\PlaylistTypesApplication::class => autowire(PlaylistTypes\PlaylistTypesApplication::class)
+        ->constructorParameter(
+            'playlistTypeList',
+            get('playlistTypeHandler')
+        ),
 ];

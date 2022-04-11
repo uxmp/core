@@ -23,5 +23,15 @@ return [
                 HandlerTypeEnum::SONG => get(MediaAddition\Handler\SongHandler::class),
             ]
         ),
-    PlaylistSongRetrieverInterface::class => autowire(PlaylistSongRetriever::class),
+    'playlistTypeHandler' => [
+        PlaylistTypeEnum::STATIC => get(Smartlist\Type\StaticPlaylistType::class),
+        //PlaylistTypeEnum::FAVORITES => get(Smartlist\Type\FavoriteSongsType::class),
+    ],
+    PlaylistSongRetrieverInterface::class => autowire(PlaylistSongRetriever::class)
+        ->constructorParameter(
+            'handlerTypes',
+            get('playlistTypeHandler')
+        ),
+    Smartlist\Type\FavoriteSongsType::class => autowire(),
+    Smartlist\Type\StaticPlaylistType::class => autowire(),
 ];

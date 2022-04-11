@@ -118,6 +118,9 @@ final class ApiApplication
         $app->post('/playlist/{playlistId}/songs', Playlist\PlaylistAddMediaApplication::class);
         $app->get('/playlist/{playlistId}/songs', Playlist\PlaylistSongListApplication::class);
 
+        // playlist types
+        $app->get('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class);
+
         $app->run();
     }
 }
