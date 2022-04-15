@@ -10,7 +10,15 @@ use Doctrine\ORM\Tools\Setup;
 use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use Psr\Container\ContainerInterface;
 use Tzsk\Collage\MakeCollage;
+use Usox\HyperSonic\FeatureSet\V1161\FeatureSetFactory;
+use Usox\HyperSonic\HyperSonic;
+use Usox\HyperSonic\HyperSonicInterface;
+use Uxmp\Core\Component\SubSonic\ArtistListDataProvider;
+use Uxmp\Core\Component\SubSonic\AuthenticationProvider;
+use Uxmp\Core\Component\SubSonic\LicenseDataProvider;
+use Uxmp\Core\Component\SubSonic\PingDataProvider;
 use function DI\autowire;
 
 /**
@@ -41,4 +49,15 @@ return [
         return $dotenv;
     },
     MakeCollage::class => autowire(),
+    HyperSonicInterface::class => function (ContainerInterface $c): HyperSonicInterface {
+        return HyperSonic::init(
+            new FeatureSetFactory(),
+            $c->get(AuthenticationProvider::class),
+            [
+                'ping.view' => fn () => $c->get(PingDataProvider::class),
+                'getLicense.view' => fn () => $c->get(LicenseDataProvider::class),
+                'getArtists.view' => fn () => $c->get(ArtistListDataProvider::class),
+            ],
+        );
+    },
 ];

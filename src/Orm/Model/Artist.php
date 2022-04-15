@@ -100,4 +100,9 @@ class Artist implements ArtistInterface
         $this->last_modified = $last_modified;
         return $this;
     }
+
+    public function getAlbumCount(): int
+    {
+        return $this->albums->count();
+    }
 }

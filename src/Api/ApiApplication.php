@@ -9,6 +9,7 @@ use Monolog\Logger;
 use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
+use Usox\HyperSonic\HyperSonicInterface;
 use Uxmp\Core\Api\Playback\MostPlayedApplication;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
@@ -18,9 +19,13 @@ use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
  */
 final class ApiApplication
 {
+    /**
+     * @param HyperSonicInterface&callable $hyperSonic
+     */
     public function __construct(
         private ConfigProviderInterface $config,
         private SessionValidatorMiddleware $sessionValidatorMiddleware,
+        private HyperSonicInterface $hyperSonic,
     ) {
     }
 
@@ -49,9 +54,10 @@ final class ApiApplication
         );
         $app->setBasePath($apiBasePath);
 
+        $this->sessionValidatorMiddleware->setLogger($logger);
         $app->add($this->sessionValidatorMiddleware);
         $app->add(new JwtAuthentication([
-            'ignore' => [$apiBasePath . '/common/login', $apiBasePath . '/art'],
+            'ignore' => [$apiBasePath . '/common/login', $apiBasePath . '/art', $apiBasePath . '/rest'],
             'cookie' => $this->config->getCookieName(),
             'secret' => $this->config->getJwtSecret(),
             'logger' => $logger,
@@ -120,6 +126,9 @@ final class ApiApplication
 
         // playlist types
         $app->get('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class);
+
+        // subsonic api
+        $app->get('/rest/{methodName}', $this->hyperSonic);
 
         $app->run();
     }

@@ -34,6 +34,7 @@ final class Init
         $builder->addDefinitions(require __DIR__ . '/../Component/Cli/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/User/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Component/Playlist/Services.php');
+        $builder->addDefinitions(require __DIR__ . '/../Component/SubSonic/Services.php');
         $builder->addDefinitions(require __DIR__ . '/../Orm/Services.php');
 
         /** @var ContainerInterface $container */

@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a89a4f024582b949f2ba03b742d9c83",
+    "content-hash": "574182bb625f5798625ab02f0c1143f6",
     "packages": [
+        {
+            "name": "aaronddm/xml-builder",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AaronDDM/XMLBuilder.git",
+                "reference": "dfd3ad538a6cd2979fd8775e6638e4895e61d218"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AaronDDM/XMLBuilder/zipball/dfd3ad538a6cd2979fd8775e6638e4895e61d218",
+                "reference": "dfd3ad538a6cd2979fd8775e6638e4895e61d218",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "require-dev": {
+                "ext-xmlwriter": "*",
+                "lib-libxml": ">=2.6.20",
+                "phpunit/phpunit": "^8.0",
+                "sabre/xml": "^1.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AaronDDM\\XMLBuilder\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron de Mello",
+                    "email": "aaron@aarondm.com"
+                }
+            ],
+            "description": "A simple PHP based XML builder",
+            "support": {
+                "issues": "https://github.com/AaronDDM/XMLBuilder/issues",
+                "source": "https://github.com/AaronDDM/XMLBuilder/tree/v2.0.2"
+            },
+            "time": "2022-01-10T03:25:11+00:00"
+        },
         {
             "name": "adhocore/cli",
             "version": "0.9.1",
@@ -5128,6 +5174,59 @@
             "time": "2022-02-13T06:28:50+00:00"
         },
         {
+            "name": "usox/hypersonic",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/usox/hypersonic.git",
+                "reference": "d4041d71cf4d1669f9e80d3f052814605b6d4e12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usox/hypersonic/zipball/d4041d71cf4d1669f9e80d3f052814605b6d4e12",
+                "reference": "d4041d71cf4d1669f9e80d3f052814605b6d4e12",
+                "shasum": ""
+            },
+            "require": {
+                "aaronddm/xml-builder": "^2.0",
+                "ext-mbstring": "*",
+                "php": "^8.1",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "mockery/mockery": "^1.5",
+                "phpstan/phpstan": "^1.5",
+                "phpstan/phpstan-mockery": "^1",
+                "phpstan/phpstan-strict-rules": "^1",
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Usox\\HyperSonic\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Jakob",
+                    "email": "github@usox.org"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/usox/hypersonic/issues",
+                "source": "https://github.com/usox/hypersonic/tree/main"
+            },
+            "time": "2022-04-22T19:40:54+00:00"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v5.4.1",
             "source": {
@@ -8530,7 +8629,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "usox/hypersonic": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

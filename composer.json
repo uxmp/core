@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.0 || ^8.1",
         "ext-readline": "*",
+        "aaronddm/xml-builder": "^2.0",
         "adhocore/cli": "^0.9.0",
         "doctrine/annotations": "^1.13",
         "doctrine/orm": "^2.9",
@@ -26,6 +27,7 @@
         "symfony/cache": "^5.3",
         "tuupola/cors-middleware": "^1.2",
         "tuupola/slim-jwt-auth": "^3.5",
+        "usox/hypersonic": "dev-main",
         "tzsk/collage": "^6",
         "vlucas/phpdotenv": "^5.3"
     },

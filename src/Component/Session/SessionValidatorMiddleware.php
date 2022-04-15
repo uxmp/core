@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Log\LoggerInterface;
 use Teapot\StatusCode;
 
 class SessionValidatorMiddleware implements MiddlewareInterface
@@ -23,10 +24,18 @@ class SessionValidatorMiddleware implements MiddlewareInterface
     ) {
     }
 
+    private LoggerInterface $logger;
+
+    public function setLogger($logger) {
+        $this->logger = $logger;
+    }
+
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
     ): ResponseInterface {
+        $this->logger->info((string) $request->getUri());
+
         /** @var null|array<scalar> $tokenData */
         $tokenData = $request->getAttribute('token');
         if ($tokenData !== null) {
