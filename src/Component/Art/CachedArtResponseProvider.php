@@ -5,6 +5,7 @@ namespace Uxmp\Core\Component\Art;
 use DateTimeInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
+use Uxmp\Core\Component\Art\Exception\ArtContentException;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 final class CachedArtResponseProvider implements CachedArtResponseProviderInterface
@@ -12,6 +13,7 @@ final class CachedArtResponseProvider implements CachedArtResponseProviderInterf
     public function __construct(
         private ConfigProviderInterface $config,
         private Psr17Factory $psr17Factory,
+        private ArtContentRetrieverInterface $artContentRetriever,
     ) {
     }
 
@@ -25,23 +27,16 @@ final class CachedArtResponseProvider implements CachedArtResponseProviderInterf
             return $this->createErrorResponse($response);
         }
 
-        $filename = $artItemId . '.jpg';
-        $path = sprintf(
-            '%s/%s',
-            $this->config->getAssetPath() . '/img/' . $item->getArtItemType(),
-            $filename
-        );
-        $mimeType = 'image/jpg';
-
-        if (!file_exists($path)) {
+        try {
+            $artContent = $this->artContentRetriever->retrieve($item);
+        } catch (ArtContentException) {
             return $this->createErrorResponse($response);
         }
 
         return $this->createResponse(
             $response,
-            $path,
-            $mimeType,
-            $filename,
+            $artContent,
+            sprintf('%s.jpg', $artItemId),
             $item->getLastModified()
         );
     }
@@ -49,32 +44,30 @@ final class CachedArtResponseProvider implements CachedArtResponseProviderInterf
     private function createErrorResponse(
         ResponseInterface $response
     ): ResponseInterface {
-        return $this->createResponse(
-            $response,
-            (string) realpath(__DIR__ . '/../../../resource/asset/disc.png'),
-            'image/png',
-            'disc.png'
-        );
+        return $response
+            ->withHeader('Content-Type', 'image/png')
+            ->withHeader('Content-Disposition', 'filename=disc.png')
+            ->withBody(
+                $this->psr17Factory->createStreamFromFile((string) realpath(__DIR__ . '/../../../resource/asset/disc.png'))
+            );
     }
 
+    /**
+     * @param array{content: string, mimeType: string} $artContent
+     */
     private function createResponse(
         ResponseInterface $response,
-        string $path,
-        string $mimeType,
+        array $artContent,
         string $filename,
         ?DateTimeInterface $lastModified = null
     ): ResponseInterface {
-        if ($lastModified !== null) {
-            $response = $response
-                ->withHeader('Cache-Control', sprintf('public, max-age=%d', $this->config->getClientCacheMaxAge()))
-                ->withHeader('Last-Modified', $lastModified->format(DATE_RFC7231));
-        }
-
         return $response
-            ->withHeader('Content-Type', $mimeType)
+            ->withHeader('Cache-Control', sprintf('public, max-age=%d', $this->config->getClientCacheMaxAge()))
+            ->withHeader('Last-Modified', (string) $lastModified?->format(DATE_RFC7231))
+            ->withHeader('Content-Type', $artContent['mimeType'])
             ->withHeader('Content-Disposition', 'filename='.$filename)
             ->withBody(
-                $this->psr17Factory->createStreamFromFile($path)
+                $this->psr17Factory->createStream($artContent['content'])
             );
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Art;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Nyholm\Psr7\Factory\Psr17Factory;
-use org\bovigo\vfs\vfsStream;
-use org\bovigo\vfs\vfsStreamDirectory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Component\Art\Exception\ArtContentException;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 class CachedArtResponseProviderTest extends MockeryTestCase
@@ -19,27 +19,70 @@ class CachedArtResponseProviderTest extends MockeryTestCase
 
     private MockInterface $psr17Factory;
 
-    private CachedArtResponseProvider $subject;
+    private MockInterface $artContentRetriever;
 
-    private vfsStreamDirectory $root;
+    private CachedArtResponseProvider $subject;
 
     public function setUp(): void
     {
-        $this->config = \Mockery::mock(ConfigProviderInterface::class);
-        $this->psr17Factory = \Mockery::mock(Psr17Factory::class);
-        $this->root = vfsStream::setup();
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->psr17Factory = Mockery::mock(Psr17Factory::class);
+        $this->artContentRetriever = Mockery::mock(ArtContentRetrieverInterface::class);
 
         $this->subject = new CachedArtResponseProvider(
             $this->config,
-            $this->psr17Factory
+            $this->psr17Factory,
+            $this->artContentRetriever,
+        );
+    }
+
+    public function testWithCachedArtReturnsErrorOnArtRetrievalError(): void
+    {
+        $response = Mockery::mock(ResponseInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
+
+        $item->shouldReceive('getArtItemId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn('some-id');
+
+        $this->artContentRetriever->shouldReceive('retrieve')
+            ->with($item)
+            ->once()
+            ->andThrow(new ArtContentException());
+
+        $response->shouldReceive('withHeader')
+            ->with('Content-Type', 'image/png')
+            ->once()
+            ->andReturnSelf();
+        $response->shouldReceive('withHeader')
+            ->with('Content-Disposition', 'filename=disc.png')
+            ->once()
+            ->andReturnSelf();
+        $response->shouldReceive('withBody')
+            ->with($stream)
+            ->once()
+            ->andReturnSelf();
+
+        $this->psr17Factory->shouldReceive('createStreamFromFile')
+            ->with(
+                realpath(__DIR__ . '/../../../resource/asset/disc.png')
+            )
+            ->once()
+            ->andReturn($stream);
+
+        $this->assertSame(
+            $response,
+            $this->subject->withCachedArt($response, $item)
         );
     }
 
     public function testWithCachedArtReturnsErrorIfItemIdIsNull(): void
     {
-        $response = \Mockery::mock(ResponseInterface::class);
-        $item = \Mockery::mock(CachableArtItemInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $item->shouldReceive('getArtItemId')
             ->withNoArgs()
@@ -72,78 +115,26 @@ class CachedArtResponseProviderTest extends MockeryTestCase
         );
     }
 
-    public function testWithCachedArtReturnsErrorIfArtFileDoesNotExist(): void
-    {
-        $response = \Mockery::mock(ResponseInterface::class);
-        $item = \Mockery::mock(CachableArtItemInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
-
-        $artItemId = 'some-art-item-id';
-        $assetPath = 'some-asset-path';
-        $artItemType = 'some-art-item-type';
-
-        $item->shouldReceive('getArtItemId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artItemId);
-        $item->shouldReceive('getArtItemType')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artItemType);
-
-        $response->shouldReceive('withHeader')
-            ->with('Content-Type', 'image/png')
-            ->once()
-            ->andReturnSelf();
-        $response->shouldReceive('withHeader')
-            ->with('Content-Disposition', 'filename=disc.png')
-            ->once()
-            ->andReturnSelf();
-        $response->shouldReceive('withBody')
-            ->with($stream)
-            ->once()
-            ->andReturnSelf();
-
-        $this->config->shouldReceive('getAssetPath')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($assetPath);
-
-        $this->psr17Factory->shouldReceive('createStreamFromFile')
-            ->with(
-                realpath(__DIR__ . '/../../../resource/asset/disc.png')
-            )
-            ->once()
-            ->andReturn($stream);
-
-        $this->assertSame(
-            $response,
-            $this->subject->withCachedArt($response, $item)
-        );
-    }
-
     public function testWithCachedArtReturnsData(): void
     {
-        $response = \Mockery::mock(ResponseInterface::class);
-        $item = \Mockery::mock(CachableArtItemInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $artItemId = 'some-art-item-id';
-        $artItemType = 'some-art-item-type';
         $fileName = sprintf('%s.jpg', $artItemId);
         $timestamp = 123456;
         $maxAge = 666;
+        $content = 'some-content';
+        $mimeType = 'some-content-type';
+
+        $this->artContentRetriever->shouldReceive('retrieve')
+            ->with($item)
+            ->once()
+            ->andReturn(['content' => $content, 'mimeType' => $mimeType]);
 
         $lastModified = new \DateTime();
         $lastModified->setTimestamp($timestamp);
-
-        $assetDir = vfsStream::newDirectory('/img')
-            ->at($this->root);
-        $artTypeDir = vfsStream::newDirectory('/' . $artItemType)
-            ->at($assetDir);
-        vfsStream::newFile($fileName)
-            ->withContent('aggi')
-            ->at($artTypeDir);
 
         $this->config->shouldReceive('getClientCacheMaxAge')
             ->withNoArgs()
@@ -154,10 +145,6 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn($artItemId);
-        $item->shouldReceive('getArtItemType')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artItemType);
         $item->shouldReceive('getLastModified')
             ->withNoArgs()
             ->once()
@@ -172,7 +159,7 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
         $response->shouldReceive('withHeader')
-            ->with('Content-Type', 'image/jpg')
+            ->with('Content-Type', $mimeType)
             ->once()
             ->andReturnSelf();
         $response->shouldReceive('withHeader')
@@ -184,19 +171,8 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
 
-        $this->config->shouldReceive('getAssetPath')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($this->root->url());
-
-        $this->psr17Factory->shouldReceive('createStreamFromFile')
-            ->with(
-                sprintf(
-                    '%s/%s',
-                    $artTypeDir->url(),
-                    $fileName,
-                )
-            )
+        $this->psr17Factory->shouldReceive('createStream')
+            ->with($content)
             ->once()
             ->andReturn($stream);
 

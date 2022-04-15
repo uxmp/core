@@ -12,6 +12,7 @@ use Monolog\Logger;
 use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
+use Usox\HyperSonic\HyperSonicInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
@@ -201,6 +202,9 @@ class ApiApplicationTest extends MockeryTestCase
             ->once();
         $app->shouldReceive('get')
             ->with('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class)
+            ->once();
+        $app->shouldReceive('get')
+            ->with('/rest/{methodName}', HyperSonicInterface::class)
             ->once();
         $app->shouldReceive('run')
             ->withNoArgs()

@@ -2,6 +2,7 @@
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
 use Uxmp\Core\Component\Art\CachableArtItemInterface;
 
 interface ArtistInterface extends
@@ -24,5 +25,7 @@ interface ArtistInterface extends
 
     public function setMbid(?string $mbid): ArtistInterface;
 
-    public function setLastModified(\DateTimeInterface $last_modified): ArtistInterface;
+    public function setLastModified(DateTimeInterface $last_modified): ArtistInterface;
+
+    public function getAlbumCount(): int;
 }
