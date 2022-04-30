@@ -11,7 +11,6 @@ use Usox\HyperSonic\FeatureSet\V1161\Contract\LicenseDataProviderInterface;
 
 final class LicenseDataProvider implements LicenseDataProviderInterface
 {
-
     public function isValid(): bool
     {
         return true;

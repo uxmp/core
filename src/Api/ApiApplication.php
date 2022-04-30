@@ -54,7 +54,6 @@ final class ApiApplication
         );
         $app->setBasePath($apiBasePath);
 
-        $this->sessionValidatorMiddleware->setLogger($logger);
         $app->add($this->sessionValidatorMiddleware);
         $app->add(new JwtAuthentication([
             'ignore' => [$apiBasePath . '/common/login', $apiBasePath . '/art', $apiBasePath . '/rest'],

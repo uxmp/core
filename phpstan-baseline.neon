@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\AccessKey\\:\\:\\$user_id is never read, only written\\.$#"
+			count: 1
+			path: src/Orm/Model/AccessKey.php
+
+		-
 			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Playlist\\:\\:\\$owner_user_id is never read, only written\\.$#"
 			count: 1
 			path: src/Orm/Model/Playlist.php

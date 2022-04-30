@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "574182bb625f5798625ab02f0c1143f6",
+    "content-hash": "b18514ba364386cec3faad0bd4463195",
     "packages": [
         {
             "name": "aaronddm/xml-builder",
@@ -5175,16 +5175,16 @@
         },
         {
             "name": "usox/hypersonic",
-            "version": "dev-main",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usox/hypersonic.git",
-                "reference": "d4041d71cf4d1669f9e80d3f052814605b6d4e12"
+                "reference": "4859c63cddc596abe2ea4772735a89d5b70ae5b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usox/hypersonic/zipball/d4041d71cf4d1669f9e80d3f052814605b6d4e12",
-                "reference": "d4041d71cf4d1669f9e80d3f052814605b6d4e12",
+                "url": "https://api.github.com/repos/usox/hypersonic/zipball/4859c63cddc596abe2ea4772735a89d5b70ae5b2",
+                "reference": "4859c63cddc596abe2ea4772735a89d5b70ae5b2",
                 "shasum": ""
             },
             "require": {
@@ -5201,7 +5201,6 @@
                 "phpstan/phpstan-strict-rules": "^1",
                 "phpunit/phpunit": "^9.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5220,11 +5219,12 @@
                     "email": "github@usox.org"
                 }
             ],
+            "description": "Creates subsonic-protocol compatible api backends",
             "support": {
                 "issues": "https://github.com/usox/hypersonic/issues",
-                "source": "https://github.com/usox/hypersonic/tree/main"
+                "source": "https://github.com/usox/hypersonic/tree/0.1.1"
             },
-            "time": "2022-04-22T19:40:54+00:00"
+            "time": "2022-04-30T19:53:28+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -8629,9 +8629,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "usox/hypersonic": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

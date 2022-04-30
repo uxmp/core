@@ -27,7 +27,7 @@
         "symfony/cache": "^5.3",
         "tuupola/cors-middleware": "^1.2",
         "tuupola/slim-jwt-auth": "^3.5",
-        "usox/hypersonic": "dev-main",
+        "usox/hypersonic": "^0.1",
         "tzsk/collage": "^6",
         "vlucas/phpdotenv": "^5.3"
     },
