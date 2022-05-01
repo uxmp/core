@@ -108,6 +108,9 @@ final class ApiApplication
         // user settings
         $app->get('/usersettings', User\UserSettingsRetrieveApplication::class);
         $app->put('/usersettings', User\UserSettingsEditApplication::class);
+        $app->get('/usersettings/subsonic', User\SubSonic\SubSonicSettingsRetrieveApplication::class);
+        $app->post('/usersettings/subsonic', User\SubSonic\SubSonicSettingsCreateApplication::class);
+        $app->delete('/usersettings/subsonic', User\SubSonic\SubSonicSettingsDeleteApplication::class);
 
         // playlist
         $app->get('/playlists', Playlist\PlaylistListApplication::class);

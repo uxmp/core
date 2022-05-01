@@ -176,6 +176,15 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('put')
             ->with('/usersettings', User\UserSettingsEditApplication::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/usersettings/subsonic', User\SubSonic\SubSonicSettingsRetrieveApplication::class)
+            ->once();
+        $app->shouldReceive('post')
+            ->with('/usersettings/subsonic', User\SubSonic\SubSonicSettingsCreateApplication::class)
+            ->once();
+        $app->shouldReceive('delete')
+            ->with('/usersettings/subsonic', User\SubSonic\SubSonicSettingsDeleteApplication::class)
+            ->once();
         $app->shouldReceive('post')
             ->with('/playlist', Playlist\PlaylistCreationApplication::class)
             ->once();
