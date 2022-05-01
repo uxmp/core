@@ -12,7 +12,7 @@ use Uxmp\Core\Component\Setup\Validator\Exception\EnvironmentValidationException
 final class DatabaseValidator implements ValidatorInterface
 {
     public function __construct(
-        private ContainerInterface $dic,
+        private readonly ContainerInterface $dic,
     ) {
     }
 

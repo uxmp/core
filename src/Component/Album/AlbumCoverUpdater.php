@@ -11,8 +11,8 @@ use Uxmp\Core\Orm\Model\AlbumInterface;
 final class AlbumCoverUpdater implements AlbumCoverUpdaterInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private ArtistCoverUpdaterInterface $artistCoverUpdater
+        private readonly ConfigProviderInterface $config,
+        private readonly ArtistCoverUpdaterInterface $artistCoverUpdater
     ) {
     }
 

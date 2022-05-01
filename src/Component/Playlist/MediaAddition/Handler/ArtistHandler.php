@@ -12,7 +12,7 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtistHandler implements HandlerInterface
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository,
+        private readonly ArtistRepositoryInterface $artistRepository,
     ) {
     }
 

@@ -17,9 +17,9 @@ abstract class AbstractFavoriteApplication extends AbstractApiApplication
      * @param SchemaValidatorInterface<array{itemId: int}> $schemaValidator
      */
     protected function __construct(
-        private SongRepositoryInterface $songRepository,
-        private AlbumRepositoryInterface $albumRepository,
-        private SchemaValidatorInterface $schemaValidator,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
     ) {
     }
 

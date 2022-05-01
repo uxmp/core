@@ -12,7 +12,7 @@ final class EventHandler implements EventHandlerInterface
     private array $events = [];
 
     public function __construct(
-        private ContainerInterface $dic
+        private readonly ContainerInterface $dic
     ) {
     }
 

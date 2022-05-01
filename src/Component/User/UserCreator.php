@@ -13,8 +13,8 @@ use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 final class UserCreator implements UserCreatorInterface
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private PasswordVerificatorInterface $passwordVerificator,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly PasswordVerificatorInterface $passwordVerificator,
     ) {
     }
 

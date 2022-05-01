@@ -10,7 +10,7 @@ final class ExtractorDeterminator implements ExtractorDeterminatorInterface
      * @param array<ExtractorInterface> $availableExtractors
      */
     public function __construct(
-        private array $availableExtractors
+        private readonly array $availableExtractors
     ) {
     }
 

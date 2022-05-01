@@ -16,12 +16,12 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 final class CatalogCleaner implements CatalogCleanerInterface
 {
     public function __construct(
-        private CatalogRepositoryInterface $catalogRepository,
-        private AlbumDeleterInterface $albumDeleter,
-        private SongRepositoryInterface $songRepository,
-        private SongDeleterInterface $songDeleter,
-        private DiscRepositoryInterface $discRepository,
-        private AlbumRepositoryInterface $albumRepository,
+        private readonly CatalogRepositoryInterface $catalogRepository,
+        private readonly AlbumDeleterInterface $albumDeleter,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly SongDeleterInterface $songDeleter,
+        private readonly DiscRepositoryInterface $discRepository,
+        private readonly AlbumRepositoryInterface $albumRepository,
     ) {
     }
 

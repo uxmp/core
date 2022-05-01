@@ -17,8 +17,8 @@ final class PlaylistMediaAdder implements PlaylistMediaAdderInterface
      * @param array<string, HandlerInterface> $handlerList
      */
     public function __construct(
-        private array $handlerList,
-        private PlaylistRepositoryInterface $playlistRepository,
+        private readonly array $handlerList,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
     ) {
     }
 

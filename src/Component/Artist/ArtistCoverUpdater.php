@@ -13,9 +13,9 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private ArtistRepositoryInterface $artistRepository,
-        private MakeCollage $collageMaker,
+        private readonly ConfigProviderInterface $config,
+        private readonly ArtistRepositoryInterface $artistRepository,
+        private readonly MakeCollage $collageMaker,
     ) {
     }
 

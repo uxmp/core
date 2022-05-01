@@ -17,7 +17,7 @@ use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
 final class FavoriteListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private FavoriteRepositoryInterface $favoriteRepository,
+        private readonly FavoriteRepositoryInterface $favoriteRepository,
     ) {
     }
 

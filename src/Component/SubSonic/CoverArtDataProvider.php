@@ -16,8 +16,8 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class CoverArtDataProvider implements GetCoverArtDataProviderInterface
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository,
-        private ArtContentRetrieverInterface $artContentRetriever,
+        private readonly ArtistRepositoryInterface $artistRepository,
+        private readonly ArtContentRetrieverInterface $artContentRetriever,
     ) {
     }
 

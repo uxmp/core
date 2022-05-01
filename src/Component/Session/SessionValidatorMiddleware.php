@@ -13,13 +13,13 @@ use Teapot\StatusCode;
 
 class SessionValidatorMiddleware implements MiddlewareInterface
 {
-    public const SESSION_ID = 'sessionId';
-    public const USER = 'user';
-    public const USER_ID = 'userId';
+    final public const SESSION_ID = 'sessionId';
+    final public const USER = 'user';
+    final public const USER_ID = 'userId';
 
     public function __construct(
-        private SessionManagerInterface $sessionManager,
-        private Psr17Factory $psr17Factory
+        private readonly SessionManagerInterface $sessionManager,
+        private readonly Psr17Factory $psr17Factory
     ) {
     }
 

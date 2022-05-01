@@ -16,8 +16,8 @@ use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 final class AuthenticationProvider implements AuthenticationProviderInterface
 {
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private AccessKeyRepositoryInterface $accessKeyRepository,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly AccessKeyRepositoryInterface $accessKeyRepository,
     ) {
     }
 

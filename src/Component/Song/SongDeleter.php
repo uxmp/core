@@ -11,8 +11,8 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 final class SongDeleter implements SongDeleterInterface
 {
     public function __construct(
-        private SongRepositoryInterface $songRepository,
-        private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
     ) {
     }
 

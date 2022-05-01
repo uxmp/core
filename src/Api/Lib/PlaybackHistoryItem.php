@@ -16,7 +16,23 @@ final class PlaybackHistoryItem implements JsonSerializable
     ) {
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array{
+     *  id: int,
+     *  name: string,
+     *  artistName: string|null,
+     *  albumName: string|null,
+     *  trackNumber: int,
+     *  playUrl: string,
+     *  cover: string,
+     *  artistId: int,
+     *  albumId: int,
+     *  length: int,
+     *  userId: int,
+     *  userName: string
+     * }
+     */
+    public function jsonSerialize(): array
     {
         $song = $this->playbackHistory->getSong();
         $album = $song->getDisc()->getAlbum();

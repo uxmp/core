@@ -18,9 +18,9 @@ final class AlbumCache implements AlbumCacheInterface
     private array $cache = [];
 
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ArtistCacheInterface $artistCache,
-        private EventHandlerInterface $eventHandler
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ArtistCacheInterface $artistCache,
+        private readonly EventHandlerInterface $eventHandler
     ) {
     }
 

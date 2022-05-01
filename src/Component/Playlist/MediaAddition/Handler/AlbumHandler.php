@@ -12,7 +12,7 @@ use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 final class AlbumHandler implements HandlerInterface
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
+        private readonly AlbumRepositoryInterface $albumRepository,
     ) {
     }
 

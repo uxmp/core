@@ -12,7 +12,7 @@ use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
 final class FavoriteSongsType implements SmartlistTypeInterface
 {
     public function __construct(
-        private FavoriteRepositoryInterface $favoriteRepository,
+        private readonly FavoriteRepositoryInterface $favoriteRepository,
     ) {
     }
 

@@ -11,7 +11,7 @@ use Uxmp\Core\Component\Cli\Wizard\UserCreationWizardInterface;
 final class UserAddCommand extends Command
 {
     public function __construct(
-        private ContainerInterface $dic
+        private readonly ContainerInterface $dic
     ) {
         parent::__construct(
             'user:add',

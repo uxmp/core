@@ -12,7 +12,7 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 final class SongHandler implements HandlerInterface
 {
     public function __construct(
-        private SongRepositoryInterface $songRepository,
+        private readonly SongRepositoryInterface $songRepository,
     ) {
     }
 

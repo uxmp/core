@@ -10,7 +10,7 @@ use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
 final class FavoriteManager implements FavoriteManagerInterface
 {
     public function __construct(
-        private FavoriteRepositoryInterface $favoriteRepository
+        private readonly FavoriteRepositoryInterface $favoriteRepository
     ) {
     }
 

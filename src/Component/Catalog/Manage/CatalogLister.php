@@ -10,7 +10,7 @@ use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 final class CatalogLister implements CatalogListerInterface
 {
     public function __construct(
-        private CatalogRepositoryInterface $catalogRepository,
+        private readonly CatalogRepositoryInterface $catalogRepository,
     ) {
     }
 

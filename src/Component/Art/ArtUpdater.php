@@ -10,8 +10,8 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtUpdater implements ArtUpdaterInterface
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository,
-        private ArtistCoverUpdaterInterface $artistCoverUpdater,
+        private readonly ArtistRepositoryInterface $artistRepository,
+        private readonly ArtistCoverUpdaterInterface $artistCoverUpdater,
     ) {
     }
 

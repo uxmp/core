@@ -12,7 +12,7 @@ use Uxmp\Core\Component\Config\ConfigProviderInterface;
 final class ArtContentRetriever implements ArtContentRetrieverInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config,
+        private readonly ConfigProviderInterface $config,
     ) {
     }
 

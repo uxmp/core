@@ -11,7 +11,7 @@ use Uxmp\Core\Component\Catalog\Manage\CatalogAdderInterface;
 final class CatalogAddCommand extends Command
 {
     public function __construct(
-        private ContainerInterface $dic
+        private readonly ContainerInterface $dic
     ) {
         parent::__construct(
             'catalog:add',

@@ -12,9 +12,9 @@ use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 final class AlbumDeleter implements AlbumDeleterInterface
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config,
-        private ArtistCoverUpdaterInterface $artistCoverUpdater,
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ConfigProviderInterface $config,
+        private readonly ArtistCoverUpdaterInterface $artistCoverUpdater,
     ) {
     }
 

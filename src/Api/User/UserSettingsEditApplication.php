@@ -21,8 +21,8 @@ final class UserSettingsEditApplication extends AbstractApiApplication
      * @param SchemaValidatorInterface<array{language: string}> $schemaValidator
      */
     public function __construct(
-        private SchemaValidatorInterface $schemaValidator,
-        private UserRepositoryInterface $userRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
+        private readonly UserRepositoryInterface $userRepository,
     ) {
     }
 

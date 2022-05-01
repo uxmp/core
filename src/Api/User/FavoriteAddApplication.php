@@ -22,7 +22,7 @@ final class FavoriteAddApplication extends AbstractFavoriteApplication
     public function __construct(
         SongRepositoryInterface $songRepository,
         AlbumRepositoryInterface $albumRepository,
-        private FavoriteManagerInterface $favoriteManager,
+        private readonly FavoriteManagerInterface $favoriteManager,
         SchemaValidatorInterface $schemaValidator,
     ) {
         parent::__construct(

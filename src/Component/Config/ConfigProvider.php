@@ -25,7 +25,7 @@ final class ConfigProvider implements ConfigProviderInterface
 
     public function getTokenLifetime(): int
     {
-        return (int) ($_ENV['TOKEN_LIFETIME'] ?? 1086400);
+        return (int) ($_ENV['TOKEN_LIFETIME'] ?? 1_086_400);
     }
 
     public function getLogLevel(): string

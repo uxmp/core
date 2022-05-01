@@ -12,7 +12,7 @@ final class Bootstrapper implements BootstrapperInterface
      * @param array<Validator\ValidatorInterface> $validators
      */
     public function __construct(
-        private array $validators
+        private readonly array $validators
     ) {
     }
 

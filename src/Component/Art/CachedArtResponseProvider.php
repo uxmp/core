@@ -11,9 +11,9 @@ use Uxmp\Core\Component\Config\ConfigProviderInterface;
 final class CachedArtResponseProvider implements CachedArtResponseProviderInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private Psr17Factory $psr17Factory,
-        private ArtContentRetrieverInterface $artContentRetriever,
+        private readonly ConfigProviderInterface $config,
+        private readonly Psr17Factory $psr17Factory,
+        private readonly ArtContentRetrieverInterface $artContentRetriever,
     ) {
     }
 

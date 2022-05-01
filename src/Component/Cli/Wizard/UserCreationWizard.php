@@ -19,8 +19,8 @@ final class UserCreationWizard implements UserCreationWizardInterface
     private const PASSWORD_RETRIES = 2;
 
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private UserCreatorInterface $userCreator,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly UserCreatorInterface $userCreator,
     ) {
     }
 

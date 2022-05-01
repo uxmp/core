@@ -18,9 +18,9 @@ final class DiscCache implements DiscCacheInterface
     private array $cache = [];
 
     public function __construct(
-        private DiscRepositoryInterface $discRepository,
-        private AlbumCacheInterface $albumCache,
-        private EventHandlerInterface $eventHandler
+        private readonly DiscRepositoryInterface $discRepository,
+        private readonly AlbumCacheInterface $albumCache,
+        private readonly EventHandlerInterface $eventHandler
     ) {
     }
 

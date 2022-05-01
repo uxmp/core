@@ -21,8 +21,8 @@ final class PlaylistSongRetriever implements PlaylistSongRetrieverInterface
      * @param array<SmartlistTypeInterface> $handlerTypes
      */
     public function __construct(
-        private SongRepositoryInterface $songRepository,
-        private array $handlerTypes
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly array $handlerTypes
     ) {
     }
 

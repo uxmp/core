@@ -15,7 +15,7 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtistListDataProvider implements ArtistListDataProviderInterface
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository
+        private readonly ArtistRepositoryInterface $artistRepository
     ) {
     }
 

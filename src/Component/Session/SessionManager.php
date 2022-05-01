@@ -15,9 +15,9 @@ use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 final class SessionManager implements SessionManagerInterface
 {
     public function __construct(
-        private SessionRepositoryInterface $sessionRepository,
-        private UserRepositoryInterface $userRepository,
-        private PasswordVerificatorInterface $passwordVerificator,
+        private readonly SessionRepositoryInterface $sessionRepository,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly PasswordVerificatorInterface $passwordVerificator,
     ) {
     }
 

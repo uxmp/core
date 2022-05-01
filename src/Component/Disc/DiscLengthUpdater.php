@@ -10,7 +10,7 @@ use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 final class DiscLengthUpdater implements DiscLengthUpdaterInterface
 {
     public function __construct(
-        private DiscRepositoryInterface $discRepository
+        private readonly DiscRepositoryInterface $discRepository
     ) {
     }
 

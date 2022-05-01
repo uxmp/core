@@ -16,16 +16,14 @@ return [
     LicenseDataProvider::class => autowire(),
     ArtistListDataProviderInterface::class => autowire(),
     AuthenticationProvider::class => autowire(),
-    HyperSonicInterface::class => function (ContainerInterface $c): HyperSonicInterface {
-        return HyperSonic::init(
-            new FeatureSetFactory(),
-            $c->get(AuthenticationProvider::class),
-            [
-                'ping.view' => fn () => $c->get(PingDataProvider::class),
-                'getLicense.view' => fn () => $c->get(LicenseDataProvider::class),
-                'getArtists.view' => fn () => $c->get(ArtistListDataProvider::class),
-                'getCoverArt.view' => fn () => $c->get(CoverArtDataProvider::class),
-            ],
-        );
-    },
+    HyperSonicInterface::class => fn (ContainerInterface $c): HyperSonicInterface => HyperSonic::init(
+        new FeatureSetFactory(),
+        $c->get(AuthenticationProvider::class),
+        [
+            'ping.view' => fn () => $c->get(PingDataProvider::class),
+            'getLicense.view' => fn () => $c->get(LicenseDataProvider::class),
+            'getArtists.view' => fn () => $c->get(ArtistListDataProvider::class),
+            'getCoverArt.view' => fn () => $c->get(CoverArtDataProvider::class),
+        ],
+    ),
 ];

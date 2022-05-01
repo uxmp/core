@@ -20,9 +20,9 @@ final class PasswordVerificator implements PasswordVerificatorInterface
      * @param array<string, mixed> $passwordOptions
      */
     public function __construct(
-        private UserRepositoryInterface $userRepository,
-        private string $defaultAlgo = PASSWORD_DEFAULT,
-        private array $passwordOptions = [],
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly string $defaultAlgo = PASSWORD_DEFAULT,
+        private readonly array $passwordOptions = [],
     ) {
     }
 

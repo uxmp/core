@@ -11,7 +11,7 @@ use Uxmp\Core\Component\Art\ArtUpdaterInterface;
 final class ArtUpdateCommand extends Command
 {
     public function __construct(
-        private ContainerInterface $dic,
+        private readonly ContainerInterface $dic,
     ) {
         parent::__construct(
             'art:update',

@@ -10,7 +10,7 @@ use Uxmp\Core\Component\Config\ConfigProviderInterface;
 final class JwtManager implements JwtManagerInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config
+        private readonly ConfigProviderInterface $config
     ) {
     }
 

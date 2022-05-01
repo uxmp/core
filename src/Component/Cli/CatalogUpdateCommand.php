@@ -12,7 +12,7 @@ use Uxmp\Core\Component\Event\EventHandlerInterface;
 final class CatalogUpdateCommand extends Command
 {
     public function __construct(
-        private ContainerInterface $dic
+        private readonly ContainerInterface $dic
     ) {
         parent::__construct(
             'catalog:update',

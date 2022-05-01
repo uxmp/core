@@ -23,12 +23,12 @@ final class CatalogUpdater implements CatalogUpdaterInterface
     ];
 
     public function __construct(
-        private CatalogRepositoryInterface $catalogRepository,
-        private getID3 $id3Analyzer,
-        private SongRepositoryInterface $songRepository,
-        private ExtractorDeterminatorInterface $extractorDeterminator,
-        private DiscCacheInterface $discCache,
-        private RecursiveFileReaderInterface $recursiveFileReader,
+        private readonly CatalogRepositoryInterface $catalogRepository,
+        private readonly getID3 $id3Analyzer,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly ExtractorDeterminatorInterface $extractorDeterminator,
+        private readonly DiscCacheInterface $discCache,
+        private readonly RecursiveFileReaderInterface $recursiveFileReader,
     ) {
     }
 

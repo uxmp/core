@@ -18,7 +18,22 @@ final class SongListItem implements JsonSerializable
     ) {
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array{
+     *  id: int,
+     *  name: string,
+     *  artistName: null|string,
+     *  albumName: null|string,
+     *  trackNumber: int,
+     *  playUrl: string,
+     *  cover: string,
+     *  artistId: int,
+     *  albumId: int,
+     *  length: int,
+     *  year: int|null
+     * }
+     */
+    public function jsonSerialize(): array
     {
         $songId = $this->song->getId();
         $albumId = $this->album->getId();

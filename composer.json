@@ -38,7 +38,8 @@
         "phpstan/phpstan": "^1",
         "phpstan/phpstan-mockery": "^1",
         "phpstan/phpstan-strict-rules": "^1",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "rector/rector": "^0.12.22"
     },
     "license": "MIT",
     "authors": [
