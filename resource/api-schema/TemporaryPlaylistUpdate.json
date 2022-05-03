@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/TemporaryPlaylistUpdate.json",
+  "title": "TemporaryPlaylist update",
+  "description": "Updates the temporary playlist for user",
+  "type": "object",
+  "properties": {
+    "playlistId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The playlist id"
+    },
+    "songIds": {
+      "type": "array",
+      "description": "List of song ids",
+      "items": {
+        "type": "integer",
+        "description": "Id of a single song"
+      },
+      "uniqueItems": false,
+      "maxItems": 10000
+    }
+  },
+  "additionalProperties": false,
+  "required": ["songIds", "playlistId"]
+}

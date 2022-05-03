@@ -16,6 +16,7 @@ use Uxmp\Core\Orm\Model\Playlist;
 use Uxmp\Core\Orm\Model\RadioStation;
 use Uxmp\Core\Orm\Model\Session;
 use Uxmp\Core\Orm\Model\Song;
+use Uxmp\Core\Orm\Model\TemporaryPlaylist;
 use Uxmp\Core\Orm\Model\User;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
@@ -28,6 +29,7 @@ use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SessionRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
+use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepositoryInterface;
 use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 
 return [
@@ -43,4 +45,5 @@ return [
     RadioStationRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(RadioStation::class),
     PlaylistRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(Playlist::class),
     AccessKeyRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(AccessKey::class),
+    TemporaryPlaylistRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(TemporaryPlaylist::class),
 ];

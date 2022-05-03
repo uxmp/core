@@ -1,0 +1,65 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Uxmp\Core\Api\TemporaryPlaylist;
+
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepositoryInterface;
+
+/**
+ * Updates the temporary playlist of a user
+ */
+final class TemporaryPlaylistUpdateApplication extends AbstractApiApplication
+{
+    /**
+     * @param SchemaValidatorInterface<array{
+     *  songIds: array<int>,
+     *  playlistId: string
+     * }> $schemaValidator
+     */
+    public function __construct(
+        private TemporaryPlaylistRepositoryInterface $temporaryPlaylistRepository,
+        private SchemaValidatorInterface $schemaValidator,
+    ) {
+    }
+
+    protected function run(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        array $args
+    ): ResponseInterface {
+        $user = $request->getAttribute(SessionValidatorMiddleware::USER);
+
+        $body = $this->schemaValidator->getValidatedBody(
+            $request,
+            'TemporaryPlaylistUpdate.json',
+        );
+
+        // find existing playlist; if not available, create a new one
+        $temporaryPlaylist = $this->temporaryPlaylistRepository->findOneBy([
+            'owner' => $user,
+            'id' => $body['playlistId'],
+        ]);
+        if ($temporaryPlaylist === null) {
+            $temporaryPlaylist = $this->temporaryPlaylistRepository
+                ->prototype()
+                ->setOwner($user);
+        }
+
+        $temporaryPlaylist->updateSongList($body['songIds']);
+
+        $this->temporaryPlaylistRepository->save($temporaryPlaylist);
+
+        return $this->asJson(
+            $response,
+            [
+                'result' => true,
+            ]
+        );
+    }
+}

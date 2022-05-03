@@ -215,6 +215,15 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('get')
             ->with('/rest/{methodName}', HyperSonicInterface::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistRetrieveApplication::class)
+            ->once();
+        $app->shouldReceive('get')
+            ->with('/temporary_playlist/{temporaryPlaylistId}/songs', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class)
+            ->once();
+        $app->shouldReceive('post')
+            ->with('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistUpdateApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();

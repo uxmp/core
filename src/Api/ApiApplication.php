@@ -122,6 +122,11 @@ final class ApiApplication
         $app->post('/playlist/{playlistId}/songs', Playlist\PlaylistAddMediaApplication::class);
         $app->get('/playlist/{playlistId}/songs', Playlist\PlaylistSongListApplication::class);
 
+        // temporary playlist
+        $app->get('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistRetrieveApplication::class);
+        $app->get('/temporary_playlist/{temporaryPlaylistId}/songs', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class);
+        $app->post('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistUpdateApplication::class);
+
         // playlist types
         $app->get('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class);
 
