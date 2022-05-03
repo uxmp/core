@@ -1,9 +1,49 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\AccessKeyRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/AccessKey.php
+
+		-
 			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\AccessKey\\:\\:\\$user_id is never read, only written\\.$#"
 			count: 1
 			path: src/Orm/Model/AccessKey.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\AlbumRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Album.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\ArtistRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Artist.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\CatalogRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Catalog.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\DiscRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Disc.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\FavoriteRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Favorite.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\PlaybackHistoryRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/PlaybackHistory.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\PlaylistRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Playlist.php
 
 		-
 			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Playlist\\:\\:\\$owner_user_id is never read, only written\\.$#"
@@ -11,7 +51,27 @@ parameters:
 			path: src/Orm/Model/Playlist.php
 
 		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\RadioStationRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/RadioStation.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\SessionRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Session.php
+
+		-
 			message: "#^Property Uxmp\\\\Core\\\\Orm\\\\Model\\\\Session\\:\\:\\$user_id is never read, only written\\.$#"
 			count: 1
 			path: src/Orm/Model/Session.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\SongRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/Song.php
+
+		-
+			message: "#^Parameter \\$repositoryClass of attribute class Doctrine\\\\ORM\\\\Mapping\\\\Entity constructor expects class\\-string\\<Doctrine\\\\ORM\\\\EntityRepository\\<T of object\\>\\>\\|null, 'Uxmp\\\\\\\\Core\\\\\\\\Orm\\\\\\\\Repository\\\\\\\\UserRepository' given\\.$#"
+			count: 1
+			path: src/Orm/Model/User.php
 

@@ -30,6 +30,8 @@ interface AlbumInterface extends
 
     public function getDiscCount(): int;
 
+    public function addDisc(DiscInterface $disc): AlbumInterface;
+
     public function getCatalog(): CatalogInterface;
 
     public function setCatalog(CatalogInterface $catalog): AlbumInterface;
@@ -38,6 +40,8 @@ interface AlbumInterface extends
      * Returns the summarized length of all songs on this album
      */
     public function getLength(): int;
+
+    public function getSongCount(): int;
 
     public function getLastModified(): \DateTimeInterface;
 

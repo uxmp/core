@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use Mockery;
+
 class AlbumTest extends ModelTestCase
 {
     /** @var mixed|Album */
@@ -65,6 +67,44 @@ class AlbumTest extends ModelTestCase
         $this->assertSame(
             'album',
             $this->subject->getType()
+        );
+    }
+
+    public function testGetLengthReturnsValue(): void
+    {
+        $disc = Mockery::mock(DiscInterface::class);
+
+        $length = 666;
+
+        $this->subject->addDisc($disc);
+
+        $disc->shouldReceive('getLength')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($length);
+
+        $this->assertSame(
+            $length,
+            $this->subject->getLength()
+        );
+    }
+
+    public function testGetSongCountReturnsValue(): void
+    {
+        $disc = Mockery::mock(DiscInterface::class);
+
+        $count = 666;
+
+        $this->subject->addDisc($disc);
+
+        $disc->shouldReceive('getSongCount')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($count);
+
+        $this->assertSame(
+            $count,
+            $this->subject->getSongCount()
         );
     }
 }

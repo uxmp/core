@@ -32,4 +32,6 @@ interface DiscInterface
     public function getLength(): int;
 
     public function setLength(int $length): DiscInterface;
+
+    public function getSongCount(): int;
 }

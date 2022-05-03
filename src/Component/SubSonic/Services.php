@@ -16,6 +16,7 @@ return [
     LicenseDataProvider::class => autowire(),
     ArtistListDataProviderInterface::class => autowire(),
     AuthenticationProvider::class => autowire(),
+    ArtistDataProvider::class => autowire(),
     HyperSonicInterface::class => fn (ContainerInterface $c): HyperSonicInterface => HyperSonic::init(
         new FeatureSetFactory(),
         $c->get(AuthenticationProvider::class),
@@ -24,6 +25,7 @@ return [
             'getLicense.view' => fn () => $c->get(LicenseDataProvider::class),
             'getArtists.view' => fn () => $c->get(ArtistListDataProvider::class),
             'getCoverArt.view' => fn () => $c->get(CoverArtDataProvider::class),
+            'getArtist.view' => fn () => $c->get(ArtistDataProvider::class),
         ],
     ),
 ];

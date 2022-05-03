@@ -29,7 +29,7 @@
         "tuupola/cors-middleware": "^1.2",
         "tuupola/slim-jwt-auth": "^3.5",
         "tzsk/collage": "^6",
-        "usox/hypersonic": "^0.1",
+        "usox/hypersonic": "^0.2",
         "vlucas/phpdotenv": "^5.3"
     },
     "require-dev": {

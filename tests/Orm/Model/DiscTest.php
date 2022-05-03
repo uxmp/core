@@ -35,5 +35,9 @@ class DiscTest extends ModelTestCase
             [$song],
             iterator_to_array($this->subject->getSongs())
         );
+        $this->assertSame(
+            1,
+            $this->subject->getSongCount()
+        );
     }
 }

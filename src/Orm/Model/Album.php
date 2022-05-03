@@ -103,6 +103,12 @@ class Album implements AlbumInterface
         return $this->discs->count();
     }
 
+    public function addDisc(DiscInterface $disc): AlbumInterface
+    {
+        $this->discs->add($disc);
+        return $this;
+    }
+
     public function getCatalog(): CatalogInterface
     {
         return $this->catalog;
@@ -119,6 +125,16 @@ class Album implements AlbumInterface
         return array_sum(
             array_map(
                 fn (DiscInterface $disc): int => $disc->getLength(),
+                $this->discs->toArray()
+            )
+        );
+    }
+
+    public function getSongCount(): int
+    {
+        return array_sum(
+            array_map(
+                fn (DiscInterface $disc): int => $disc->getSongCount(),
                 $this->discs->toArray()
             )
         );

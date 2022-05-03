@@ -118,4 +118,9 @@ class Disc implements DiscInterface
         $this->length = $length;
         return $this;
     }
+
+    public function getSongCount(): int
+    {
+        return $this->songs->count();
+    }
 }
