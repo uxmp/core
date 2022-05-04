@@ -12,9 +12,9 @@ use Uxmp\Core\Orm\Model\SongInterface;
 final class SongListItem implements JsonSerializable
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private SongInterface $song,
-        private AlbumInterface $album
+        private readonly ConfigProviderInterface $config,
+        private readonly SongInterface $song,
+        private readonly AlbumInterface $album
     ) {
     }
 

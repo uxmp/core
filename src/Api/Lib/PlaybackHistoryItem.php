@@ -11,8 +11,8 @@ use Uxmp\Core\Orm\Model\PlaybackHistoryInterface;
 final class PlaybackHistoryItem implements JsonSerializable
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private PlaybackHistoryInterface $playbackHistory,
+        private readonly ConfigProviderInterface $config,
+        private readonly PlaybackHistoryInterface $playbackHistory,
     ) {
     }
 

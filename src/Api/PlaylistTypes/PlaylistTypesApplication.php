@@ -18,7 +18,7 @@ final class PlaylistTypesApplication extends AbstractApiApplication
      * @param array<SmartlistTypeInterface> $playlistTypeList
      */
     public function __construct(
-        private array $playlistTypeList,
+        private readonly array $playlistTypeList,
     ) {
     }
 

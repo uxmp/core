@@ -14,8 +14,8 @@ use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 final class AlbumApplication extends AbstractApiApplication
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config,
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ConfigProviderInterface $config,
     ) {
     }
 

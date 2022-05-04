@@ -13,8 +13,8 @@ use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 final class ArtistSongsApplication extends AbstractApiApplication
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ResultItemFactoryInterface $resultItemFactory
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ResultItemFactoryInterface $resultItemFactory
     ) {
     }
 

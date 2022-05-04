@@ -18,10 +18,10 @@ final class LoginApplication extends AbstractApiApplication
      * @param SchemaValidatorInterface<array{username: string, password: string}> $schemaValidator
      */
     public function __construct(
-        private JwtManagerInterface $jwtManager,
-        private ConfigProviderInterface $configProvider,
-        private SessionManagerInterface $sessionManager,
-        private SchemaValidatorInterface $schemaValidator,
+        private readonly JwtManagerInterface $jwtManager,
+        private readonly ConfigProviderInterface $configProvider,
+        private readonly SessionManagerInterface $sessionManager,
+        private readonly SchemaValidatorInterface $schemaValidator,
     ) {
     }
 

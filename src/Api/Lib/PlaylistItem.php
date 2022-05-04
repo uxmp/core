@@ -13,7 +13,7 @@ use Uxmp\Core\Orm\Model\PlaylistInterface;
 final class PlaylistItem implements JsonSerializable
 {
     public function __construct(
-        private PlaylistInterface $playlist
+        private readonly PlaylistInterface $playlist
     ) {
     }
 

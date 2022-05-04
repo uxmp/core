@@ -16,7 +16,7 @@ use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 final class RadioStationRetrieveApplication extends AbstractApiApplication
 {
     public function __construct(
-        private RadioStationRepositoryInterface $radioStationRepository,
+        private readonly RadioStationRepositoryInterface $radioStationRepository,
     ) {
     }
 

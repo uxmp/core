@@ -16,9 +16,9 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtApplication extends AbstractApiApplication
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private CachedArtResponseProviderInterface $cachedArtResponseProvider,
-        private ArtistRepositoryInterface $artistRepository,
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly CachedArtResponseProviderInterface $cachedArtResponseProvider,
+        private readonly ArtistRepositoryInterface $artistRepository,
     ) {
     }
 

@@ -21,9 +21,9 @@ use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 final class PlaylistSongListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private PlaylistRepositoryInterface $playlistRepository,
-        private PlaylistSongRetrieverInterface $playlistSongRetriever,
-        private ResultItemFactoryInterface $resultItemFactory,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
+        private readonly PlaylistSongRetrieverInterface $playlistSongRetriever,
+        private readonly ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 

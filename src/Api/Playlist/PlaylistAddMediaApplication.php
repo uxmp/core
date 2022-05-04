@@ -24,9 +24,9 @@ final class PlaylistAddMediaApplication extends AbstractApiApplication
      * @param SchemaValidatorInterface<array{mediaType: string, mediaId: int}> $schemaValidator
      */
     public function __construct(
-        private PlaylistRepositoryInterface $playlistRepository,
-        private SchemaValidatorInterface $schemaValidator,
-        private PlaylistMediaAdderInterface $playlistMediaAdder,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
+        private readonly PlaylistMediaAdderInterface $playlistMediaAdder,
     ) {
     }
 

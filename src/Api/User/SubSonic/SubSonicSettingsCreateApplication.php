@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\User\SubSonic;
 
-use PH7\Generator\Passcode;
 use PH7\Generator\Password;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

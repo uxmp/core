@@ -16,9 +16,9 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 final class PlaySongApplication extends AbstractApiApplication
 {
     public function __construct(
-        private Psr17Factory $psr17Factory,
-        private SongRepositoryInterface $songRepository,
-        private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
+        private readonly Psr17Factory $psr17Factory,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
     ) {
     }
 

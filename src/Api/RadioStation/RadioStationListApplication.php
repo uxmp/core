@@ -16,7 +16,7 @@ use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
 final class RadioStationListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private RadioStationRepositoryInterface $radioStationRepository,
+        private readonly RadioStationRepositoryInterface $radioStationRepository,
     ) {
     }
 
@@ -28,13 +28,11 @@ final class RadioStationListApplication extends AbstractApiApplication
         $stations = $this->radioStationRepository->findBy([], ['name' => 'ASC']);
 
         $result = array_map(
-            static function (RadioStationInterface $station): array {
-                return [
-                    'id' => $station->getId(),
-                    'name' => $station->getName(),
-                    'url' => $station->getUrl(),
-                ];
-            },
+            static fn (RadioStationInterface $station): array => [
+                'id' => $station->getId(),
+                'name' => $station->getName(),
+                'url' => $station->getUrl(),
+            ],
             $stations
         );
 

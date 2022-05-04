@@ -7,15 +7,14 @@ namespace Uxmp\Core\Api\Album;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Api\Lib\Exception\AccessViolation;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
 
 final class AlbumListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ConfigProviderInterface $config
     ) {
     }
 

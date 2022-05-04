@@ -14,8 +14,8 @@ use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 final class LogoutApplication extends AbstractApiApplication
 {
     public function __construct(
-        private SessionManagerInterface $sessionManager,
-        private ConfigProviderInterface $configProvider
+        private readonly SessionManagerInterface $sessionManager,
+        private readonly ConfigProviderInterface $configProvider
     ) {
     }
 

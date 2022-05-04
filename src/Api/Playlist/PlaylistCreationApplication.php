@@ -27,9 +27,9 @@ final class PlaylistCreationApplication extends AbstractApiApplication
      * @param array<int, SmartlistTypeInterface> $playlistTypeList
      */
     public function __construct(
-        private PlaylistRepositoryInterface $playlistRepository,
-        private SchemaValidatorInterface $schemaValidator,
-        private array $playlistTypeList,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
+        private readonly array $playlistTypeList,
     ) {
     }
 

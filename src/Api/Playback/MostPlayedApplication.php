@@ -17,9 +17,9 @@ use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 final class MostPlayedApplication extends AbstractApiApplication
 {
     public function __construct(
-        private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
-        private SongRepositoryInterface $songRepository,
-        private ResultItemFactoryInterface $resultItemFactory,
+        private readonly PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 

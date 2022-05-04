@@ -19,7 +19,7 @@ final class PlaylistDeletionApplication extends AbstractApiApplication
     use OwnerValidationTrait;
 
     public function __construct(
-        private PlaylistRepositoryInterface $playlistRepository,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
     ) {
     }
 

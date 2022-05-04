@@ -20,8 +20,8 @@ use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 final class ApiApplication
 {
     public function __construct(
-        private ConfigProviderInterface $config,
-        private SessionValidatorMiddleware $sessionValidatorMiddleware,
+        private readonly ConfigProviderInterface $config,
+        private readonly SessionValidatorMiddleware $sessionValidatorMiddleware,
     ) {
     }
 

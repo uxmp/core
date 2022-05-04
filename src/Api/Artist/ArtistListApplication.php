@@ -13,8 +13,8 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 final class ArtistListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private ArtistRepositoryInterface $artistRepository,
-        private ConfigProviderInterface $config
+        private readonly ArtistRepositoryInterface $artistRepository,
+        private readonly ConfigProviderInterface $config
     ) {
     }
 

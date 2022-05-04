@@ -18,8 +18,8 @@ use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 final class PlaylistListApplication extends AbstractApiApplication
 {
     public function __construct(
-        private PlaylistRepositoryInterface $playlistRepository,
-        private ResultItemFactoryInterface $resultItemFactory,
+        private readonly PlaylistRepositoryInterface $playlistRepository,
+        private readonly ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 

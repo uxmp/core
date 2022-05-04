@@ -20,8 +20,8 @@ final class RadioStationEditApplication extends AbstractApiApplication
      * @param SchemaValidatorInterface<array{name: string, url: string}> $schemaValidator
      */
     public function __construct(
-        private RadioStationRepositoryInterface $radioStationRepository,
-        private SchemaValidatorInterface $schemaValidator,
+        private readonly RadioStationRepositoryInterface $radioStationRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
     ) {
     }
 

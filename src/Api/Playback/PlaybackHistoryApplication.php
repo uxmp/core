@@ -15,8 +15,8 @@ final class PlaybackHistoryApplication extends AbstractApiApplication
     private const HISTORY_LIMIT = 15;
 
     public function __construct(
-        private PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
-        private ResultItemFactoryInterface $resultItemFactory,
+        private readonly PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
+        private readonly ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 

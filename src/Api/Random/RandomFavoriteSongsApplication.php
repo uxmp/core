@@ -20,8 +20,8 @@ final class RandomFavoriteSongsApplication extends AbstractApiApplication
     private const DEFAULT_LIMIT = 100;
 
     public function __construct(
-        private SongRepositoryInterface $songRepository,
-        private ResultItemFactoryInterface $resultItemFactory,
+        private readonly SongRepositoryInterface $songRepository,
+        private readonly ResultItemFactoryInterface $resultItemFactory,
     ) {
     }
 

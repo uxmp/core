@@ -15,8 +15,8 @@ final class AlbumRecentApplication extends AbstractApiApplication
     private const ALBUM_LIMIT = 10;
 
     public function __construct(
-        private AlbumRepositoryInterface $albumRepository,
-        private ConfigProviderInterface $config
+        private readonly AlbumRepositoryInterface $albumRepository,
+        private readonly ConfigProviderInterface $config
     ) {
     }
 

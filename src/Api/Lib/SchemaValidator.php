@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 final class SchemaValidator implements SchemaValidatorInterface
 {
     public function __construct(
-        private Validator $validator
+        private readonly Validator $validator
     ) {
     }
 
@@ -57,6 +57,6 @@ final class SchemaValidator implements SchemaValidatorInterface
             );
         }
 
-        return json_decode($body, true);
+        return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
     }
 }

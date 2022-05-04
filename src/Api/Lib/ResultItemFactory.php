@@ -14,7 +14,7 @@ use Uxmp\Core\Orm\Model\SongInterface;
 final class ResultItemFactory implements ResultItemFactoryInterface
 {
     public function __construct(
-        private ConfigProviderInterface $config
+        private readonly ConfigProviderInterface $config
     ) {
     }
 
