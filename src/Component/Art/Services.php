@@ -10,4 +10,5 @@ return [
     CachedArtResponseProviderInterface::class => autowire(CachedArtResponseProvider::class),
     ArtUpdaterInterface::class => autowire(ArtUpdater::class),
     ArtContentRetrieverInterface::class => autowire(ArtContentRetriever::class),
+    ArtItemIdentifierInterface::class => autowire(ArtItemIdentifier::class),
 ];

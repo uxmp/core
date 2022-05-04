@@ -4,43 +4,44 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Art;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Component\Art\ArtItemIdentifierInterface;
 use Uxmp\Core\Component\Art\CachableArtItemInterface;
 use Uxmp\Core\Component\Art\CachedArtResponseProviderInterface;
-use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
-use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 class ArtApplicationTest extends MockeryTestCase
 {
-    private MockInterface $albumRepository;
-
     private MockInterface $cachedArtResponseProvider;
 
-    private MockInterface $artistRepository;
+    private MockInterface $artItemIdentifier;
 
     private ArtApplication $subject;
 
     public function setUp(): void
     {
-        $this->albumRepository = \Mockery::mock(AlbumRepositoryInterface::class);
-        $this->cachedArtResponseProvider = \Mockery::mock(CachedArtResponseProviderInterface::class);
-        $this->artistRepository = \Mockery::mock(ArtistRepositoryInterface::class);
+        $this->cachedArtResponseProvider = Mockery::mock(CachedArtResponseProviderInterface::class);
+        $this->artItemIdentifier = Mockery::mock(ArtItemIdentifierInterface::class);
 
         $this->subject = new ArtApplication(
-            $this->albumRepository,
             $this->cachedArtResponseProvider,
-            $this->artistRepository,
+            $this->artItemIdentifier,
         );
     }
 
     public function testRunReturnsNotFoundIfItemIsNull(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+
+        $this->artItemIdentifier->shouldReceive('identify')
+            ->with('-0')
+            ->once()
+            ->andReturnNull();
 
         $response->shouldReceive('withStatus')
             ->with(StatusCode::NOT_FOUND)
@@ -53,21 +54,23 @@ class ArtApplicationTest extends MockeryTestCase
         );
     }
 
-    /**
-     * @dataProvider artDataProvider
-     */
-    public function testRunReturnsResponse(
-        string $type,
-        string $repository
-    ): void {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $item = \Mockery::mock(CachableArtItemInterface::class);
+    public function testRunReturnsResponse(): void
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
 
         $objectId = 666;
+        $objectType = 'some-type';
 
-        $this->{$repository}->shouldReceive('find')
-            ->with($objectId)
+        $this->artItemIdentifier->shouldReceive('identify')
+            ->with(
+                sprintf(
+                    '%s-%d',
+                    $objectType,
+                    $objectId
+                )
+            )
             ->once()
             ->andReturn($item);
 
@@ -78,15 +81,7 @@ class ArtApplicationTest extends MockeryTestCase
 
         $this->assertSame(
             $response,
-            call_user_func($this->subject, $request, $response, ['type' => $type, 'id' => $objectId])
+            call_user_func($this->subject, $request, $response, ['type' => $objectType, 'id' => $objectId])
         );
-    }
-
-    public function artDataProvider(): array
-    {
-        return [
-            ['album', 'albumRepository'],
-            ['artist', 'artistRepository'],
-        ];
     }
 }

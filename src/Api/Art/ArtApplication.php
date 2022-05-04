@@ -8,17 +8,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Component\Art\CachableArtItemInterface;
+use Uxmp\Core\Component\Art\ArtItemIdentifierInterface;
 use Uxmp\Core\Component\Art\CachedArtResponseProviderInterface;
-use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
-use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 final class ArtApplication extends AbstractApiApplication
 {
     public function __construct(
-        private readonly AlbumRepositoryInterface $albumRepository,
         private readonly CachedArtResponseProviderInterface $cachedArtResponseProvider,
-        private readonly ArtistRepositoryInterface $artistRepository,
+        private readonly ArtItemIdentifierInterface $artItemIdentifier,
     ) {
     }
 
@@ -27,15 +24,15 @@ final class ArtApplication extends AbstractApiApplication
         ResponseInterface $response,
         array $args
     ): ResponseInterface {
-        $itemId = (int) ($args['id'] ?? 0);
+        $item = $this->artItemIdentifier->identify(
+            sprintf(
+                '%s-%d',
+                $args['type'] ?? '',
+                $args['id'] ?? 0
+            )
+        );
 
-        $item = match ($args['type'] ?? null) {
-            default => null,
-            'album' => $this->albumRepository->find($itemId),
-            'artist' => $this->artistRepository->find($itemId),
-        };
-
-        if (!($item instanceof CachableArtItemInterface)) {
+        if ($item === null) {
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
 

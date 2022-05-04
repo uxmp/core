@@ -8,43 +8,57 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Component\Art\ArtContentRetrieverInterface;
+use Uxmp\Core\Component\Art\ArtItemIdentifierInterface;
+use Uxmp\Core\Component\Art\CachableArtItemInterface;
 use Uxmp\Core\Component\Art\Exception\ArtContentException;
-use Uxmp\Core\Orm\Model\ArtistInterface;
-use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 
 class CoverArtDataProviderTest extends MockeryTestCase
 {
-    private MockInterface $artistRepository;
-
     private MockInterface $artContentRetriever;
+
+    private MockInterface $artItemIdentifier;
 
     private CoverArtDataProvider $subject;
 
     public function setUp(): void
     {
-        $this->artistRepository = Mockery::mock(ArtistRepositoryInterface::class);
+        $this->artItemIdentifier = Mockery::mock(ArtItemIdentifierInterface::class);
         $this->artContentRetriever = Mockery::mock(ArtContentRetrieverInterface::class);
 
         $this->subject = new CoverArtDataProvider(
-            $this->artistRepository,
             $this->artContentRetriever,
+            $this->artItemIdentifier,
+        );
+    }
+
+    public function testGetArtReturnsEmptyDataIfNotIdentifyable(): void
+    {
+        $covertArtId = 'some-art-id';
+
+        $this->artItemIdentifier->shouldReceive('identify')
+            ->with($covertArtId)
+            ->once()
+            ->andReturnNull();
+
+        $this->assertSame(
+            ['art' => '', 'contentType' => ''],
+            $this->subject->getArt($covertArtId)
         );
     }
 
     public function testGetArtReturnsEmptyDataIfArtDoesNotExist(): void
     {
-        $itemId = 666;
-        $covertArtId = 'artist-'.$itemId;
+        $covertArtId = 'some-art-id';
 
-        $artist = Mockery::mock(ArtistInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
 
-        $this->artistRepository->shouldReceive('find')
-            ->with($itemId)
+        $this->artItemIdentifier->shouldReceive('identify')
+            ->with($covertArtId)
             ->once()
-            ->andReturn($artist);
+            ->andReturn($item);
 
         $this->artContentRetriever->shouldReceive('retrieve')
-            ->with($artist)
+            ->with($item)
             ->once()
             ->andThrow(new ArtContentException());
 
@@ -56,20 +70,19 @@ class CoverArtDataProviderTest extends MockeryTestCase
 
     public function testGetArtReturnsData(): void
     {
-        $itemId = 666;
-        $covertArtId = 'artist-'.$itemId;
         $content = 'some-content';
         $contentype = 'some/type';
+        $covertArtId = 'some-art-id';
 
-        $artist = Mockery::mock(ArtistInterface::class);
+        $item = Mockery::mock(CachableArtItemInterface::class);
 
-        $this->artistRepository->shouldReceive('find')
-            ->with($itemId)
+        $this->artItemIdentifier->shouldReceive('identify')
+            ->with($covertArtId)
             ->once()
-            ->andReturn($artist);
+            ->andReturn($item);
 
         $this->artContentRetriever->shouldReceive('retrieve')
-            ->with($artist)
+            ->with($item)
             ->once()
             ->andReturn([
                 'content' => $content,
