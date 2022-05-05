@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Component\Session;
+namespace Uxmp\Core\Component\Authentication;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;

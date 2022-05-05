@@ -8,9 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
+use Uxmp\Core\Component\Authentication\JwtManagerInterface;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\JwtManagerInterface;
-use Uxmp\Core\Component\Session\SessionManagerInterface;
 
 final class LoginApplication extends AbstractApiApplication
 {

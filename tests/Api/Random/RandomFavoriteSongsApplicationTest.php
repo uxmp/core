@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\SongInterface;
 use Uxmp\Core\Orm\Model\UserInterface;

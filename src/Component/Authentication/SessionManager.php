@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Component\Session;
+namespace Uxmp\Core\Component\Authentication;
 
 use Uxmp\Core\Component\User\PasswordVerificatorInterface;
 use Uxmp\Core\Orm\Model\SessionInterface;

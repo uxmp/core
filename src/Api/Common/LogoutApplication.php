@@ -7,9 +7,9 @@ namespace Uxmp\Core\Api\Common;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\SessionManagerInterface;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
 final class LogoutApplication extends AbstractApiApplication
 {

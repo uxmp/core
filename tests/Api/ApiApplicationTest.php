@@ -13,8 +13,8 @@ use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Usox\HyperSonic\HyperSonicInterface;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
 class ApiApplicationTest extends MockeryTestCase
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Authentication\AccessKey;
 
-final class AccessTokenEnum
+enum AccessTokenEnum
 {
     public const TYPE_SUBSONIC = 1;
 

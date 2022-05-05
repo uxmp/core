@@ -1,6 +1,6 @@
 <?php
 
-namespace Uxmp\Core\Component\Session;
+namespace Uxmp\Core\Component\Authentication;
 
 interface JwtManagerInterface
 {

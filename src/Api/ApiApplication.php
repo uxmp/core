@@ -11,8 +11,8 @@ use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Usox\HyperSonic\HyperSonicInterface;
 use Uxmp\Core\Api\Playback\MostPlayedApplication;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
 
 /**
  * Registers all api routes

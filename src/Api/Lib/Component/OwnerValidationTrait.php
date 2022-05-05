@@ -6,7 +6,7 @@ namespace Uxmp\Core\Api\Lib\Component;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\Lib\Exception\AccessViolation;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\User\OwnerProviderInterface;
 
 /**

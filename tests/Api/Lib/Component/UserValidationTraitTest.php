@@ -8,7 +8,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\Lib\Exception\AccessViolation;
-use Uxmp\Core\Component\Session\SessionValidatorMiddleware;
+use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\User\OwnerProviderInterface;
 
 class UserValidationTraitTest extends MockeryTestCase

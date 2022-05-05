@@ -11,9 +11,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
+use Uxmp\Core\Component\Authentication\JwtManagerInterface;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\JwtManagerInterface;
-use Uxmp\Core\Component\Session\SessionManagerInterface;
 use Uxmp\Core\Orm\Model\SessionInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 

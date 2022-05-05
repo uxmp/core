@@ -55,18 +55,20 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
         $qbSub = $this
             ->getEntityManager()
             ->createQueryBuilder();
-        $expr = $this->getEntityManager()->getExpressionBuilder();
+        $expressionBuilder = $this
+            ->getEntityManager()
+            ->getExpressionBuilder();
 
         $qb
             ->select('a')
             ->from(Album::class, 'a')
             ->where(
-                $expr->in(
+                $expressionBuilder->in(
                     'a.id',
                     $qbSub
                         ->select('fav.item_id')
                         ->from(Favorite::class, 'fav')
-                        ->where($expr->eq('fav.user', '?1'))
+                        ->where($expressionBuilder->eq('fav.user', '?1'))
                         ->getDQL()
                 )
             )

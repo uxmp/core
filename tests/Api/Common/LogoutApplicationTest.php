@@ -10,8 +10,8 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
-use Uxmp\Core\Component\Session\SessionManagerInterface;
 
 class LogoutApplicationTest extends MockeryTestCase
 {
