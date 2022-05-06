@@ -61,7 +61,10 @@
         }
     },
     "scripts": {
-        "serve": "@php -S 0.0.0.0:8888 src/public/index.php",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php -S 0.0.0.0:8888 src/public/index.php"
+        ],
         "qa": [
             "@composer check-cs",
             "@composer stan",
