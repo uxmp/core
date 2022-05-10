@@ -3,10 +3,13 @@ parameters:
 	paths:
 		- src
 	ignoreErrors:
-		- '#Property Uxmp\\Core\\Orm\\Model\\(\w+)::\$(\w+) is unused#'
-		- '#Property Uxmp\\Core\\Orm\\Model\\(\w+)::\$id is never written, only read#'
+		- '#Property Uxmp\\Core\\Orm\\Model\\(\w+)::\$(\w+) is never written, only read#'
+	doctrine:
+		objectManagerLoader: tests/object-manager.php
+
 
 includes:
+	- vendor/phpstan/phpstan-doctrine/extension.neon
 	- vendor/phpstan/phpstan-mockery/extension.neon
 	- vendor/phpstan/phpstan-strict-rules/rules.neon
 	- vendor/phpstan/phpstan/conf/bleedingEdge.neon

@@ -37,6 +37,7 @@
         "mikey179/vfsstream": "^1.6",
         "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^1",
+        "phpstan/phpstan-doctrine": "^1.3",
         "phpstan/phpstan-mockery": "^1",
         "phpstan/phpstan-strict-rules": "^1",
         "phpunit/phpunit": "^9.5",
