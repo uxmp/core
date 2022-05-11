@@ -75,6 +75,10 @@ class TemporaryPlaylistUpdateApplicationTest extends MockeryTestCase
             ->with($user)
             ->once()
             ->andReturnSelf();
+        $obj->shouldReceive('setId')
+            ->with($playlistId)
+            ->once()
+            ->andReturnSelf();
         $obj->shouldReceive('updateSongList')
             ->with([$songId])
             ->once();

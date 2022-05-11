@@ -6,7 +6,6 @@ namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Ramsey\Uuid\Doctrine\UuidType;
 use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepository;
 
@@ -15,11 +14,10 @@ use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepository;
 class TemporaryPlaylist implements TemporaryPlaylistInterface
 {
     #[ORM\Column(type: UuidType::NAME, unique: true)]
-    #[ORM\Id, ORM\GeneratedValue(strategy: 'CUSTOM')]
-    #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    #[ORM\Id, ORM\GeneratedValue(strategy: 'NONE')]
     private string $id;
 
-    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0], unique: true)]
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $owner_user_id = 0;
 
     #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
@@ -39,6 +37,12 @@ class TemporaryPlaylist implements TemporaryPlaylistInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function setId(string $id): TemporaryPlaylistInterface
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getOwner(): UserInterface

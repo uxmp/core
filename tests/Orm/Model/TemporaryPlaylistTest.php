@@ -19,6 +19,7 @@ class TemporaryPlaylistTest extends ModelTestCase
     public function setterGetterDataProvider(): array
     {
         return [
+            ['Id', 'set-some-id'],
             ['Owner', Mockery::mock(UserInterface::class)],
             ['SongList', [666, 42]],
             ['SongCount', 33],

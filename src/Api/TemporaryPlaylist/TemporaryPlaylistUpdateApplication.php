@@ -40,14 +40,17 @@ final class TemporaryPlaylistUpdateApplication extends AbstractApiApplication
             'TemporaryPlaylistUpdate.json',
         );
 
+        $temporaryPlaylistId = $body['playlistId'];
+
         // find existing playlist; if not available, create a new one
         $temporaryPlaylist = $this->temporaryPlaylistRepository->findOneBy([
             'owner' => $user,
-            'id' => $body['playlistId'],
+            'id' => $temporaryPlaylistId,
         ]);
         if ($temporaryPlaylist === null) {
             $temporaryPlaylist = $this->temporaryPlaylistRepository
                 ->prototype()
+                ->setId($temporaryPlaylistId)
                 ->setOwner($user);
         }
 

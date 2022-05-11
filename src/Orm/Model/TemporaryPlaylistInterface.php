@@ -8,6 +8,8 @@ interface TemporaryPlaylistInterface
 {
     public function getId(): string;
 
+    public function setId(string $id): TemporaryPlaylistInterface;
+
     public function getOwner(): UserInterface;
 
     public function setOwner(UserInterface $owner): TemporaryPlaylistInterface;
