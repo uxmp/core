@@ -1429,7 +1429,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v9.12.0",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1484,7 +1484,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v9.12.0",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1530,7 +1530,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v9.12.0",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1578,7 +1578,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v9.12.0",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1624,16 +1624,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v9.12.0",
+            "version": "v9.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "55382a1a71d35877fb88d386d66f760e9b32e74b"
+                "reference": "d949479b8e0b9fd9daca1e0177a3f96767a94ea0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/55382a1a71d35877fb88d386d66f760e9b32e74b",
-                "reference": "55382a1a71d35877fb88d386d66f760e9b32e74b",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/d949479b8e0b9fd9daca1e0177a3f96767a94ea0",
+                "reference": "d949479b8e0b9fd9daca1e0177a3f96767a94ea0",
                 "shasum": ""
             },
             "require": {
@@ -1689,7 +1689,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-05-09T15:31:28+00:00"
+            "time": "2022-05-10T14:02:00+00:00"
         },
         {
             "name": "intervention/image",
