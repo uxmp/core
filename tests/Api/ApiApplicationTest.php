@@ -113,6 +113,9 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('get')
             ->with('/play/{id}', Playback\PlaySongApplication::class)
             ->once();
+        $app->shouldReceive('post')
+            ->with('/play/nowplaying', Playback\NowPlayingUpdate::class)
+            ->once();
         $app->shouldReceive('get')
             ->with('/artists', Artist\ArtistListApplication::class)
             ->once();
@@ -219,7 +222,7 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistRetrieveApplication::class)
             ->once();
         $app->shouldReceive('get')
-            ->with('/temporary_playlist/{temporaryPlaylistId}/songs', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class)
+            ->with('/temporary_playlist/{temporaryPlaylistId}', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class)
             ->once();
         $app->shouldReceive('post')
             ->with('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistUpdateApplication::class)

@@ -73,6 +73,7 @@ final class ApiApplication
         $app->get('/play/history', Playback\PlaybackHistoryApplication::class);
         $app->get('/play/mostplayed', MostPlayedApplication::class);
         $app->get('/play/{id}', Playback\PlaySongApplication::class);
+        $app->post('/play/nowplaying', Playback\NowPlayingUpdate::class);
 
         // artists
         $app->get('/artists', Artist\ArtistListApplication::class);
@@ -124,7 +125,7 @@ final class ApiApplication
 
         // temporary playlist
         $app->get('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistRetrieveApplication::class);
-        $app->get('/temporary_playlist/{temporaryPlaylistId}/songs', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class);
+        $app->get('/temporary_playlist/{temporaryPlaylistId}', TemporaryPlaylist\TemporaryPlaylistRetrieveSongsApplication::class);
         $app->post('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistUpdateApplication::class);
 
         // playlist types

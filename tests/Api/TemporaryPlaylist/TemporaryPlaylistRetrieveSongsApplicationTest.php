@@ -59,6 +59,7 @@ class TemporaryPlaylistRetrieveSongsApplicationTest extends MockeryTestCase
         $songId1 = 666;
         $songId2 = 42;
         $songListResult = 'some-result';
+        $offset = 42;
 
         $request->shouldReceive('getAttribute')
             ->with(SessionValidatorMiddleware::USER)
@@ -74,6 +75,10 @@ class TemporaryPlaylistRetrieveSongsApplicationTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([$songId1, $songId2,]);
+        $temporaryPlaylist->shouldReceive('getOffset')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($offset);
 
         $this->songRepository->shouldReceive('find')
             ->with($songId1)
@@ -109,7 +114,7 @@ class TemporaryPlaylistRetrieveSongsApplicationTest extends MockeryTestCase
             ->andReturn($songListResult);
 
         $stream->shouldReceive('write')
-            ->with(json_encode(['items' => [$songListResult]], JSON_PRETTY_PRINT))
+            ->with(json_encode(['offset' => $offset, 'songs' => [$songListResult]], JSON_PRETTY_PRINT))
             ->once();
 
         $this->assertSame(

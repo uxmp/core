@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://uxmp/NowPlayingUpdate.json",
+  "title": "Update NowPlaying state",
+  "description": "Defines the nowplaying state request for the user",
+  "type": "object",
+  "properties": {
+    "songId": {
+      "type": "integer",
+      "description": "The current song id"
+    },
+    "temporaryPlaylist": {
+      "type": "object",
+      "description": "Playlist id, if available",
+      "properties": {
+        "id": {
+          "type": ["string", "null"],
+          "description": "The id of the temporary playlist"
+        },
+        "offset": {
+          "type": "integer",
+          "description": "The position of the song in the playlist"
+        }
+      },
+      "required": ["id", "offset"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["songId", "temporaryPlaylist"]
+}

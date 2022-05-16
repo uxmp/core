@@ -7,10 +7,8 @@ namespace Uxmp\Core\Api\Playback;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 use Uxmp\Core\Api\AbstractApiApplication;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
-use Uxmp\Core\Orm\Model\UserInterface;
-use Uxmp\Core\Orm\Repository\PlaybackHistoryRepositoryInterface;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
 final class PlaySongApplication extends AbstractApiApplication
@@ -18,7 +16,6 @@ final class PlaySongApplication extends AbstractApiApplication
     public function __construct(
         private readonly Psr17Factory $psr17Factory,
         private readonly SongRepositoryInterface $songRepository,
-        private readonly PlaybackHistoryRepositoryInterface $playbackHistoryRepository,
     ) {
     }
 
@@ -32,18 +29,8 @@ final class PlaySongApplication extends AbstractApiApplication
         $song = $this->songRepository->find($songId);
 
         if ($song === null) {
-            throw new \RuntimeException('song not found');
+            throw new RuntimeException('song not found');
         }
-
-        /** @var UserInterface $user */
-        $user = $request->getAttribute(SessionValidatorMiddleware::USER);
-
-        $history = $this->playbackHistoryRepository->prototype()
-            ->setUser($user)
-            ->setSong($song)
-            ->setPlayDate(new \DateTime());
-
-        $this->playbackHistoryRepository->save($history);
 
         $path = $song->getFilename();
 

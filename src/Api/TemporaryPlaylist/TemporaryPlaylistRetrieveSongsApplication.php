@@ -57,7 +57,8 @@ final class TemporaryPlaylistRetrieveSongsApplication extends AbstractApiApplica
         return $this->asJson(
             $response,
             [
-                'items' => $songs,
+                'offset' => $temporaryPlaylist->getOffset(),
+                'songs' => $songs,
             ]
         );
     }
