@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Lib;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
@@ -23,9 +24,9 @@ class SongListItemTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->config = \Mockery::mock(ConfigProviderInterface::class);
-        $this->song = \Mockery::mock(SongInterface::class);
-        $this->album = \Mockery::mock(AlbumInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->song = Mockery::mock(SongInterface::class);
+        $this->album = Mockery::mock(AlbumInterface::class);
 
         $this->subject = new SongListItem(
             $this->config,
@@ -36,7 +37,7 @@ class SongListItemTest extends MockeryTestCase
 
     public function testJsonSerializeReturnsData(): void
     {
-        $artist = \Mockery::mock(ArtistInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
 
         $albumId = 666;
         $songId = 42;

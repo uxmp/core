@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Api\Random;
 
 use JsonSerializable;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -25,8 +26,8 @@ class RandomSongsApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
-        $this->resultItemFactory = \Mockery::mock(ResultItemFactoryInterface::class);
+        $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
+        $this->resultItemFactory = Mockery::mock(ResultItemFactoryInterface::class);
 
         $this->subject = new RandomSongsApplication(
             $this->songRepository,
@@ -36,12 +37,12 @@ class RandomSongsApplicationTest extends MockeryTestCase
 
     public function testRunReturnsList(): void
     {
-        $song = \Mockery::mock(SongInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $album = \Mockery::mock(AlbumInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
-        $item = \Mockery::mock(JsonSerializable::class);
+        $song = Mockery::mock(SongInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
+        $item = Mockery::mock(JsonSerializable::class);
 
         $result = 'some-result';
 

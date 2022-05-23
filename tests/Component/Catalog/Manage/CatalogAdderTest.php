@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Manage;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\CliInteractorHelper;
@@ -18,7 +19,7 @@ class CatalogAdderTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->catalogRepository = \Mockery::mock(CatalogRepositoryInterface::class);
+        $this->catalogRepository = Mockery::mock(CatalogRepositoryInterface::class);
 
         $this->subject = new CatalogAdder(
             $this->catalogRepository
@@ -27,7 +28,7 @@ class CatalogAdderTest extends MockeryTestCase
 
     public function testAddFailsIfPathDoesNotExist(): void
     {
-        $io = \Mockery::mock(CliInteractorHelper::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
 
         $path = 'some-path';
 
@@ -43,8 +44,8 @@ class CatalogAdderTest extends MockeryTestCase
 
     public function testAddFailsIfPathIsAlreadyKnown(): void
     {
-        $io = \Mockery::mock(CliInteractorHelper::class);
-        $catalog = \Mockery::mock(CatalogInterface::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
+        $catalog = Mockery::mock(CatalogInterface::class);
 
         $path = '/tmp/';
         $realPath = '/tmp';
@@ -66,8 +67,8 @@ class CatalogAdderTest extends MockeryTestCase
 
     public function testAddAdds(): void
     {
-        $io = \Mockery::mock(CliInteractorHelper::class);
-        $catalog = \Mockery::mock(CatalogInterface::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
+        $catalog = Mockery::mock(CatalogInterface::class);
 
         $path = '/tmp/';
         $realPath = '/tmp';

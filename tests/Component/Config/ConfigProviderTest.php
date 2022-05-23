@@ -44,7 +44,7 @@ class ConfigProviderTest extends MockeryTestCase
             ['getLogFilePath', 'LOG_PATH', '', 'some-path'],
             ['getJwtSecret', 'JWT_SECRET', '', 'some-jwt'],
             ['getCookieName', 'TOKEN_NAME', 'nekot', 'some-token'],
-            ['getTokenLifetime', 'TOKEN_LIFETIME', 1086400, 666],
+            ['getTokenLifetime', 'TOKEN_LIFETIME', 1_086_400, 666],
             ['getLogLevel', 'LOG_LEVEL', LogLevel::ERROR, 'debug'],
             ['getCorsOrigin', 'CORS_ORIGIN', '', 'some-cors-origin'],
             ['getApiBasePath', 'API_BASE_PATH', '', 'some-base-path'],

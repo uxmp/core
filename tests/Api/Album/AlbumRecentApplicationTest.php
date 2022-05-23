@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Album;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,8 +25,8 @@ class AlbumRecentApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->albumRepository = \Mockery::mock(AlbumRepositoryInterface::class);
-        $this->config = \Mockery::mock(ConfigProviderInterface::class);
+        $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new AlbumRecentApplication(
             $this->albumRepository,
@@ -35,11 +36,11 @@ class AlbumRecentApplicationTest extends MockeryTestCase
 
     public function testRunsReturnsData(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $album = \Mockery::mock(AlbumInterface::class);
-        $artist = \Mockery::mock(ArtistInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $baseUrl = 'some-base-url';
         $albumId = 666;

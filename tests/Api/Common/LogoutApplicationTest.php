@@ -71,16 +71,14 @@ class LogoutApplicationTest extends MockeryTestCase
         $response->shouldReceive('withHeader')
             ->with(
                 'Set-Cookie',
-                Mockery::on(function ($value) use ($cookieName, $apiBasePath) {
-                    return str_starts_with(
-                        $value,
-                        sprintf(
-                            '%s=; path=%s/play; Expires=',
-                            $cookieName,
-                            $apiBasePath
-                        )
-                    );
-                })
+                Mockery::on(fn ($value) => str_starts_with(
+                    $value,
+                    sprintf(
+                        '%s=; path=%s/play; Expires=',
+                        $cookieName,
+                        $apiBasePath
+                    )
+                ))
             )
             ->once()
             ->andReturnSelf();

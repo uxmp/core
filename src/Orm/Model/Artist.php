@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
@@ -32,7 +33,7 @@ class Artist implements ArtistInterface
     private Collection $albums;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private \DateTimeInterface $last_modified;
+    private DateTimeInterface $last_modified;
 
     #[Pure]
     public function __construct()
@@ -90,12 +91,12 @@ class Artist implements ArtistInterface
         return $this->getMbid();
     }
 
-    public function getLastModified(): ?\DateTimeInterface
+    public function getLastModified(): ?DateTimeInterface
     {
         return $this->last_modified;
     }
 
-    public function setLastModified(\DateTimeInterface $last_modified): ArtistInterface
+    public function setLastModified(DateTimeInterface $last_modified): ArtistInterface
     {
         $this->last_modified = $last_modified;
         return $this;

@@ -23,8 +23,8 @@ final class TemporaryPlaylistUpdateApplication extends AbstractApiApplication
      * }> $schemaValidator
      */
     public function __construct(
-        private TemporaryPlaylistRepositoryInterface $temporaryPlaylistRepository,
-        private SchemaValidatorInterface $schemaValidator,
+        private readonly TemporaryPlaylistRepositoryInterface $temporaryPlaylistRepository,
+        private readonly SchemaValidatorInterface $schemaValidator,
     ) {
     }
 

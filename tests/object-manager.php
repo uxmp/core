@@ -9,6 +9,4 @@ use Uxmp\Core\Bootstrap\Init;
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
-return Init::run(static function (ContainerInterface $dic): ObjectManager {
-    return $dic->get(EntityManagerInterface::class);
-});
+return Init::run(static fn (ContainerInterface $dic): ObjectManager => $dic->get(EntityManagerInterface::class));

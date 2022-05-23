@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Manage;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\CliInteractorHelper;
@@ -18,7 +19,7 @@ class CatalogListerTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->catalogRepository = \Mockery::mock(CatalogRepositoryInterface::class);
+        $this->catalogRepository = Mockery::mock(CatalogRepositoryInterface::class);
 
         $this->subject = new CatalogLister(
             $this->catalogRepository
@@ -27,8 +28,8 @@ class CatalogListerTest extends MockeryTestCase
 
     public function testListLists(): void
     {
-        $io = \Mockery::mock(CliInteractorHelper::class);
-        $catalog = \Mockery::mock(CatalogInterface::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
+        $catalog = Mockery::mock(CatalogInterface::class);
 
         $catalogId = 666;
         $catalogPath = 'some-path';

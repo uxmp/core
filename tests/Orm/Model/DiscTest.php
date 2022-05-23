@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use Mockery;
+
 class DiscTest extends ModelTestCase
 {
     /** @var mixed|Disc */
@@ -20,14 +22,14 @@ class DiscTest extends ModelTestCase
             ['Mbid', 'some-mbid'],
             ['AlbumId', 666],
             ['Number', 42],
-            ['Album', \Mockery::mock(AlbumInterface::class)],
+            ['Album', Mockery::mock(AlbumInterface::class)],
             ['Length', 33],
         ];
     }
 
     public function testGetSongsReturnsAddedSong(): void
     {
-        $song = \Mockery::mock(SongInterface::class);
+        $song = Mockery::mock(SongInterface::class);
 
         $this->subject->addSong($song);
 

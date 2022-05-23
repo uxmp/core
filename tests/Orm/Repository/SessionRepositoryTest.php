@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Session;
@@ -21,8 +22,8 @@ class SessionRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new SessionRepository(
             $this->entityManager,
@@ -40,7 +41,7 @@ class SessionRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $session = \Mockery::mock(SessionInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($session)
@@ -54,7 +55,7 @@ class SessionRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $session = \Mockery::mock(SessionInterface::class);
+        $session = Mockery::mock(SessionInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($session)

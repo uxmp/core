@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTime;
 use Mockery;
 
 class AlbumTest extends ModelTestCase
@@ -23,7 +24,7 @@ class AlbumTest extends ModelTestCase
             ['Artist', \Mockery::mock(ArtistInterface::class)],
             ['Mbid', 'some-mbid'],
             ['Catalog', \Mockery::mock(CatalogInterface::class)],
-            ['LastModified', new \DateTime()],
+            ['LastModified', new DateTime()],
         ];
     }
 

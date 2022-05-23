@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Uxmp\Core\Orm\Repository\FavoriteRepository;
@@ -26,7 +27,7 @@ class Favorite implements FavoriteInterface
     private string $type;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private \DateTimeInterface $date;
+    private DateTimeInterface $date;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
@@ -65,13 +66,13 @@ class Favorite implements FavoriteInterface
         return $this->type;
     }
 
-    public function setDate(\DateTimeInterface $date): FavoriteInterface
+    public function setDate(DateTimeInterface $date): FavoriteInterface
     {
         $this->date = $date;
         return $this;
     }
 
-    public function getDate(): \DateTimeInterface
+    public function getDate(): DateTimeInterface
     {
         return $this->date;
     }

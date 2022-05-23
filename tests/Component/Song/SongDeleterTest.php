@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Song;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\PlaybackHistoryInterface;
@@ -21,8 +22,8 @@ class SongDeleterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->songRepository = \Mockery::mock(SongRepositoryInterface::class);
-        $this->playbackHistoryRepository = \Mockery::mock(PlaybackHistoryRepositoryInterface::class);
+        $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
+        $this->playbackHistoryRepository = Mockery::mock(PlaybackHistoryRepositoryInterface::class);
 
         $this->subject = new SongDeleter(
             $this->songRepository,
@@ -32,8 +33,8 @@ class SongDeleterTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $song = \Mockery::mock(SongInterface::class);
-        $historyItem = \Mockery::mock(PlaybackHistoryInterface::class);
+        $song = Mockery::mock(SongInterface::class);
+        $historyItem = Mockery::mock(PlaybackHistoryInterface::class);
 
         $this->songRepository->shouldReceive('delete')
             ->with($song)

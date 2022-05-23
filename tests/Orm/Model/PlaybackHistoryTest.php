@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTime;
+use Mockery;
+
 class PlaybackHistoryTest extends ModelTestCase
 {
     /** @var PlaybackHistory */
@@ -17,9 +20,9 @@ class PlaybackHistoryTest extends ModelTestCase
     public function setterGetterDataProvider(): array
     {
         return [
-            ['User', \Mockery::mock(UserInterface::class)],
-            ['Song', \Mockery::mock(SongInterface::class)],
-            ['PlayDate', new \DateTime()],
+            ['User', Mockery::mock(UserInterface::class)],
+            ['Song', Mockery::mock(SongInterface::class)],
+            ['PlayDate', new DateTime()],
         ];
     }
 }

@@ -94,9 +94,7 @@ class UserCreationWizardTest extends MockeryTestCase
         $this->interactor->shouldReceive('promptHidden')
             ->with(
                 'Password',
-                Mockery::on(function (callable $fn): bool {
-                    return true;
-                }),
+                Mockery::on(fn (callable $fn): bool => true),
                 2
             )
             ->once()
@@ -129,9 +127,7 @@ class UserCreationWizardTest extends MockeryTestCase
         $this->interactor->shouldReceive('promptHidden')
             ->with(
                 'Password',
-                Mockery::on(function (callable $fn) use ($password): bool {
-                    return $fn($password) === $password;
-                }),
+                Mockery::on(fn (callable $fn): bool => $fn($password) === $password),
                 2
             )
             ->once()

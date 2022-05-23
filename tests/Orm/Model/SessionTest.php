@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use Mockery;
+
 class SessionTest extends ModelTestCase
 {
     /** @var mixed|Session */
@@ -19,7 +21,7 @@ class SessionTest extends ModelTestCase
         return [
             ['Subject', 'some-subject'],
             ['Active', true],
-            ['User', \Mockery::mock(UserInterface::class)],
+            ['User', Mockery::mock(UserInterface::class)],
         ];
     }
 }

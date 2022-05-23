@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 use Doctrine\ORM\UnitOfWork;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Song;
@@ -23,8 +24,8 @@ class SongRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new SongRepository(
             $this->entityManager,
@@ -42,7 +43,7 @@ class SongRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $song = \Mockery::mock(SongInterface::class);
+        $song = Mockery::mock(SongInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($song)
@@ -56,7 +57,7 @@ class SongRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $song = \Mockery::mock(SongInterface::class);
+        $song = Mockery::mock(SongInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($song)
@@ -72,9 +73,9 @@ class SongRepositoryTest extends MockeryTestCase
     {
         $mbid = 'some-mbid';
 
-        $result = \Mockery::mock(SongInterface::class);
-        $unitOfWork = \Mockery::mock(UnitOfWork::class);
-        $persister = \Mockery::mock(EntityPersister::class);
+        $result = Mockery::mock(SongInterface::class);
+        $unitOfWork = Mockery::mock(UnitOfWork::class);
+        $persister = Mockery::mock(EntityPersister::class);
 
         $this->entityManager->shouldReceive('getUnitOfWork')
             ->withNoArgs()

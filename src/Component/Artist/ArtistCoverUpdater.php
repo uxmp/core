@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Artist;
 
+use DateTime;
 use Intervention\Image\Image;
 use Tzsk\Collage\MakeCollage;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
@@ -67,7 +68,7 @@ final class ArtistCoverUpdater implements ArtistCoverUpdaterInterface
             )
         );
 
-        $artist->setLastModified(new \DateTime());
+        $artist->setLastModified(new DateTime());
 
         $this->artistRepository->save($artist);
     }

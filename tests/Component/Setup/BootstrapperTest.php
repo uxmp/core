@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Setup;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\CliInteractorHelper;
@@ -18,7 +19,7 @@ class BootstrapperTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->validator = \Mockery::mock(ValidatorInterface::class);
+        $this->validator = Mockery::mock(ValidatorInterface::class);
 
         $this->subject = new Bootstrapper(
             [$this->validator]
@@ -29,7 +30,7 @@ class BootstrapperTest extends MockeryTestCase
     {
         $message = 'some-error';
 
-        $io = \Mockery::mock(CliInteractorHelper::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
 
         $this->validator->shouldReceive('validate')
             ->withNoArgs()
@@ -45,7 +46,7 @@ class BootstrapperTest extends MockeryTestCase
 
     public function testBootstrapBootstraps(): void
     {
-        $io = \Mockery::mock(CliInteractorHelper::class);
+        $io = Mockery::mock(CliInteractorHelper::class);
 
         $this->validator->shouldReceive('validate')
             ->withNoArgs()

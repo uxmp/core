@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 use Doctrine\ORM\UnitOfWork;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Artist;
@@ -23,8 +24,8 @@ class ArtistRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new ArtistRepository(
             $this->entityManager,
@@ -42,7 +43,7 @@ class ArtistRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $artist = \Mockery::mock(ArtistInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($artist)
@@ -58,9 +59,9 @@ class ArtistRepositoryTest extends MockeryTestCase
     {
         $mbid = 'some-mbid';
 
-        $result = \Mockery::mock(ArtistInterface::class);
-        $unitOfWork = \Mockery::mock(UnitOfWork::class);
-        $persister = \Mockery::mock(EntityPersister::class);
+        $result = Mockery::mock(ArtistInterface::class);
+        $unitOfWork = Mockery::mock(UnitOfWork::class);
+        $persister = Mockery::mock(EntityPersister::class);
 
         $this->entityManager->shouldReceive('getUnitOfWork')
             ->withNoArgs()

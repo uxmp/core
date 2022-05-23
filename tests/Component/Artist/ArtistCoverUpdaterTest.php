@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Artist;
 
+use DateTimeInterface;
 use Intervention\Image\Image;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use org\bovigo\vfs\vfsStream;
@@ -29,9 +31,9 @@ class ArtistCoverUpdaterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->config = \Mockery::mock(ConfigProviderInterface::class);
-        $this->artistRepository = \Mockery::mock(ArtistRepositoryInterface::class);
-        $this->collageMaker = \Mockery::mock(MakeCollage::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->artistRepository = Mockery::mock(ArtistRepositoryInterface::class);
+        $this->collageMaker = Mockery::mock(MakeCollage::class);
         $this->root = vfsStream::setup();
 
         $this->subject = new ArtistCoverUpdater(
@@ -43,8 +45,8 @@ class ArtistCoverUpdaterTest extends MockeryTestCase
 
     public function testUpdateDoesNothingIfNoAlbumCoverIsAvailable(): void
     {
-        $artist = \Mockery::mock(ArtistInterface::class);
-        $album = \Mockery::mock(AlbumInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
 
         $albumMbId = 'some-album-mbid';
 
@@ -68,9 +70,9 @@ class ArtistCoverUpdaterTest extends MockeryTestCase
 
     public function testUpdateBuildsArtistCover(): void
     {
-        $artist = \Mockery::mock(ArtistInterface::class);
-        $album = \Mockery::mock(AlbumInterface::class);
-        $image = \Mockery::mock(Image::class);
+        $artist = Mockery::mock(ArtistInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
+        $image = Mockery::mock(Image::class);
 
         $albumMbId = 'some-album-mbid';
         $artistMbId = 'some-artist-mbid';
@@ -133,7 +135,7 @@ class ArtistCoverUpdaterTest extends MockeryTestCase
             ->once();
 
         $artist->shouldReceive('setLastModified')
-            ->with(\Mockery::type(\DateTimeInterface::class))
+            ->with(Mockery::type(DateTimeInterface::class))
             ->once();
 
         $this->artistRepository->shouldReceive('save')

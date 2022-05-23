@@ -140,9 +140,7 @@ class SubSonicSettingsCreateApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
         $accessKey->shouldReceive('setConfig')
-            ->with(Mockery::on(function (array $config): bool {
-                return strlen($config[AccessTokenEnum::CONFIG_KEY_TOKEN]) === AccessTokenEnum::SUBSONIC_KEY_LENGTH;
-            }))
+            ->with(Mockery::on(fn (array $config): bool => strlen((string) $config[AccessTokenEnum::CONFIG_KEY_TOKEN]) === AccessTokenEnum::SUBSONIC_KEY_LENGTH))
             ->once()
             ->andReturnSelf();
         $accessKey->shouldReceive('getConfig')

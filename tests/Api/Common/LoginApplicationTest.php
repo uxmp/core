@@ -184,11 +184,9 @@ class LoginApplicationTest extends MockeryTestCase
 
         $this->jwtManager->shouldReceive('encode')
             ->with(
-                Mockery::on(function (array $value) use ($lifetime, $sessionId): bool {
-                    return $value['iat'] <= time() &&
-                    $value['exp'] <= time() + $lifetime &&
-                    $value['sub'] == (string) $sessionId;
-                })
+                Mockery::on(fn (array $value): bool => $value['iat'] <= time() &&
+                $value['exp'] <= time() + $lifetime &&
+                $value['sub'] == (string) $sessionId)
             )
             ->once()
             ->andReturn($token);

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTime;
+use Mockery;
+
 class ArtistTest extends ModelTestCase
 {
     protected mixed $subject;
@@ -18,7 +21,7 @@ class ArtistTest extends ModelTestCase
         return [
             ['Title', 'some-title'],
             ['Mbid', 'some-mbid'],
-            ['LastModified', new \DateTime()],
+            ['LastModified', new DateTime()],
         ];
     }
 
@@ -44,7 +47,7 @@ class ArtistTest extends ModelTestCase
 
     public function testGetAlbumsReturnsAddedAlbum(): void
     {
-        $album = \Mockery::mock(AlbumInterface::class);
+        $album = Mockery::mock(AlbumInterface::class);
 
         $this->subject->addAlbum($album);
 

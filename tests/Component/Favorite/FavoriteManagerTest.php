@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Favorite;
 
+use DateTimeInterface;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -108,7 +109,7 @@ class FavoriteManagerTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
         $favorite->shouldReceive('setDate')
-            ->with(Mockery::type(\DateTimeInterface::class))
+            ->with(Mockery::type(DateTimeInterface::class))
             ->once()
             ->andReturnSelf();
 

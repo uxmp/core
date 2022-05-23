@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Art;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Component\Artist\ArtistCoverUpdaterInterface;
@@ -20,8 +21,8 @@ class ArtUpdaterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->artistRepository = \Mockery::mock(ArtistRepositoryInterface::class);
-        $this->artistCoverUpdater = \Mockery::mock(ArtistCoverUpdaterInterface::class);
+        $this->artistRepository = Mockery::mock(ArtistRepositoryInterface::class);
+        $this->artistCoverUpdater = Mockery::mock(ArtistCoverUpdaterInterface::class);
 
         $this->subject = new ArtUpdater(
             $this->artistRepository,
@@ -33,7 +34,7 @@ class ArtUpdaterTest extends MockeryTestCase
     {
         $catalogId = 666;
 
-        $artist = \Mockery::mock(ArtistInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
 
         $this->artistRepository->shouldReceive('findAll')
             ->withNoArgs()

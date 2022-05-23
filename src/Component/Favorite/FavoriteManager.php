@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Favorite;
 
+use DateTime;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
 
@@ -32,7 +33,7 @@ final class FavoriteManager implements FavoriteManagerInterface
                 ->setUser($user)
                 ->setType($type)
                 ->setItemId($itemId)
-                ->setDate(new \DateTime());
+                ->setDate(new DateTime());
 
             $this->favoriteRepository->save($favorite);
 

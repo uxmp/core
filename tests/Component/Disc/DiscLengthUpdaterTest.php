@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Disc;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\DiscInterface;
@@ -18,7 +19,7 @@ class DiscLengthUpdaterTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->discRepository = \Mockery::mock(DiscRepositoryInterface::class);
+        $this->discRepository = Mockery::mock(DiscRepositoryInterface::class);
 
         $this->subject = new DiscLengthUpdater(
             $this->discRepository
@@ -27,8 +28,8 @@ class DiscLengthUpdaterTest extends MockeryTestCase
 
     public function testUpdateUpdates(): void
     {
-        $disc = \Mockery::mock(DiscInterface::class);
-        $song = \Mockery::mock(SongInterface::class);
+        $disc = Mockery::mock(DiscInterface::class);
+        $song = Mockery::mock(SongInterface::class);
 
         $length1 = 666;
         $length2 = 42;

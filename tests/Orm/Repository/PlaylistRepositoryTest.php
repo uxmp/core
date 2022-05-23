@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Playlist;
@@ -21,8 +22,8 @@ class PlaylistRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new PlaylistRepository(
             $this->entityManager,
@@ -40,7 +41,7 @@ class PlaylistRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $playlist = \Mockery::mock(PlaylistInterface::class);
+        $playlist = Mockery::mock(PlaylistInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($playlist)
@@ -54,7 +55,7 @@ class PlaylistRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $playlist = \Mockery::mock(PlaylistInterface::class);
+        $playlist = Mockery::mock(PlaylistInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($playlist)

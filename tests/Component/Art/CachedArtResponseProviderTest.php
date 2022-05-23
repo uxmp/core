@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Art;
 
+use DateTime;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
@@ -133,7 +134,7 @@ class CachedArtResponseProviderTest extends MockeryTestCase
             ->once()
             ->andReturn(['content' => $content, 'mimeType' => $mimeType]);
 
-        $lastModified = new \DateTime();
+        $lastModified = new DateTime();
         $lastModified->setTimestamp($timestamp);
 
         $this->config->shouldReceive('getClientCacheMaxAge')

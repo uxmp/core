@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Event;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Container\ContainerInterface;
@@ -16,7 +17,7 @@ class EventHandlerTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->dic = \Mockery::mock(ContainerInterface::class);
+        $this->dic = Mockery::mock(ContainerInterface::class);
 
         $this->subject = new EventHandler(
             $this->dic

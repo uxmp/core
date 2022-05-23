@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Artist;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,8 +25,8 @@ class ArtistApplicationTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->artistRepository = \Mockery::mock(ArtistRepositoryInterface::class);
-        $this->config = \Mockery::mock(ConfigProviderInterface::class);
+        $this->artistRepository = Mockery::mock(ArtistRepositoryInterface::class);
+        $this->config = Mockery::mock(ConfigProviderInterface::class);
 
         $this->subject = new ArtistApplication(
             $this->artistRepository,
@@ -35,8 +36,8 @@ class ArtistApplicationTest extends MockeryTestCase
 
     public function testRunReturnsErrorIfArtistWasNotFound(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
 
         $this->artistRepository->shouldReceive('find')
             ->with(0)
@@ -56,10 +57,10 @@ class ArtistApplicationTest extends MockeryTestCase
 
     public function testRunReturnsArtist(): void
     {
-        $request = \Mockery::mock(ServerRequestInterface::class);
-        $response = \Mockery::mock(ResponseInterface::class);
-        $artist = \Mockery::mock(ArtistInterface::class);
-        $stream = \Mockery::mock(StreamInterface::class);
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $artist = Mockery::mock(ArtistInterface::class);
+        $stream = Mockery::mock(StreamInterface::class);
 
         $artistId = 666;
         $title = 'some-title';

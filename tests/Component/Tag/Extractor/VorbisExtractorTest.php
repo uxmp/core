@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Tag\Extractor;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 
@@ -32,7 +33,7 @@ class VorbisExtractorTest extends MockeryTestCase
 
     public function testExtractSetsData(): void
     {
-        $audioFile = \Mockery::mock(AudioFileInterface::class);
+        $audioFile = Mockery::mock(AudioFileInterface::class);
 
         $mbid = 'some-mbid';
         $title = 'some-title';

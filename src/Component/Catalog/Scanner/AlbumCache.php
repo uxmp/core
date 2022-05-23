@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Catalog\Scanner;
 
+use DateTime;
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Component\Album\AlbumCoverUpdaterInterface;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
@@ -42,7 +43,7 @@ final class AlbumCache implements AlbumCacheInterface
                     ->setArtist($artist)
                     ->setMbid($albumMbid)
                     ->setCatalog($catalog)
-                    ->setLastModified(new \DateTime())
+                    ->setLastModified(new DateTime())
                 ;
                 $this->albumRepository->save($album);
 

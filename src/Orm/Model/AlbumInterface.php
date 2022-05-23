@@ -2,6 +2,7 @@
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
 use Uxmp\Core\Component\Art\CachableArtItemInterface;
 use Uxmp\Core\Component\Favorite\FavoriteAbleInterface;
 
@@ -43,7 +44,7 @@ interface AlbumInterface extends
 
     public function getSongCount(): int;
 
-    public function getLastModified(): \DateTimeInterface;
+    public function getLastModified(): DateTimeInterface;
 
-    public function setLastModified(\DateTimeInterface $last_modified): AlbumInterface;
+    public function setLastModified(DateTimeInterface $last_modified): AlbumInterface;
 }

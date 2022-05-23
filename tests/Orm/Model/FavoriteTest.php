@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTime;
+use Mockery;
+
 class FavoriteTest extends ModelTestCase
 {
     /** @var mixed|Favorite */
@@ -17,10 +20,10 @@ class FavoriteTest extends ModelTestCase
     public function setterGetterDataProvider(): array
     {
         return [
-            ['User', \Mockery::mock(UserInterface::class)],
+            ['User', Mockery::mock(UserInterface::class)],
             ['Type', 'some-type'],
             ['ItemId', 666],
-            ['Date', new \DateTime()],
+            ['Date', new DateTime()],
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\User;
@@ -21,8 +22,8 @@ class UserRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new UserRepository(
             $this->entityManager,
@@ -40,7 +41,7 @@ class UserRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $user = \Mockery::mock(UserInterface::class);
+        $user = Mockery::mock(UserInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($user)
@@ -54,7 +55,7 @@ class UserRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $user = \Mockery::mock(UserInterface::class);
+        $user = Mockery::mock(UserInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($user)

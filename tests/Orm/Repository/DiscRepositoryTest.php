@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Persisters\Entity\EntityPersister;
 use Doctrine\ORM\UnitOfWork;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Album;
@@ -27,8 +28,8 @@ class DiscRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new DiscRepository(
             $this->entityManager,
@@ -46,7 +47,7 @@ class DiscRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $disc = \Mockery::mock(DiscInterface::class);
+        $disc = Mockery::mock(DiscInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($disc)
@@ -60,7 +61,7 @@ class DiscRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $disc = \Mockery::mock(DiscInterface::class);
+        $disc = Mockery::mock(DiscInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($disc)
@@ -77,9 +78,9 @@ class DiscRepositoryTest extends MockeryTestCase
         $mbid = 'some-mbid';
         $discNumber = 666;
 
-        $result = \Mockery::mock(DiscInterface::class);
-        $unitOfWork = \Mockery::mock(UnitOfWork::class);
-        $persister = \Mockery::mock(EntityPersister::class);
+        $result = Mockery::mock(DiscInterface::class);
+        $unitOfWork = Mockery::mock(UnitOfWork::class);
+        $persister = Mockery::mock(EntityPersister::class);
 
         $this->entityManager->shouldReceive('getUnitOfWork')
             ->withNoArgs()
@@ -115,9 +116,9 @@ class DiscRepositoryTest extends MockeryTestCase
 
     public function testFindEmptyDiscsReturnsData(): void
     {
-        $query = \Mockery::mock(AbstractQuery::class);
-        $result = [\Mockery::mock(DiscInterface::class)];
-        $catalog = \Mockery::mock(CatalogInterface::class);
+        $query = Mockery::mock(AbstractQuery::class);
+        $result = [Mockery::mock(DiscInterface::class)];
+        $catalog = Mockery::mock(CatalogInterface::class);
 
         $catalogId = 666;
 

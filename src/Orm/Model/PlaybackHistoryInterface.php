@@ -2,6 +2,8 @@
 
 namespace Uxmp\Core\Orm\Model;
 
+use DateTimeInterface;
+
 interface PlaybackHistoryInterface
 {
     public function getId(): int;
@@ -14,7 +16,7 @@ interface PlaybackHistoryInterface
 
     public function setSong(SongInterface $song): PlaybackHistoryInterface;
 
-    public function getPlayDate(): \DateTimeInterface;
+    public function getPlayDate(): DateTimeInterface;
 
-    public function setPlayDate(\DateTimeInterface $play_date): PlaybackHistoryInterface;
+    public function setPlayDate(DateTimeInterface $play_date): PlaybackHistoryInterface;
 }

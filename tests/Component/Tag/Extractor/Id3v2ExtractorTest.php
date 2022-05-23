@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Tag\Extractor;
 
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 
@@ -67,7 +68,7 @@ class Id3v2ExtractorTest extends MockeryTestCase
             'part_of_a_set' => [$this->discNumber . '/1'],
         ];
 
-        $audioFile = \Mockery::mock(AudioFileInterface::class);
+        $audioFile = Mockery::mock(AudioFileInterface::class);
 
         $audioFile->shouldReceive('setMbid')
             ->with($this->mbid)

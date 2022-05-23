@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\RadioStation;
@@ -21,8 +22,8 @@ class RadioStationRepositoryTest extends MockeryTestCase
 
     public function setUp(): void
     {
-        $this->entityManager = \Mockery::mock(EntityManagerInterface::class);
-        $this->classMetaData = \Mockery::mock(ClassMetadata::class);
+        $this->entityManager = Mockery::mock(EntityManagerInterface::class);
+        $this->classMetaData = Mockery::mock(ClassMetadata::class);
 
         $this->subject = new RadioStationRepository(
             $this->entityManager,
@@ -40,7 +41,7 @@ class RadioStationRepositoryTest extends MockeryTestCase
 
     public function testSaveSaves(): void
     {
-        $station = \Mockery::mock(RadioStationInterface::class);
+        $station = Mockery::mock(RadioStationInterface::class);
 
         $this->entityManager->shouldReceive('persist')
             ->with($station)
@@ -54,7 +55,7 @@ class RadioStationRepositoryTest extends MockeryTestCase
 
     public function testDeleteDeletes(): void
     {
-        $station = \Mockery::mock(RadioStationInterface::class);
+        $station = Mockery::mock(RadioStationInterface::class);
 
         $this->entityManager->shouldReceive('remove')
             ->with($station)

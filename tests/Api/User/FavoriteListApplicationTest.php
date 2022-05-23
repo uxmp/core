@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\User;
 
+use DateTime;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -36,7 +37,7 @@ class FavoriteListApplicationTest extends MockeryTestCase
         $stream = Mockery::mock(StreamInterface::class);
         $user = Mockery::mock(UserInterface::class);
         $favorite = Mockery::mock(FavoriteInterface::class);
-        $timestamp = new \DateTime();
+        $timestamp = new DateTime();
 
         $itemId = 666;
         $type = 'song';
