@@ -29,6 +29,7 @@ final class VorbisExtractor implements ExtractorInterface
             ->setDiscMbid(current($tags['musicbrainz_releasegroupid']))
             ->setDiscNumber((int) current($tags['discnumber']))
             ->setYear($year === false ? null : (int) $year)
+            ->setGenres($tags['genre'] ?? [])
         ;
     }
 

@@ -30,6 +30,9 @@ final class AudioFile implements AudioFileInterface
 
     private string $mimeType = '';
 
+    /** @var array<string> */
+    private array $genres = [];
+
     public function getTrackNumber(): int
     {
         return $this->trackNumber;
@@ -168,6 +171,23 @@ final class AudioFile implements AudioFileInterface
     public function setMimeType(string $mimeType): AudioFileInterface
     {
         $this->mimeType = $mimeType;
+        return $this;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getGenres(): array
+    {
+        return $this->genres;
+    }
+
+    /**
+     * @param array<string> $genres
+     */
+    public function setGenres(array $genres): AudioFileInterface
+    {
+        $this->genres = $genres;
         return $this;
     }
 }

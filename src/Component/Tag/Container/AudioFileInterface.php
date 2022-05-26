@@ -53,4 +53,14 @@ interface AudioFileInterface
     public function getMimeType(): string;
 
     public function setMimeType(string $mimeType): AudioFileInterface;
+
+    /**
+     * @return array<string>
+     */
+    public function getGenres(): array;
+
+    /**
+     * @param array<string> $genres
+     */
+    public function setGenres(array $genres): AudioFileInterface;
 }

@@ -22,8 +22,7 @@ return [
     Psr17Factory::class => autowire(),
     getID3::class => autowire(),
     EntityManagerInterface::class => static function (): EntityManagerInterface {
-
-    // register uuid type
+        // register uuid type
         Type::addType('uuid', UuidType::class);
 
         return EntityManager::create(

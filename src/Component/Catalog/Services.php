@@ -10,6 +10,7 @@ return [
     Scanner\ArtistCacheInterface::class => autowire(Scanner\ArtistCache::class),
     Scanner\AlbumCacheInterface::class => autowire(Scanner\AlbumCache::class),
     Scanner\DiscCacheInterface::class => autowire(Scanner\DiscCache::class),
+    Scanner\GenreCacheInterface::class => autowire(Scanner\GenreCache::class),
     Manage\CatalogAdderInterface::class => autowire(Manage\CatalogAdder::class),
     Manage\CatalogUpdaterInterface::class => autowire(Manage\CatalogUpdater::class),
     Manage\CatalogCleanerInterface::class => autowire(Manage\CatalogCleaner::class),

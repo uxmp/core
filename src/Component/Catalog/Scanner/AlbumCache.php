@@ -21,7 +21,8 @@ final class AlbumCache implements AlbumCacheInterface
     public function __construct(
         private readonly AlbumRepositoryInterface $albumRepository,
         private readonly ArtistCacheInterface $artistCache,
-        private readonly EventHandlerInterface $eventHandler
+        private readonly EventHandlerInterface $eventHandler,
+        private readonly GenreCacheInterface $genreCache,
     ) {
     }
 
@@ -54,6 +55,8 @@ final class AlbumCache implements AlbumCacheInterface
                     $c->get(AlbumCoverUpdaterInterface::class)->update($album, $analysisResult);
                 }
             );
+
+            $this->genreCache->enrich($album, $audioFile);
 
             $this->cache[$albumMbid] = $album;
         }

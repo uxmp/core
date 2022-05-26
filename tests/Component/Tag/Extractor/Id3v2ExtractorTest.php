@@ -30,6 +30,8 @@ class Id3v2ExtractorTest extends MockeryTestCase
 
     private string $year = '6666';
 
+    private array $genres = ['meddal'];
+
     private Id3v2Extractor $subject;
 
     public function setUp(): void
@@ -66,6 +68,7 @@ class Id3v2ExtractorTest extends MockeryTestCase
             'artist' => [$this->artistTitle],
             'album' => [$this->albumTitle],
             'part_of_a_set' => [$this->discNumber . '/1'],
+            'genre' => $this->genres,
         ];
 
         $audioFile = Mockery::mock(AudioFileInterface::class);
@@ -108,6 +111,10 @@ class Id3v2ExtractorTest extends MockeryTestCase
             ->andReturnSelf();
         $audioFile->shouldReceive('setYear')
             ->with((int) $this->year)
+            ->once()
+            ->andReturnSelf();
+        $audioFile->shouldReceive('setGenres')
+            ->with($this->genres)
             ->once()
             ->andReturnSelf();
 

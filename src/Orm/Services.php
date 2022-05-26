@@ -11,6 +11,8 @@ use Uxmp\Core\Orm\Model\Artist;
 use Uxmp\Core\Orm\Model\Catalog;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
+use Uxmp\Core\Orm\Model\Genre;
+use Uxmp\Core\Orm\Model\GenreMap;
 use Uxmp\Core\Orm\Model\PlaybackHistory;
 use Uxmp\Core\Orm\Model\Playlist;
 use Uxmp\Core\Orm\Model\RadioStation;
@@ -24,6 +26,8 @@ use Uxmp\Core\Orm\Repository\ArtistRepositoryInterface;
 use Uxmp\Core\Orm\Repository\CatalogRepositoryInterface;
 use Uxmp\Core\Orm\Repository\DiscRepositoryInterface;
 use Uxmp\Core\Orm\Repository\FavoriteRepositoryInterface;
+use Uxmp\Core\Orm\Repository\GenreMapRepositoryInterface;
+use Uxmp\Core\Orm\Repository\GenreRepositoryInterface;
 use Uxmp\Core\Orm\Repository\PlaybackHistoryRepositoryInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 use Uxmp\Core\Orm\Repository\RadioStationRepositoryInterface;
@@ -46,4 +50,6 @@ return [
     PlaylistRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(Playlist::class),
     AccessKeyRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(AccessKey::class),
     TemporaryPlaylistRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(TemporaryPlaylist::class),
+    GenreRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(Genre::class),
+    GenreMapRepositoryInterface::class => fn (EntityManagerInterface $em) => $em->getRepository(GenreMap::class),
 ];

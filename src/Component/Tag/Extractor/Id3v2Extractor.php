@@ -29,6 +29,7 @@ final class Id3v2Extractor implements ExtractorInterface
             ->setDiscMbid($tags['text']['MusicBrainz Release Group Id'] ?? '')
             ->setDiscNumber((int) strstr((string) current($tags['part_of_a_set']), '/', true))
             ->setYear($year === null ? null : (int) $year)
+            ->setGenres($tags['genre'] ?? [])
         ;
     }
 
