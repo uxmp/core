@@ -28,6 +28,8 @@ final class AudioFile implements AudioFileInterface
 
     private ?int $year = null;
 
+    private int $fileSize = 0;
+
     private string $mimeType = '';
 
     /** @var array<string> */
@@ -188,6 +190,17 @@ final class AudioFile implements AudioFileInterface
     public function setGenres(array $genres): AudioFileInterface
     {
         $this->genres = $genres;
+        return $this;
+    }
+
+    public function getFileSize(): int
+    {
+        return $this->fileSize;
+    }
+
+    public function setFileSize(int $fileSize): AudioFileInterface
+    {
+        $this->fileSize = $fileSize;
         return $this;
     }
 }

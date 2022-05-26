@@ -11,6 +11,9 @@ use RuntimeException;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Orm\Repository\SongRepositoryInterface;
 
+/**
+ * Returns the song stream
+ */
 final class PlaySongApplication extends AbstractApiApplication
 {
     public function __construct(
@@ -33,12 +36,11 @@ final class PlaySongApplication extends AbstractApiApplication
         }
 
         $path = $song->getFilename();
-
-        $size = filesize($path);
+        $size = $song->getFileSize();
 
         return $response
             ->withHeader('Content-Type', (string) $song->getMimeType())
-            ->withHeader('Content-Disposition', 'filename=song'.$songId.'.mp3')
+            ->withHeader('Content-Disposition', sprintf('filename=song%d.mp3', $songId))
             ->withHeader('Content-Length', (string) $size)
             ->withHeader('Cache-Control', 'no-cache')
             ->withHeader('Content-Range', 'bytes '.$size)

@@ -46,6 +46,9 @@ class Song implements SongInterface
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $mimeType = null;
 
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    private int $fileSize = 0;
+
     #[ORM\ManyToOne(targetEntity: Disc::class, inversedBy: 'songs')]
     #[ORM\JoinColumn(name: 'disc_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private DiscInterface $disc;
@@ -181,5 +184,16 @@ class Song implements SongInterface
     public function getAlbum(): AlbumInterface
     {
         return $this->getDisc()->getAlbum();
+    }
+
+    public function getFileSize(): int
+    {
+        return $this->fileSize;
+    }
+
+    public function setFileSize(int $fileSize): SongInterface
+    {
+        $this->fileSize = $fileSize;
+        return $this;
     }
 }

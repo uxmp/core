@@ -23,11 +23,11 @@ class Genre implements GenreInterface
 
     /** @var Collection<int, GenreMapInterface> */
     #[ORM\OneToMany(mappedBy: 'genre_map', targetEntity: GenreMap::class, cascade: ['ALL'])]
-    private Collection $mapped_genres;
+    private Collection $mappedGenres;
 
     public function __construct()
     {
-        $this->mapped_genres = new ArrayCollection();
+        $this->mappedGenres = new ArrayCollection();
     }
 
     public function getId(): int

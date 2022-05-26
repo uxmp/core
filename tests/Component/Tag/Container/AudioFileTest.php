@@ -45,6 +45,8 @@ class AudioFileTest extends MockeryTestCase
             ['DiscNumber', 666],
             ['Year', 42],
             ['MimeType', 'some/type'],
+            ['Genres', ['some-genre']],
+            ['FileSize', 33],
         ];
     }
 

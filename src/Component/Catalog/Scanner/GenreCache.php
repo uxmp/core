@@ -28,28 +28,47 @@ final class GenreCache implements GenreCacheInterface
             return;
         }
 
-        foreach ($genres as $genre_name) {
-            $genre_name = ucwords($genre_name);
+        $genres = array_map('ucwords', $genres);
+
+        $albumId = $album->getId();
+
+        $knownGenres = $this->genreMapRepository->findBy([
+            'mapped_item_type' => GenreMapEnum::ALBUM,
+            'mapped_item_id' => $albumId,
+        ]);
+
+        foreach ($knownGenres as $knownGenre) {
+            $genreName = $knownGenre->getGenreTitle();
+            $key = array_search($genreName, $genres, true);
+            if ($key !== false) {
+                unset($genres[$key]);
+            } else {
+                $this->genreMapRepository->delete($knownGenre);
+            }
+        }
+
+        foreach ($genres as $genreName) {
+            $genreName = ucwords($genreName);
 
             $cachedGenre = $this->genreRepository->findOneBy([
-                'title' => $genre_name,
+                'title' => $genreName,
             ]);
 
             if ($cachedGenre === null) {
                 $cachedGenre = $this->genreRepository
-                        ->prototype()
-                        ->setTitle($genre_name);
+                    ->prototype()
+                    ->setTitle($genreName);
 
                 $this->genreRepository->save($cachedGenre);
             }
 
-            $mapped_genre = $this->genreMapRepository
+            $mappedGenre = $this->genreMapRepository
                 ->prototype()
                 ->setGenre($cachedGenre)
                 ->setMappedItemType(GenreMapEnum::ALBUM)
-                ->setMappedItemId($album->getId());
+                ->setMappedItemId($albumId);
 
-            $this->genreMapRepository->save($mapped_genre);
+            $this->genreMapRepository->save($mappedGenre);
         }
     }
 }

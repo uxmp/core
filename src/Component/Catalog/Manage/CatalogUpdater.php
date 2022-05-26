@@ -58,9 +58,12 @@ final class CatalogUpdater implements CatalogUpdaterInterface
         $io->info(sprintf('Updating catalog from `%s`', $directory), true);
 
         foreach ($this->recursiveFileReader->read($directory) as $filename) {
-            $audioFile = (new AudioFile())->setFilename($filename);
-
             $analysisResult = $this->id3Analyzer->analyze($filename);
+
+            $audioFile = (new AudioFile())
+                ->setFilename($filename)
+                ->setFileSize($analysisResult['filesize'] ?? 0)
+            ;
 
             $fileFormat = $analysisResult['fileformat'] ?? '';
 
@@ -123,6 +126,7 @@ final class CatalogUpdater implements CatalogUpdaterInterface
                 ->setLength((int) round($analysisResult['playtime_seconds']))
                 ->setYear($audioFile->getYear())
                 ->setMimeType($audioFile->getMimeType())
+                ->setFileSize($audioFile->getFileSize())
             ;
 
             $this->songRepository->save($song);

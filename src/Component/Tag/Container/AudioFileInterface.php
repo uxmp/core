@@ -63,4 +63,8 @@ interface AudioFileInterface
      * @param array<string> $genres
      */
     public function setGenres(array $genres): AudioFileInterface;
+
+    public function getFileSize(): int;
+
+    public function setFileSize(int $fileSize): AudioFileInterface;
 }

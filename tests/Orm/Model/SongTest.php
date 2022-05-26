@@ -29,6 +29,7 @@ class SongTest extends ModelTestCase
             ['Length', 42],
             ['Year', 33],
             ['MimeType', 'some-type'],
+            ['FileSize', 1234],
         ];
     }
 

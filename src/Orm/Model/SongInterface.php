@@ -49,4 +49,8 @@ interface SongInterface extends FavoriteAbleInterface
     public function setMimeType(?string $mimeType): SongInterface;
 
     public function getAlbum(): AlbumInterface;
+
+    public function getFileSize(): int;
+
+    public function setFileSize(int $fileSize): SongInterface;
 }
