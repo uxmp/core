@@ -72,7 +72,7 @@ class LogoutApplicationTest extends MockeryTestCase
             ->with(
                 'Set-Cookie',
                 Mockery::on(fn ($value) => str_starts_with(
-                    $value,
+                    (string) $value,
                     sprintf(
                         '%s=; path=%s/play; Expires=',
                         $cookieName,
