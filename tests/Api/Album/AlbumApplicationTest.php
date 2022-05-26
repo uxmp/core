@@ -14,7 +14,9 @@ use Teapot\StatusCode;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
+use Uxmp\Core\Orm\Model\GenreMapInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
+use Uxmp\Core\Orm\Repository\GenreMapRepositoryInterface;
 
 class AlbumApplicationTest extends MockeryTestCase
 {
@@ -22,16 +24,20 @@ class AlbumApplicationTest extends MockeryTestCase
 
     private MockInterface $config;
 
+    private MockInterface $genreMapRepository;
+
     private AlbumApplication $subject;
 
     public function setUp(): void
     {
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
         $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->genreMapRepository = Mockery::mock(GenreMapRepositoryInterface::class);
 
         $this->subject = new AlbumApplication(
             $this->albumRepository,
             $this->config,
+            $this->genreMapRepository,
         );
     }
 
@@ -63,6 +69,7 @@ class AlbumApplicationTest extends MockeryTestCase
         $album = Mockery::mock(AlbumInterface::class);
         $artist = Mockery::mock(ArtistInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
+        $mappedGenre = Mockery::mock(GenreMapInterface::class);
 
         $albumId = 666;
         $artistTitle = 'some-artist-title';
@@ -72,6 +79,22 @@ class AlbumApplicationTest extends MockeryTestCase
         $cover = sprintf('%s/art/album/%d', $baseUrl, $albumId);
         $length = 123;
         $mbId = 'some-mbid';
+        $genreId = 42;
+        $genreTitle = 'some-genre';
+
+        $this->genreMapRepository->shouldReceive('findByAlbum')
+            ->with($album)
+            ->once()
+            ->andReturn([$mappedGenre]);
+
+        $mappedGenre->shouldReceive('getGenreId')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($genreId);
+        $mappedGenre->shouldReceive('getGenreTitle')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($genreTitle);
 
         $this->config->shouldReceive('getBaseUrl')
             ->withNoArgs()
@@ -117,6 +140,10 @@ class AlbumApplicationTest extends MockeryTestCase
             'cover' => $cover,
             'length' => $length,
             'mbId' => $mbId,
+            'genres' => [[
+                'id' => $genreId,
+                'title' => $genreTitle,
+            ]],
         ];
 
         $response->shouldReceive('withHeader')

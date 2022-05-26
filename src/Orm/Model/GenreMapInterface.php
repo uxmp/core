@@ -10,6 +10,8 @@ interface GenreMapInterface
 
     public function getGenreTitle(): string;
 
+    public function getGenreId(): int;
+
     public function getMappedItemType(): GenreMapEnum;
 
     public function setMappedItemType(GenreMapEnum $value): GenreMapInterface;

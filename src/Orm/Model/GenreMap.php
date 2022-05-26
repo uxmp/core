@@ -41,6 +41,11 @@ class GenreMap implements GenreMapInterface
         return $this->genre->getTitle();
     }
 
+    public function getGenreId(): int
+    {
+        return $this->genre->getId();
+    }
+
     public function getMappedItemType(): GenreMapEnum
     {
         return $this->mapped_item_type;

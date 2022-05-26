@@ -6,7 +6,6 @@ namespace Uxmp\Core\Component\Catalog\Scanner;
 
 use Uxmp\Core\Component\Tag\Container\AudioFileInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
-use Uxmp\Core\Orm\Model\GenreInterface;
 use Uxmp\Core\Orm\Model\GenreMapEnum;
 use Uxmp\Core\Orm\Repository\GenreMapRepositoryInterface;
 use Uxmp\Core\Orm\Repository\GenreRepositoryInterface;
@@ -30,9 +29,11 @@ final class GenreCache implements GenreCacheInterface
         }
 
         foreach ($genres as $genre_name) {
+            $genre_name = ucwords($genre_name);
+
             $cachedGenre = $this->genreRepository->findOneBy([
-                    'title' => $genre_name,
-                ]);
+                'title' => $genre_name,
+            ]);
 
             if ($cachedGenre === null) {
                 $cachedGenre = $this->genreRepository
