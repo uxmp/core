@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Orm\Repository;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Genre;
 use Uxmp\Core\Orm\Model\GenreInterface;
+use Uxmp\Core\Orm\Model\GenreMap;
 
 class GenreRepositoryTest extends MockeryTestCase
 {
@@ -65,5 +69,81 @@ class GenreRepositoryTest extends MockeryTestCase
             ->once();
 
         $this->subject->delete($genre);
+    }
+
+    public function testGetGenreStatisticsReturnsValue(): void
+    {
+        $queryBuilder = Mockery::mock(QueryBuilder::class);
+        $query = Mockery::mock(AbstractQuery::class);
+
+        $title = 'some-title';
+        $albumCount = 666;
+        $songCount = 42;
+
+        $this->entityManager->shouldReceive('createQueryBuilder')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($queryBuilder);
+
+        $queryBuilder->shouldReceive('select')
+            ->with(
+                'a.title',
+                'count(b.id) as albumCount',
+                'count(c.id) as songCount'
+            )
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('from')
+            ->with(Genre::class, 'a')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('leftJoin')
+            ->with(
+                GenreMap::class,
+                'b',
+                Join::WITH,
+                'b.genre_id = a.id AND b.mapped_item_type = \'album\''
+            )
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('leftJoin')
+            ->with(
+                GenreMap::class,
+                'c',
+                Join::WITH,
+                'c.genre_id = a.id AND c.mapped_item_type = \'song\''
+            )
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('groupBy')
+            ->with('a.title')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('orderBy')
+            ->with('a.title', 'ASC')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('getQuery')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($query);
+
+        $query->shouldReceive('toIterable')
+            ->withNoArgs()
+            ->once()
+            ->andReturn([[
+                'title' => $title,
+                'albumCount' => (string) $albumCount,
+                'songCount' => (string) $songCount,
+            ]]);
+
+        $this->assertSame(
+            [[
+                'value' => $title,
+                'albumCount' => $albumCount,
+                'songCount' => $songCount,
+            ]],
+            iterator_to_array($this->subject->getGenreStatistics())
+        );
     }
 }
