@@ -2,6 +2,7 @@
 
 namespace Uxmp\Core\Orm\Model;
 
+use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
 use Uxmp\Core\Component\User\OwnerProviderInterface;
 
 interface PlaylistInterface extends OwnerProviderInterface
@@ -28,9 +29,11 @@ interface PlaylistInterface extends OwnerProviderInterface
 
     public function setSongCount(int $songCount): PlaylistInterface;
 
-    public function getType(): int;
+    public function getType(): PlaylistTypeEnum;
 
-    public function setType(int $type): PlaylistInterface;
+    public function isStatic(): bool;
+
+    public function setType(PlaylistTypeEnum $type): PlaylistInterface;
 
     /**
      * Updates the song list and also sets the song count

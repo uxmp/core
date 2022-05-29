@@ -74,6 +74,10 @@ class PlaylistAddMediaApplicationTest extends MockeryTestCase
             ->with($playlist, $mediaType, $mediaId)
             ->once();
 
+        $playlist->shouldReceive('isStatic')
+            ->withNoArgs()
+            ->once()
+            ->andReturnTrue();
         $playlist->shouldReceive('getOwner->getId')
             ->withNoArgs()
             ->once()
@@ -116,6 +120,35 @@ class PlaylistAddMediaApplicationTest extends MockeryTestCase
             ->with(StatusCode::NOT_FOUND)
             ->once()
             ->andReturnSelf();
+
+        $this->assertSame(
+            $response,
+            call_user_func($this->subject, $request, $response, ['playlistId' => (string) $playlistId])
+        );
+    }
+
+    public function testRunErrorsIfPlaylistIsNotStatic(): void
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $response = Mockery::mock(ResponseInterface::class);
+        $playlist = Mockery::mock(PlaylistInterface::class);
+
+        $playlistId = 666;
+
+        $this->playlistRepository->shouldReceive('find')
+            ->with($playlistId)
+            ->once()
+            ->andReturn($playlist);
+
+        $response->shouldReceive('withStatus')
+            ->with(StatusCode::NOT_FOUND)
+            ->once()
+            ->andReturnSelf();
+
+        $playlist->shouldReceive('isStatic')
+            ->withNoArgs()
+            ->once()
+            ->andReturnFalse();
 
         $this->assertSame(
             $response,

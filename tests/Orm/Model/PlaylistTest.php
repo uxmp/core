@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Model;
 
 use Mockery;
+use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
 
 class PlaylistTest extends ModelTestCase
 {
@@ -23,7 +24,7 @@ class PlaylistTest extends ModelTestCase
             ['Owner', Mockery::mock(UserInterface::class)],
             ['SongList', [666]],
             ['SongCount', 42],
-            ['Type', 21],
+            ['Type', PlaylistTypeEnum::FAVORITES],
         ];
     }
 
@@ -40,6 +41,17 @@ class PlaylistTest extends ModelTestCase
         $this->assertSame(
             1,
             $this->subject->getSongCount()
+        );
+    }
+
+    public function testIsStaticReturnsValue(): void
+    {
+        $type = PlaylistTypeEnum::STATIC;
+
+        $this->subject->setType($type);
+
+        $this->assertTrue(
+            $this->subject->isStatic()
         );
     }
 }

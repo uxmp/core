@@ -21,9 +21,5 @@ return [
             'playlistTypeList',
             get('playlistTypeHandler')
         ),
-    Playlist\PlaylistCreationApplication::class => autowire(Playlist\PlaylistCreationApplication::class)
-        ->constructorParameter(
-            'playlistTypeList',
-            get('playlistTypeHandler')
-        ),
+    Playlist\PlaylistCreationApplication::class => autowire(Playlist\PlaylistCreationApplication::class),
 ];

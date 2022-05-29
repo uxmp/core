@@ -10,8 +10,10 @@ use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
 use Uxmp\Core\Component\Playlist\Smartlist\Type\SmartlistTypeInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
+use ValueError;
 
 /**
  * Creates a playlist
@@ -24,12 +26,10 @@ final class PlaylistCreationApplication extends AbstractApiApplication
      *  url: string,
      *  typeId: integer
      * }> $schemaValidator
-     * @param array<int, SmartlistTypeInterface> $playlistTypeList
      */
     public function __construct(
         private readonly PlaylistRepositoryInterface $playlistRepository,
         private readonly SchemaValidatorInterface $schemaValidator,
-        private readonly array $playlistTypeList,
     ) {
     }
 
@@ -43,16 +43,16 @@ final class PlaylistCreationApplication extends AbstractApiApplication
             'PlaylistCreation.json',
         );
 
-        $typeId = $body['typeId'];
-
-        if (!array_key_exists($typeId, $this->playlistTypeList)) {
+        try {
+            $type = PlaylistTypeEnum::from($body['typeId']);
+        } catch (ValueError) {
             return $response->withStatus(StatusCode::BAD_REQUEST);
         }
 
         $playlist = $this->playlistRepository->prototype()
             ->setName($body['name'])
             ->setOwner($request->getAttribute(SessionValidatorMiddleware::USER))
-            ->setType($typeId)
+            ->setType($type)
         ;
 
         $this->playlistRepository->save($playlist);

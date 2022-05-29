@@ -13,6 +13,7 @@ use Psr\Http\Message\StreamInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
 use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
 use Uxmp\Core\Orm\Model\PlaylistInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
@@ -76,7 +77,7 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
 
         $id = 666;
         $name = 'some-name';
-        $typeId = 42;
+        $typeId = PlaylistTypeEnum::STATIC->value;
 
         $this->schemaValidator->shouldReceive('getValidatedBody')
             ->with(
@@ -104,7 +105,7 @@ class PlaylistCreationApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
         $playlist->shouldReceive('setType')
-            ->with($typeId)
+            ->with(PlaylistTypeEnum::STATIC)
             ->once()
             ->andReturnSelf();
         $playlist->shouldReceive('setOwner')

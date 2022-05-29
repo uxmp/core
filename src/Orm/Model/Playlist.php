@@ -26,8 +26,8 @@ class Playlist implements PlaylistInterface
     #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
     private int $song_count = 0;
 
-    #[ORM\Column(type: Types::INTEGER, options: ['default' => PlaylistTypeEnum::STATIC])]
-    private int $type = PlaylistTypeEnum::STATIC;
+    #[ORM\Column(type: Types::INTEGER, enumType: PlaylistTypeEnum::class, options: ['default' => PlaylistTypeEnum::STATIC])]
+    private PlaylistTypeEnum $type = PlaylistTypeEnum::STATIC;
 
     /** @var array<int> */
     #[ORM\Column(type: Types::JSON, options: ['default' => '[]'])]
@@ -92,12 +92,17 @@ class Playlist implements PlaylistInterface
         return $this;
     }
 
-    public function getType(): int
+    public function getType(): PlaylistTypeEnum
     {
         return $this->type;
     }
 
-    public function setType(int $type): PlaylistInterface
+    public function isStatic(): bool
+    {
+        return $this->getType() === PlaylistTypeEnum::STATIC;
+    }
+
+    public function setType(PlaylistTypeEnum $type): PlaylistInterface
     {
         $this->type = $type;
         return $this;

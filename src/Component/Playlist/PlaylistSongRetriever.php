@@ -37,7 +37,7 @@ final class PlaylistSongRetriever implements PlaylistSongRetrieverInterface
         PlaylistInterface $playlist,
         UserInterface $user
     ): Generator {
-        $handler = $this->handlerTypes[$playlist->getType()] ?? null;
+        $handler = $this->handlerTypes[$playlist->getType()->value] ?? null;
         if ($handler === null) {
             throw new InvalidPlaylistTypeException();
         }

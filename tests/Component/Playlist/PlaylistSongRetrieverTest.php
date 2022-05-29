@@ -22,8 +22,6 @@ class PlaylistSongRetrieverTest extends MockeryTestCase
 
     private MockInterface $handlerType;
 
-    private int $handlerTypeId = 666;
-
     public function setUp(): void
     {
         $this->songRepository = Mockery::mock(SongRepositoryInterface::class);
@@ -31,7 +29,7 @@ class PlaylistSongRetrieverTest extends MockeryTestCase
 
         $this->subject = new PlaylistSongRetriever(
             $this->songRepository,
-            [$this->handlerTypeId => $this->handlerType],
+            [PlaylistTypeEnum::STATIC->value => $this->handlerType],
         );
     }
 
@@ -45,7 +43,7 @@ class PlaylistSongRetrieverTest extends MockeryTestCase
         $playlist->shouldReceive('getType')
             ->withNoArgs()
             ->once()
-            ->andReturn(42);
+            ->andReturn(PlaylistTypeEnum::FAVORITES);
 
         iterator_to_array($this->subject->retrieve($playlist, $user));
     }
@@ -76,7 +74,7 @@ class PlaylistSongRetrieverTest extends MockeryTestCase
         $playlist->shouldReceive('getType')
             ->withNoArgs()
             ->once()
-            ->andReturn($this->handlerTypeId);
+            ->andReturn(PlaylistTypeEnum::STATIC);
 
         $this->assertSame(
             [$song],

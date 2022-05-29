@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Uxmp\Core\Component\Playlist;
 
-final class PlaylistTypeEnum
+enum PlaylistTypeEnum: int
 {
-    public const STATIC = 1;
-    public const FAVORITES = 2;
+    case STATIC = 1;
+    case FAVORITES = 2;
 }

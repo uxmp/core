@@ -42,6 +42,11 @@ final class PlaylistAddMediaApplication extends AbstractApiApplication
             return $response->withStatus(StatusCode::NOT_FOUND);
         }
 
+        // allow just static playlists
+        if (!$playlist->isStatic()) {
+            return $response->withStatus(StatusCode::NOT_FOUND);
+        }
+
         $body = $this->schemaValidator->getValidatedBody(
             $request,
             'PlaylistMediaAddition.json',

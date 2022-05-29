@@ -24,8 +24,8 @@ return [
             ]
         ),
     'playlistTypeHandler' => [
-        PlaylistTypeEnum::STATIC => get(Smartlist\Type\StaticPlaylistType::class),
-        PlaylistTypeEnum::FAVORITES => get(Smartlist\Type\FavoriteSongsType::class),
+        PlaylistTypeEnum::STATIC->value => get(Smartlist\Type\StaticPlaylistType::class),
+        PlaylistTypeEnum::FAVORITES->value => get(Smartlist\Type\FavoriteSongsType::class),
     ],
     PlaylistSongRetrieverInterface::class => autowire(PlaylistSongRetriever::class)
         ->constructorParameter(
