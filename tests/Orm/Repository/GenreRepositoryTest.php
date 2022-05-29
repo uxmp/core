@@ -15,6 +15,7 @@ use Mockery\MockInterface;
 use Uxmp\Core\Orm\Model\Genre;
 use Uxmp\Core\Orm\Model\GenreInterface;
 use Uxmp\Core\Orm\Model\GenreMap;
+use Uxmp\Core\Orm\Model\GenreMapEnum;
 
 class GenreRepositoryTest extends MockeryTestCase
 {
@@ -102,7 +103,7 @@ class GenreRepositoryTest extends MockeryTestCase
                 GenreMap::class,
                 'b',
                 Join::WITH,
-                'b.genre_id = a.id AND b.mapped_item_type = \'album\''
+                'b.genre_id = a.id AND b.mapped_item_type = :album_index_name'
             )
             ->once()
             ->andReturnSelf();
@@ -111,8 +112,15 @@ class GenreRepositoryTest extends MockeryTestCase
                 GenreMap::class,
                 'c',
                 Join::WITH,
-                'c.genre_id = a.id AND c.mapped_item_type = \'song\''
+                'c.genre_id = a.id AND c.mapped_item_type = :song_index_name'
             )
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('setParameters')
+            ->with([
+                'album_index_name' => GenreMapEnum::ALBUM->value,
+                'song_index_name' => GenreMapEnum::SONG->value,
+            ])
             ->once()
             ->andReturnSelf();
         $queryBuilder->shouldReceive('groupBy')

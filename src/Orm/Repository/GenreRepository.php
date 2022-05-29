@@ -11,6 +11,7 @@ use JetBrains\PhpStorm\Pure;
 use Uxmp\Core\Orm\Model\Genre;
 use Uxmp\Core\Orm\Model\GenreInterface;
 use Uxmp\Core\Orm\Model\GenreMap;
+use Uxmp\Core\Orm\Model\GenreMapEnum;
 
 /**
  * @extends EntityRepository<GenreInterface>
@@ -60,14 +61,18 @@ final class GenreRepository extends EntityRepository implements GenreRepositoryI
                 GenreMap::class,
                 'b',
                 Join::WITH,
-                'b.genre_id = a.id AND b.mapped_item_type = \'album\''
+                'b.genre_id = a.id AND b.mapped_item_type = :album_index_name'
             )
             ->leftJoin(
                 GenreMap::class,
                 'c',
                 Join::WITH,
-                'c.genre_id = a.id AND c.mapped_item_type = \'song\''
+                'c.genre_id = a.id AND c.mapped_item_type = :song_index_name'
             )
+            ->setParameters([
+                'album_index_name' => GenreMapEnum::ALBUM->value,
+                'song_index_name' => GenreMapEnum::SONG->value,
+            ])
             ->groupBy('a.title')
             ->orderBy('a.title', 'ASC')
             ->getQuery();

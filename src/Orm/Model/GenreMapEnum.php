@@ -8,4 +8,5 @@ enum GenreMapEnum: string
 {
     case ARTIST = 'artist';
     case ALBUM = 'album';
+    case SONG = 'song';
 }
