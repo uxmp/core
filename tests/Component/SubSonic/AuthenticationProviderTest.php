@@ -8,7 +8,7 @@ use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Usox\HyperSonic\Authentication\Exception\AuthenticationFailedException;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
 use Uxmp\Core\Orm\Model\AccessKeyInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
@@ -68,7 +68,7 @@ class AuthenticationProviderTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
                 'active' => true,
             ])
             ->once()
@@ -100,7 +100,7 @@ class AuthenticationProviderTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
                 'active' => true,
             ])
             ->once()
@@ -110,7 +110,7 @@ class AuthenticationProviderTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([
-                AccessTokenEnum::CONFIG_KEY_TOKEN => $tokenRaw,
+                AuthenticationProvider::CONFIG_KEY_TOKEN => $tokenRaw,
             ]);
 
         $this->subject->authByToken($userName, $token, $salt);
@@ -149,7 +149,7 @@ class AuthenticationProviderTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
                 'active' => true,
             ])
             ->once()
@@ -159,7 +159,7 @@ class AuthenticationProviderTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([
-                AccessTokenEnum::CONFIG_KEY_TOKEN => 'some-token',
+                AuthenticationProvider::CONFIG_KEY_TOKEN => 'some-token',
             ]);
 
         $this->subject->authByPassword($userName, $password);
@@ -181,7 +181,7 @@ class AuthenticationProviderTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
                 'active' => true,
             ])
             ->once()
@@ -191,7 +191,7 @@ class AuthenticationProviderTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([
-                AccessTokenEnum::CONFIG_KEY_TOKEN => $password,
+                AuthenticationProvider::CONFIG_KEY_TOKEN => $password,
             ]);
 
         $this->subject->authByPassword($userName, $password);

@@ -9,7 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
+use Uxmp\Core\Component\SubSonic\AuthenticationProvider;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
 
@@ -33,16 +34,18 @@ final class SubSonicSettingsCreateApplication extends AbstractApiApplication
 
         $accessKey = $this->accessKeyRepository->findOneBy([
             'user' => $user,
-            'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+            'type_id' => AccessKeyTypeEnum::SUBSONIC,
         ]);
 
         if ($accessKey === null) {
             $accessKey = $this->accessKeyRepository->prototype()
                 ->setUser($user)
                 ->setActive(true)
-                ->setTypeId(AccessTokenEnum::TYPE_SUBSONIC)
+                ->setTypeId(AccessKeyTypeEnum::SUBSONIC)
                 ->setConfig([
-                    AccessTokenEnum::CONFIG_KEY_TOKEN => Password::generate(AccessTokenEnum::SUBSONIC_KEY_LENGTH),
+                    AuthenticationProvider::CONFIG_KEY_TOKEN => Password::generate(
+                        AuthenticationProvider::SUBSONIC_KEY_LENGTH
+                    ),
                 ]);
 
             $this->accessKeyRepository->save($accessKey);
@@ -51,7 +54,7 @@ final class SubSonicSettingsCreateApplication extends AbstractApiApplication
         return $this->asJson(
             $response,
             [
-                'accessToken' => $accessKey->getConfig()[AccessTokenEnum::CONFIG_KEY_TOKEN] ?? null,
+                'accessToken' => $accessKey->getConfig()[AuthenticationProvider::CONFIG_KEY_TOKEN] ?? null,
             ]
         );
     }

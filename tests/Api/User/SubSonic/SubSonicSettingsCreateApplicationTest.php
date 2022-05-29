@@ -10,7 +10,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
+use Uxmp\Core\Component\SubSonic\AuthenticationProvider;
 use Uxmp\Core\Orm\Model\AccessKeyInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
@@ -61,7 +62,7 @@ class SubSonicSettingsCreateApplicationTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
             ])
             ->once()
             ->andReturn($accessKey);
@@ -69,7 +70,7 @@ class SubSonicSettingsCreateApplicationTest extends MockeryTestCase
         $accessKey->shouldReceive('getConfig')
             ->withNoArgs()
             ->once()
-            ->andReturn([AccessTokenEnum::CONFIG_KEY_TOKEN => $accessToken]);
+            ->andReturn([AuthenticationProvider::CONFIG_KEY_TOKEN => $accessToken]);
 
         $this->assertSame(
             $response,
@@ -115,7 +116,7 @@ class SubSonicSettingsCreateApplicationTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
             ])
             ->once()
             ->andReturnNull();
@@ -136,17 +137,19 @@ class SubSonicSettingsCreateApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
         $accessKey->shouldReceive('setTypeId')
-            ->with(AccessTokenEnum::TYPE_SUBSONIC)
+            ->with(AccessKeyTypeEnum::SUBSONIC)
             ->once()
             ->andReturnSelf();
         $accessKey->shouldReceive('setConfig')
-            ->with(Mockery::on(fn (array $config): bool => strlen((string) $config[AccessTokenEnum::CONFIG_KEY_TOKEN]) === AccessTokenEnum::SUBSONIC_KEY_LENGTH))
+            ->with(Mockery::on(
+                fn (array $config): bool => strlen((string) $config[AuthenticationProvider::CONFIG_KEY_TOKEN]) === AuthenticationProvider::SUBSONIC_KEY_LENGTH
+            ))
             ->once()
             ->andReturnSelf();
         $accessKey->shouldReceive('getConfig')
             ->withNoArgs()
             ->once()
-            ->andReturn([AccessTokenEnum::CONFIG_KEY_TOKEN => $accessToken]);
+            ->andReturn([AuthenticationProvider::CONFIG_KEY_TOKEN => $accessToken]);
 
         $this->assertSame(
             $response,

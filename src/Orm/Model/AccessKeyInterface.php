@@ -2,13 +2,15 @@
 
 namespace Uxmp\Core\Orm\Model;
 
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
+
 interface AccessKeyInterface
 {
     public function getId(): int;
 
-    public function getTypeId(): int;
+    public function getTypeId(): AccessKeyTypeEnum;
 
-    public function setTypeId(int $typeId): AccessKeyInterface;
+    public function setTypeId(AccessKeyTypeEnum $typeId): AccessKeyInterface;
 
     public function getActive(): bool;
 

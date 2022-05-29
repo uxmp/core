@@ -6,6 +6,7 @@ namespace Uxmp\Core\Orm\Model;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
 use Uxmp\Core\Orm\Repository\AccessKeyRepository;
 
 #[ORM\Entity(repositoryClass: AccessKeyRepository::class)]
@@ -16,8 +17,8 @@ class AccessKey implements AccessKeyInterface
     #[ORM\Id, ORM\GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $type_id = 0;
+    #[ORM\Column(type: Types::INTEGER, enumType: AccessKeyTypeEnum::class)]
+    private AccessKeyTypeEnum $type_id = AccessKeyTypeEnum::NONE;
 
     /**
      * @var array{
@@ -42,12 +43,12 @@ class AccessKey implements AccessKeyInterface
         return $this->id;
     }
 
-    public function getTypeId(): int
+    public function getTypeId(): AccessKeyTypeEnum
     {
         return $this->type_id;
     }
 
-    public function setTypeId(int $typeId): AccessKeyInterface
+    public function setTypeId(AccessKeyTypeEnum $typeId): AccessKeyInterface
     {
         $this->type_id = $typeId;
         return $this;

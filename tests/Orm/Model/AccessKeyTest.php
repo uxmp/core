@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Model;
 
 use Mockery;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
 
 class AccessKeyTest extends ModelTestCase
 {
@@ -19,7 +20,7 @@ class AccessKeyTest extends ModelTestCase
     public function setterGetterDataProvider(): array
     {
         return [
-            ['TypeId', 666],
+            ['TypeId', AccessKeyTypeEnum::SUBSONIC],
             ['Active', true],
             ['User', Mockery::mock(UserInterface::class)],
             ['Config', ['some-confiug']],

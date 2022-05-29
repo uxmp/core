@@ -8,7 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
 use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
+use Uxmp\Core\Component\SubSonic\AuthenticationProvider;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
 
@@ -32,13 +33,13 @@ final class SubSonicSettingsRetrieveApplication extends AbstractApiApplication
 
         $accessKey = $this->accessKeyRepository->findOneBy([
             'user' => $user,
-            'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+            'type_id' => AccessKeyTypeEnum::SUBSONIC,
         ]);
 
         return $this->asJson(
             $response,
             [
-                'accessToken' => $accessKey?->getConfig()[AccessTokenEnum::CONFIG_KEY_TOKEN] ?? null,
+                'accessToken' => $accessKey?->getConfig()[AuthenticationProvider::CONFIG_KEY_TOKEN] ?? null,
             ]
         );
     }

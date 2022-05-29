@@ -6,7 +6,7 @@ namespace Uxmp\Core\Component\SubSonic;
 
 use Usox\HyperSonic\Authentication\AuthenticationProviderInterface;
 use Usox\HyperSonic\Authentication\Exception\AuthenticationFailedException;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
 use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
 
@@ -15,6 +15,9 @@ use Uxmp\Core\Orm\Repository\UserRepositoryInterface;
  */
 final class AuthenticationProvider implements AuthenticationProviderInterface
 {
+    public const CONFIG_KEY_TOKEN = 'accessToken';
+    public const SUBSONIC_KEY_LENGTH = 10;
+
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly AccessKeyRepositoryInterface $accessKeyRepository,
@@ -70,10 +73,10 @@ final class AuthenticationProvider implements AuthenticationProviderInterface
         // search for a valid subsonic token
         $accessKey = $this->accessKeyRepository->findOneBy([
             'user' => $user,
-            'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+            'type_id' => AccessKeyTypeEnum::SUBSONIC,
             'active' => true,
         ]);
 
-        return $accessKey?->getConfig()[AccessTokenEnum::CONFIG_KEY_TOKEN] ?? null;
+        return $accessKey?->getConfig()[self::CONFIG_KEY_TOKEN] ?? null;
     }
 }

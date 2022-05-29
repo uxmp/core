@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
-use Uxmp\Core\Component\Authentication\AccessKey\AccessTokenEnum;
+use Uxmp\Core\Component\Authentication\AccessKey\AccessKeyTypeEnum;
 use Uxmp\Core\Orm\Model\AccessKeyInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\AccessKeyRepositoryInterface;
@@ -59,7 +59,7 @@ class SubSonicSettingsDeleteApplicationTest extends MockeryTestCase
         $this->accessKeyRepository->shouldReceive('findOneBy')
             ->with([
                 'user' => $user,
-                'type_id' => AccessTokenEnum::TYPE_SUBSONIC,
+                'type_id' => AccessKeyTypeEnum::SUBSONIC,
             ])
             ->once()
             ->andReturn($accessKey);
