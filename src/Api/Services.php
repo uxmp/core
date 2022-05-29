@@ -22,4 +22,5 @@ return [
             get('playlistTypeHandler')
         ),
     Playlist\PlaylistCreationApplication::class => autowire(Playlist\PlaylistCreationApplication::class),
+    Lib\Middleware\MiddlewareFactoryInterface::class => autowire(Lib\Middleware\MiddlewareFactory::class),
 ];

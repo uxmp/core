@@ -9,29 +9,30 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
+use Psr\Http\Server\MiddlewareInterface;
 use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Usox\HyperSonic\HyperSonicInterface;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Api\Lib\Middleware\MiddlewareFactoryInterface;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 class ApiApplicationTest extends MockeryTestCase
 {
     private MockInterface $config;
 
-    private MockInterface $sessionValidatorMiddleware;
+    private MockInterface $middlewareFactory;
 
     private ApiApplication $subject;
 
     public function setUp(): void
     {
         $this->config = Mockery::mock(ConfigProviderInterface::class);
-        $this->sessionValidatorMiddleware = Mockery::mock(SessionValidatorMiddleware::class);
+        $this->middlewareFactory = Mockery::mock(MiddlewareFactoryInterface::class);
 
         $this->subject = new ApiApplication(
             $this->config,
-            $this->sessionValidatorMiddleware
+            $this->middlewareFactory
         );
     }
 
@@ -39,6 +40,7 @@ class ApiApplicationTest extends MockeryTestCase
     {
         $app = Mockery::mock(App::class);
         $logger = Mockery::mock(Logger::class);
+        $middleware = Mockery::mock(MiddlewareInterface::class);
 
         $basePath = 'some-base-path';
         $logFilePath = '/tmp';
@@ -88,14 +90,23 @@ class ApiApplicationTest extends MockeryTestCase
             ->with($basePath)
             ->once();
         $app->shouldReceive('add')
-            ->with($this->sessionValidatorMiddleware)
-            ->once();
+            ->with($middleware)
+            ->twice();
         $app->shouldReceive('add')
             ->with(Mockery::type(JwtAuthentication::class))
             ->once();
         $app->shouldReceive('add')
             ->with(Mockery::type(CorsMiddleware::class))
             ->once();
+
+        $this->middlewareFactory->shouldReceive('createRequestLoggingMiddleware')
+            ->with($logger)
+            ->once()
+            ->andReturn($middleware);
+        $this->middlewareFactory->shouldReceive('createSessionValidatorMiddleware')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($middleware);
 
         // routes
         $app->shouldReceive('post')

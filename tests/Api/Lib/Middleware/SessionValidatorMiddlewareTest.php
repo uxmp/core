@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Component\Authentication;
+namespace Uxmp\Core\Api\Lib\Middleware;
 
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
@@ -12,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
 use Uxmp\Core\Orm\Model\SessionInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 

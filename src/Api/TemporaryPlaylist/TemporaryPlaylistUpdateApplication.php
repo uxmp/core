@@ -7,8 +7,8 @@ namespace Uxmp\Core\Api\TemporaryPlaylist;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepositoryInterface;
 
 /**

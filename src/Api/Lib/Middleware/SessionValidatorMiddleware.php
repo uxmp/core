@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Uxmp\Core\Component\Authentication;
+namespace Uxmp\Core\Api\Lib\Middleware;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Psr\Http\Message\ResponseInterface;
@@ -10,8 +10,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Teapot\StatusCode;
+use Uxmp\Core\Component\Authentication\SessionManagerInterface;
 
-class SessionValidatorMiddleware implements MiddlewareInterface
+/**
+ * Provides authentication services for api requests
+ */
+final class SessionValidatorMiddleware implements MiddlewareInterface
 {
     final public const SESSION_ID = 'sessionId';
     final public const USER = 'user';

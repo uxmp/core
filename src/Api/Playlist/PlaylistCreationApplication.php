@@ -8,10 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Teapot\StatusCode;
 use Uxmp\Core\Api\AbstractApiApplication;
+use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
 use Uxmp\Core\Api\Lib\SchemaValidatorInterface;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\Playlist\PlaylistTypeEnum;
-use Uxmp\Core\Component\Playlist\Smartlist\Type\SmartlistTypeInterface;
 use Uxmp\Core\Orm\Repository\PlaylistRepositoryInterface;
 use ValueError;
 

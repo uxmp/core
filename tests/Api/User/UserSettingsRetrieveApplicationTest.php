@@ -9,7 +9,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 class UserSettingsRetrieveApplicationTest extends MockeryTestCase

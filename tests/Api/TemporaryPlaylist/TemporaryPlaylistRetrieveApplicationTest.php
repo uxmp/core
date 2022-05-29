@@ -10,7 +10,7 @@ use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
+use Uxmp\Core\Api\Lib\Middleware\SessionValidatorMiddleware;
 use Uxmp\Core\Orm\Model\TemporaryPlaylistInterface;
 use Uxmp\Core\Orm\Model\UserInterface;
 use Uxmp\Core\Orm\Repository\TemporaryPlaylistRepositoryInterface;

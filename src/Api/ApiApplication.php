@@ -10,8 +10,8 @@ use Slim\App;
 use Tuupola\Middleware\CorsMiddleware;
 use Tuupola\Middleware\JwtAuthentication;
 use Usox\HyperSonic\HyperSonicInterface;
+use Uxmp\Core\Api\Lib\Middleware\MiddlewareFactoryInterface;
 use Uxmp\Core\Api\Playback\MostPlayedApplication;
-use Uxmp\Core\Component\Authentication\SessionValidatorMiddleware;
 use Uxmp\Core\Component\Config\ConfigProviderInterface;
 
 /**
@@ -21,7 +21,7 @@ final class ApiApplication
 {
     public function __construct(
         private readonly ConfigProviderInterface $config,
-        private readonly SessionValidatorMiddleware $sessionValidatorMiddleware,
+        private readonly MiddlewareFactoryInterface $middlewareFactory,
     ) {
     }
 
@@ -50,7 +50,9 @@ final class ApiApplication
         );
         $app->setBasePath($apiBasePath);
 
-        $app->add($this->sessionValidatorMiddleware);
+        $app->add($this->middlewareFactory->createRequestLoggingMiddleware($logger));
+        $app->add($this->middlewareFactory->createSessionValidatorMiddleware());
+
         $app->add(new JwtAuthentication([
             'ignore' => [$apiBasePath . '/common/login', $apiBasePath . '/art', $apiBasePath . '/rest'],
             'cookie' => $this->config->getCookieName(),
