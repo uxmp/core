@@ -18,9 +18,9 @@ return [
         ->constructorParameter(
             'handlerList',
             [
-                HandlerTypeEnum::ARTIST => get(MediaAddition\Handler\ArtistHandler::class),
-                HandlerTypeEnum::ALBUM => get(MediaAddition\Handler\AlbumHandler::class),
-                HandlerTypeEnum::SONG => get(MediaAddition\Handler\SongHandler::class),
+                HandlerTypeEnum::ARTIST->value => get(MediaAddition\Handler\ArtistHandler::class),
+                HandlerTypeEnum::ALBUM->value => get(MediaAddition\Handler\AlbumHandler::class),
+                HandlerTypeEnum::SONG->value => get(MediaAddition\Handler\SongHandler::class),
             ]
         ),
     'playlistTypeHandler' => [

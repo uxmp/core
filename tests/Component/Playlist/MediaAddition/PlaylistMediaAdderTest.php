@@ -26,7 +26,7 @@ class PlaylistMediaAdderTest extends MockeryTestCase
         $this->playlistRepository = Mockery::mock(PlaylistRepositoryInterface::class);
 
         $this->subject = new PlaylistMediaAdder(
-            [HandlerTypeEnum::SONG => $this->handler],
+            [HandlerTypeEnum::SONG->value => $this->handler],
             $this->playlistRepository
         );
     }
@@ -74,7 +74,7 @@ class PlaylistMediaAdderTest extends MockeryTestCase
 
         $this->subject->add(
             $playlist,
-            HandlerTypeEnum::SONG,
+            HandlerTypeEnum::SONG->value,
             $mediaId
         );
     }
