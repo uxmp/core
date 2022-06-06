@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Setup\Validator;
 
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Setup\Validator\Exception\EnvironmentValidationException;
 
 final class AssetPathValidator implements ValidatorInterface
@@ -12,9 +13,14 @@ final class AssetPathValidator implements ValidatorInterface
 
     private const PERMISSIONS = 0766;
 
+    public function __construct(
+        private readonly ConfigProviderInterface $configProvider,
+    ) {
+    }
+
     public function validate(): void
     {
-        $assetPath = $_ENV['ASSET_PATH'] ?? '';
+        $assetPath = $this->configProvider->getAssetPath();
         if ($assetPath === '') {
             throw new EnvironmentValidationException(
                 'ASSET_PATH is not set in config'

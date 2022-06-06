@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Bootstrap;
 
+use Configula\ConfigFactory;
+use Configula\ConfigValues;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
-use Dotenv\Dotenv;
 use getID3;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Ramsey\Uuid\Doctrine\UuidType;
 use Tzsk\Collage\MakeCollage;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use function DI\autowire;
 
 /**
@@ -21,28 +23,23 @@ use function DI\autowire;
 return [
     Psr17Factory::class => autowire(),
     getID3::class => autowire(),
-    EntityManagerInterface::class => static function (): EntityManagerInterface {
+    EntityManagerInterface::class => static function (ConfigProviderInterface $config): EntityManagerInterface {
         // register uuid type
         Type::addType('uuid', UuidType::class);
 
         return EntityManager::create(
             [
-                'url' => $_ENV['DATABASE_DSN'],
-                'password' => $_ENV['DATABASE_PASSWORD'],
+                'url' => $config->getDatabaseDsn(),
+                'password' => $config->getDatabasePassword(),
             ],
             ORMSetup::createAttributeMetadataConfiguration(
                 [__DIR__ . '/../Orm/Model/'],
-                (bool) ($_ENV['DEBUG_MODE'] ?? false),
+                $config->getDebugMode(),
             )
         );
     },
-    Dotenv::class => function (): Dotenv {
-        $dotenv = Dotenv::createImmutable(
-            __DIR__ . '/../../',
-            ['.env', '.env.dist']
-        );
-        $dotenv->load();
-        return $dotenv;
+    ConfigValues::class => function (): ConfigValues {
+        return ConfigFactory::loadSingleDirectory(__DIR__ . '/../../config');
     },
     MakeCollage::class => autowire(),
 ];

@@ -3,3 +3,4 @@ dev
 .php-cs-fixer.cache
 build
 .env
+config/config.local.ini

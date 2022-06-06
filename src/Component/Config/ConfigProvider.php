@@ -4,60 +4,76 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Config;
 
+use Configula\ConfigValues;
 use Psr\Log\LogLevel;
 
 final class ConfigProvider implements ConfigProviderInterface
 {
+    public function __construct(
+        private readonly ConfigValues $configValues,
+    ) {
+    }
+
     public function getLogFilePath(): string
     {
-        return $_ENV['LOG_PATH'] ?? '';
+        return $this->configValues->get('logging.path', '');
     }
 
     public function getJwtSecret(): string
     {
-        return $_ENV['JWT_SECRET'] ?? '';
+        return $this->configValues->get('security.jwt_secret', '');
     }
 
     public function getCookieName(): string
     {
-        return $_ENV['TOKEN_NAME'] ?? 'nekot';
+        return $this->configValues->get('security.token_name', 'nekot');
     }
 
     public function getTokenLifetime(): int
     {
-        return (int) ($_ENV['TOKEN_LIFETIME'] ?? 1_086_400);
+        return (int) $this->configValues->get('security.token_lifetime', 1_086_400);
     }
 
     public function getLogLevel(): string
     {
-        return $_ENV['LOG_LEVEL'] ?? LogLevel::ERROR;
+        return $this->configValues->get('logging.level', LogLevel::ERROR);
     }
 
     public function getCorsOrigin(): string
     {
-        return $_ENV['CORS_ORIGIN'] ?? '';
+        return $this->configValues->get('http.cors_origin', '');
     }
 
     public function getApiBasePath(): string
     {
-        return $_ENV['API_BASE_PATH'] ?? '';
+        return $this->configValues->get('http.api_base_path', '');
     }
 
     public function getAssetPath(): string
     {
-        return $_ENV['ASSET_PATH'] ?? '';
+        return $this->configValues->get('assets.path', '');
     }
 
     public function getDebugMode(): bool
     {
-        return (bool) ($_ENV['DEBUG_MODE'] ?? false);
+        return (bool) $this->configValues->get('debug.enabled', false);
+    }
+
+    public function getDatabaseDsn(): string
+    {
+        return $this->configValues->get('database.dsn', '');
+    }
+
+    public function getDatabasePassword(): string
+    {
+        return $this->configValues->get('database.password', '');
     }
 
     public function getBaseUrl(): string
     {
-        $hostname = $_ENV['HOSTNAME'];
-        $port = (int) $_ENV['PORT'];
-        $ssl = ((bool) $_ENV['SSL']) === true;
+        $hostname = $this->configValues->get('http.hostname', '');
+        $port = (int) $this->configValues->get('http.port', 0);
+        $ssl = ((bool) $this->configValues->get('http.ssl', true)) === true;
 
         $protocol = ($ssl === true)
             ? 'https'

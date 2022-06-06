@@ -7,18 +7,20 @@ namespace Uxmp\Core\Component\Setup\Validator;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Throwable;
+use Uxmp\Core\Component\Config\ConfigProviderInterface;
 use Uxmp\Core\Component\Setup\Validator\Exception\EnvironmentValidationException;
 
 final class DatabaseValidator implements ValidatorInterface
 {
     public function __construct(
         private readonly ContainerInterface $dic,
+        private readonly ConfigProviderInterface $configProvider,
     ) {
     }
 
     public function validate(): void
     {
-        $dsn = $_ENV['DATABASE_DSN'] ?? '';
+        $dsn = $this->configProvider->getDatabaseDsn();
 
         if ($dsn === '') {
             throw new EnvironmentValidationException(

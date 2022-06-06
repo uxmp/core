@@ -4,16 +4,25 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Component\Config;
 
+use Configula\ConfigValues;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery\MockInterface;
 use Psr\Log\LogLevel;
 
 class ConfigProviderTest extends MockeryTestCase
 {
+    private MockInterface $configValues;
+
     private ConfigProvider $subject;
 
     public function setUp(): void
     {
-        $this->subject = new ConfigProvider();
+        $this->configValues = Mockery::mock(ConfigValues::class);
+
+        $this->subject = new ConfigProvider(
+            $this->configValues,
+        );
     }
 
     /**
@@ -25,12 +34,10 @@ class ConfigProviderTest extends MockeryTestCase
         mixed $default,
         mixed $value
     ): void {
-        $this->assertSame(
-            $default,
-            call_user_func([$this->subject, $getter])
-        );
-
-        $_ENV[$variable] = $value;
+        $this->configValues->shouldReceive('get')
+            ->with($variable, $default)
+            ->once()
+            ->andReturn($value);
 
         $this->assertSame(
             $value,
@@ -41,15 +48,17 @@ class ConfigProviderTest extends MockeryTestCase
     public function valueDataProvider(): array
     {
         return [
-            ['getLogFilePath', 'LOG_PATH', '', 'some-path'],
-            ['getJwtSecret', 'JWT_SECRET', '', 'some-jwt'],
-            ['getCookieName', 'TOKEN_NAME', 'nekot', 'some-token'],
-            ['getTokenLifetime', 'TOKEN_LIFETIME', 1_086_400, 666],
-            ['getLogLevel', 'LOG_LEVEL', LogLevel::ERROR, 'debug'],
-            ['getCorsOrigin', 'CORS_ORIGIN', '', 'some-cors-origin'],
-            ['getApiBasePath', 'API_BASE_PATH', '', 'some-base-path'],
-            ['getAssetPath', 'ASSET_PATH', '', 'some-asset-path'],
-            ['getDebugMode', 'DEBUG_MODE', false, false],
+            ['getLogFilePath', 'logging.path', '', 'some-path'],
+            ['getJwtSecret', 'security.jwt_secret', '', 'some-jwt'],
+            ['getCookieName', 'security.token_name', 'nekot', 'some-token'],
+            ['getTokenLifetime', 'security.token_lifetime', 1_086_400, 666],
+            ['getLogLevel', 'logging.level', LogLevel::ERROR, 'debug'],
+            ['getCorsOrigin', 'http.cors_origin', '', 'some-cors-origin'],
+            ['getApiBasePath', 'http.api_base_path', '', 'some-base-path'],
+            ['getAssetPath', 'assets.path', '', 'some-asset-path'],
+            ['getDebugMode', 'debug.enabled', false, true],
+            ['getDatabaseDsn', 'database.dsn', '', 'snafu'],
+            ['getDatabasePassword', 'database.password', '', 'snafu'],
         ];
     }
 
@@ -63,10 +72,22 @@ class ConfigProviderTest extends MockeryTestCase
         int $ssl,
         string $url
     ): void {
-        $_ENV['HOSTNAME'] = $hostName;
-        $_ENV['PORT'] = (string) $port;
-        $_ENV['SSL'] = $ssl;
-        $_ENV['API_BASE_PATH'] = $basePath;
+        $this->configValues->shouldReceive('get')
+            ->with('http.hostname', '')
+            ->once()
+            ->andReturn($hostName);
+        $this->configValues->shouldReceive('get')
+            ->with('http.port', 0)
+            ->once()
+            ->andReturn((string) $port);
+        $this->configValues->shouldReceive('get')
+            ->with('http.ssl', true)
+            ->once()
+            ->andReturn($ssl);
+        $this->configValues->shouldReceive('get')
+            ->with('http.api_base_path', '')
+            ->once()
+            ->andReturn($basePath);
 
         $this->assertSame(
             $url,

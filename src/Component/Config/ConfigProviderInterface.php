@@ -27,6 +27,10 @@ interface ConfigProviderInterface
 
     public function getDebugMode(): bool;
 
+    public function getDatabaseDsn(): string;
+
+    public function getDatabasePassword(): string;
+
     public function getBaseUrl(): string;
 
     public function getClientCacheMaxAge(): int;

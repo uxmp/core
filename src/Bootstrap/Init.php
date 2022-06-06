@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Bootstrap;
 
+use Configula\ConfigValues;
 use DI\ContainerBuilder;
-use Dotenv\Dotenv;
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Component\Event\EventHandlerInterface;
 
@@ -41,7 +41,7 @@ final class Init
         $container = $builder->build();
 
         // @todo validate env variable
-        $container->get(Dotenv::class);
+        $container->get(ConfigValues::class);
 
         $result = $app($container);
 

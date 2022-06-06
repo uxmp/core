@@ -2,6 +2,7 @@
 <?php
 declare(strict_types=1);
 
+use Configula\ConfigValues;
 use Psr\Container\ContainerInterface;
 use Uxmp\Core\Bootstrap\Init;
 use Uxmp\Core\Component\Cli\ArtUpdateCommand;
@@ -17,7 +18,7 @@ Init::run(
     function (ContainerInterface $dic): void {
         $app = new Ahc\Cli\Application(
             'uxmp',
-            $_ENV['UXMP_VERSION']
+            $dic->get(ConfigValues::class)->get('uxmp.version')
         );
 
         $app->add(new CatalogAddCommand($dic), 'ca');
