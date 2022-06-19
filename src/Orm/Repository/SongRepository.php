@@ -56,22 +56,22 @@ final class SongRepository extends EntityRepository implements SongRepositoryInt
         $qbSub = $this
             ->getEntityManager()
             ->createQueryBuilder();
-        $expr = $this->getEntityManager()->getExpressionBuilder();
+        $expressionBuilder = $this->getEntityManager()->getExpressionBuilder();
 
-        $and = $expr->andX();
-        $and->add($expr->eq('fav.user', ':user'));
-        $and->add($expr->eq('fav.type', ':type'));
+        $andExpression = $expressionBuilder->andX();
+        $andExpression->add($expressionBuilder->eq('fav.user', ':user'));
+        $andExpression->add($expressionBuilder->eq('fav.type', ':type'));
 
         $qb
             ->select('a')
             ->from(Song::class, 'a')
             ->where(
-                $expr->in(
+                $expressionBuilder->in(
                     'a.id',
                     $qbSub
                         ->select('fav.item_id')
                         ->from(Favorite::class, 'fav')
-                        ->where($and)
+                        ->where($andExpression)
                         ->getDQL()
                 )
             )
