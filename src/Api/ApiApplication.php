@@ -133,6 +133,9 @@ final class ApiApplication
         // playlist types
         $app->get('/playlist_types', PlaylistTypes\PlaylistTypesApplication::class);
 
+        // genres
+        $app->get('/genres', Genre\GenreListApplication::class);
+
         // subsonic api
         $app->get('/rest/{methodName}', HyperSonicInterface::class);
 

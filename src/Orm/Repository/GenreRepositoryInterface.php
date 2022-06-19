@@ -23,6 +23,7 @@ interface GenreRepositoryInterface extends ObjectRepository
 
     /**
      * @return Generator<array{
+     *  id: int,
      *  value: string,
      *  albumCount: int,
      *  songCount: int

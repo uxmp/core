@@ -80,6 +80,7 @@ class GenreRepositoryTest extends MockeryTestCase
         $title = 'some-title';
         $albumCount = 666;
         $songCount = 42;
+        $id = 33;
 
         $this->entityManager->shouldReceive('createQueryBuilder')
             ->withNoArgs()
@@ -88,6 +89,7 @@ class GenreRepositoryTest extends MockeryTestCase
 
         $queryBuilder->shouldReceive('select')
             ->with(
+                'a.id',
                 'a.title',
                 'count(b.id) as albumCount',
                 'count(c.id) as songCount'
@@ -140,6 +142,7 @@ class GenreRepositoryTest extends MockeryTestCase
             ->withNoArgs()
             ->once()
             ->andReturn([[
+                'id' => $id,
                 'title' => $title,
                 'albumCount' => (string) $albumCount,
                 'songCount' => (string) $songCount,
@@ -147,6 +150,7 @@ class GenreRepositoryTest extends MockeryTestCase
 
         $this->assertSame(
             [[
+                'id' => $id,
                 'value' => $title,
                 'albumCount' => $albumCount,
                 'songCount' => $songCount,

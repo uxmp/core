@@ -238,6 +238,9 @@ class ApiApplicationTest extends MockeryTestCase
         $app->shouldReceive('post')
             ->with('/temporary_playlist', TemporaryPlaylist\TemporaryPlaylistUpdateApplication::class)
             ->once();
+        $app->shouldReceive('get')
+            ->with('/genres', Genre\GenreListApplication::class)
+            ->once();
         $app->shouldReceive('run')
             ->withNoArgs()
             ->once();

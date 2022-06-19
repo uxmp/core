@@ -42,6 +42,7 @@ final class GenreRepository extends EntityRepository implements GenreRepositoryI
      * Retrieve a list of all genres and the number of albums/songs associated
      *
      * @return Generator<array{
+     *  id: int,
      *  value: string,
      *  albumCount: int,
      *  songCount: int
@@ -52,6 +53,7 @@ final class GenreRepository extends EntityRepository implements GenreRepositoryI
         $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select(
+                'a.id',
                 'a.title',
                 'count(b.id) as albumCount',
                 'count(c.id) as songCount'
@@ -79,6 +81,7 @@ final class GenreRepository extends EntityRepository implements GenreRepositoryI
 
         foreach ($query->toIterable() as $data) {
             yield [
+                'id' => (int) $data['id'],
                 'value' => $data['title'],
                 'albumCount' => (int) $data['albumCount'],
                 'songCount' => (int) $data['songCount'],
