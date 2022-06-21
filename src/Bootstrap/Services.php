@@ -38,8 +38,6 @@ return [
             )
         );
     },
-    ConfigValues::class => function (): ConfigValues {
-        return ConfigFactory::loadSingleDirectory(__DIR__ . '/../../config');
-    },
+    ConfigValues::class => fn (): ConfigValues => ConfigFactory::loadSingleDirectory(__DIR__ . '/../../config'),
     MakeCollage::class => autowire(),
 ];
