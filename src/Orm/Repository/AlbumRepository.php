@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Uxmp\Core\Orm\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Generator;
 use Uxmp\Core\Orm\Model\Album;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
+use Uxmp\Core\Orm\Model\GenreInterface;
+use Uxmp\Core\Orm\Model\GenreMap;
+use Uxmp\Core\Orm\Model\GenreMapEnum;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 /**
@@ -37,6 +41,50 @@ final class AlbumRepository extends EntityRepository implements AlbumRepositoryI
         return $this->findOneBy([
             'mbid' => $mbid,
         ]);
+    }
+
+    /**
+     * Returns all albums having a certain genre
+     *
+     * @return Generator<AlbumInterface>
+     */
+    public function findByGenre(GenreInterface $genre): Generator
+    {
+        $queryBuilder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+        $subQueryBuilder = $this
+            ->getEntityManager()
+            ->createQueryBuilder();
+        $expressionBuilder = $this
+            ->getEntityManager()
+            ->getExpressionBuilder();
+
+        $andExpression = $expressionBuilder->andX();
+        $andExpression->add($expressionBuilder->eq('genre_map.genre', '?1'));
+        $andExpression->add($expressionBuilder->eq('genre_map.mapped_item_type', '?2'));
+
+        $queryBuilder
+            ->select('a')
+            ->from(Album::class, 'a')
+            ->where(
+                $expressionBuilder->in(
+                    'a.id',
+                    $subQueryBuilder
+                        ->select('genre_map.mapped_item_id')
+                        ->from(GenreMap::class, 'genre_map')
+                        ->where($andExpression)
+                        ->getDQL()
+                )
+            )
+            ->orderBy('a.title', 'ASC')
+            ->setParameter(1, $genre)
+            ->setParameter(2, GenreMapEnum::ALBUM)
+        ;
+
+        foreach ($queryBuilder->getQuery()->toIterable() as $item) {
+            yield $item;
+        }
     }
 
     public function delete(AlbumInterface $album): void

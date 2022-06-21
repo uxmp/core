@@ -22,4 +22,8 @@ interface ResultItemFactoryInterface
     public function createPlaylistItem(
         PlaylistInterface $playlist
     ): JsonSerializable;
+
+    public function createAlbumListItem(
+        AlbumInterface $album
+    ): JsonSerializable;
 }

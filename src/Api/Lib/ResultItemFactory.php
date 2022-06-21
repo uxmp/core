@@ -45,4 +45,13 @@ final class ResultItemFactory implements ResultItemFactoryInterface
             $playlist
         );
     }
+
+    public function createAlbumListItem(
+        AlbumInterface $album
+    ): JsonSerializable {
+        return new AlbumListItem(
+            $this->config,
+            $album,
+        );
+    }
 }

@@ -58,4 +58,14 @@ class ResultItemFactoryTest extends MockeryTestCase
             )
         );
     }
+
+    public function testCreateAlbumListItemReturnsInstance(): void
+    {
+        $this->assertInstanceOf(
+            AlbumListItem::class,
+            $this->subject->createAlbumListItem(
+                Mockery::mock(AlbumInterface::class)
+            )
+        );
+    }
 }

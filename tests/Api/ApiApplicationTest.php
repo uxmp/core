@@ -140,6 +140,9 @@ class ApiApplicationTest extends MockeryTestCase
             ->with('/albums/favorite', Album\AlbumFavoriteApplication::class)
             ->once();
         $app->shouldReceive('get')
+            ->with('/albums/genre/{genreId}', Album\AlbumListByGenreApplication::class)
+            ->once();
+        $app->shouldReceive('get')
             ->with('/albums/recent', Album\AlbumRecentApplication::class)
             ->once();
         $app->shouldReceive('get')

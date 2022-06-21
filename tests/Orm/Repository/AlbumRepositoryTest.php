@@ -19,6 +19,9 @@ use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\CatalogInterface;
 use Uxmp\Core\Orm\Model\Disc;
 use Uxmp\Core\Orm\Model\Favorite;
+use Uxmp\Core\Orm\Model\GenreInterface;
+use Uxmp\Core\Orm\Model\GenreMap;
+use Uxmp\Core\Orm\Model\GenreMapEnum;
 use Uxmp\Core\Orm\Model\UserInterface;
 
 class AlbumRepositoryTest extends MockeryTestCase
@@ -230,6 +233,107 @@ class AlbumRepositoryTest extends MockeryTestCase
         $this->assertSame(
             $result,
             $this->subject->getFavorites($user)
+        );
+    }
+
+    public function testFindByGenreReturnsData(): void
+    {
+        $genre = Mockery::mock(GenreInterface::class);
+        $queryBuilder = Mockery::mock(QueryBuilder::class);
+        $subQueryBuilder = Mockery::mock(QueryBuilder::class);
+        $expressionBuilder = Mockery::mock(Expr::class);
+        $andExpression = Mockery::mock(Expr\Andx::class);
+        $equalExpression = Mockery::mock(Expr\Comparison::class);
+        $inExpression = Mockery::mock(Expr\Func::class);
+        $album = Mockery::mock(AlbumInterface::class);
+        $query = Mockery::mock(AbstractQuery::class);
+
+        $subQueryBuilderDQL = 'some-dql';
+
+        $this->entityManager->shouldReceive('createQueryBuilder')
+            ->withNoArgs()
+            ->twice()
+            ->andReturn($queryBuilder, $subQueryBuilder);
+        $this->entityManager->shouldReceive('getExpressionBuilder')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($expressionBuilder);
+
+        $expressionBuilder->shouldReceive('andX')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($andExpression);
+        $expressionBuilder->shouldReceive('eq')
+            ->with('genre_map.genre', '?1')
+            ->once()
+            ->andReturn($equalExpression);
+        $expressionBuilder->shouldReceive('eq')
+            ->with('genre_map.mapped_item_type', '?2')
+            ->once()
+            ->andReturn($equalExpression);
+        $expressionBuilder->shouldReceive('in')
+            ->with('a.id', $subQueryBuilderDQL)
+            ->once()
+            ->andReturn($inExpression);
+
+        $andExpression->shouldReceive('add')
+            ->with($equalExpression)
+            ->twice();
+
+        $subQueryBuilder->shouldReceive('select')
+            ->with('genre_map.mapped_item_id')
+            ->once()
+            ->andReturnSelf();
+        $subQueryBuilder->shouldReceive('from')
+            ->with(GenreMap::class, 'genre_map')
+            ->once()
+            ->andReturnSelf();
+        $subQueryBuilder->shouldReceive('where')
+            ->with($andExpression)
+            ->once()
+            ->andReturnSelf();
+        $subQueryBuilder->shouldReceive('getDQL')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($subQueryBuilderDQL);
+
+        $queryBuilder->shouldReceive('select')
+            ->with('a')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('from')
+            ->with(Album::class, 'a')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('where')
+            ->with($inExpression)
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('orderBy')
+            ->with('a.title', 'ASC')
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('setParameter')
+            ->with(1, $genre)
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('setParameter')
+            ->with(2, GenreMapEnum::ALBUM)
+            ->once()
+            ->andReturnSelf();
+        $queryBuilder->shouldReceive('getQuery')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($query);
+
+        $query->shouldReceive('toIterable')
+            ->withNoArgs()
+            ->once()
+            ->andReturn([$album]);
+
+        $this->assertSame(
+            iterator_to_array($this->subject->findByGenre($genre)),
+            [$album],
         );
     }
 }

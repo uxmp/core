@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Uxmp\Core\Api\Album;
 
+use JsonSerializable;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Uxmp\Core\Component\Config\ConfigProviderInterface;
+use Uxmp\Core\Api\Lib\ResultItemFactoryInterface;
 use Uxmp\Core\Orm\Model\AlbumInterface;
 use Uxmp\Core\Orm\Model\ArtistInterface;
 use Uxmp\Core\Orm\Repository\AlbumRepositoryInterface;
@@ -19,18 +20,18 @@ class AlbumListApplicationTest extends MockeryTestCase
 {
     private MockInterface $albumRepository;
 
-    private MockInterface $config;
+    private MockInterface $resultItemFactory;
 
     private AlbumListApplication $subject;
 
     public function setUp(): void
     {
         $this->albumRepository = Mockery::mock(AlbumRepositoryInterface::class);
-        $this->config = Mockery::mock(ConfigProviderInterface::class);
+        $this->resultItemFactory = Mockery::mock(ResultItemFactoryInterface::class);
 
         $this->subject = new AlbumListApplication(
             $this->albumRepository,
-            $this->config
+            $this->resultItemFactory,
         );
     }
 
@@ -40,59 +41,19 @@ class AlbumListApplicationTest extends MockeryTestCase
         $request = Mockery::mock(ServerRequestInterface::class);
         $album = Mockery::mock(AlbumInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
-        $artist = Mockery::mock(ArtistInterface::class);
+        $item = Mockery::mock(JsonSerializable::class);
 
-        $albumId = 666;
-        $artistId = 42;
-        $albumName = 'some-album-name';
-        $artistName = 'some-artist-name';
-        $baseUrl = 'some-base-url';
-        $length = 33;
+        $data = ['some-data'];
 
-        $this->config->shouldReceive('getBaseUrl')
-            ->withNoArgs()
+        $this->resultItemFactory->shouldReceive('createAlbumListItem')
+            ->with($album)
             ->once()
-            ->andReturn($baseUrl);
+            ->andReturn($item);
 
         $this->albumRepository->shouldReceive('findBy')
             ->with([], ['title' => 'ASC'])
             ->once()
             ->andReturn([$album]);
-
-        $album->shouldReceive('getArtist')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artist);
-        $album->shouldReceive('getTitle')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumName);
-        $album->shouldReceive('getLength')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($length);
-        $album->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumId);
-
-        $artist->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artistId);
-        $artist->shouldReceive('getTitle')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artistName);
-
-        $result = [[
-            'id' => $albumId,
-            'artistId' => $artistId,
-            'artistName' => $artistName,
-            'name' => $albumName,
-            'cover' => sprintf($baseUrl . '/art/album/%d', $albumId),
-            'length' => $length,
-        ]];
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -103,9 +64,14 @@ class AlbumListApplicationTest extends MockeryTestCase
             ->once()
             ->andReturnSelf();
 
+        $item->shouldReceive('jsonSerialize')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($data);
+
         $stream->shouldReceive('write')
             ->with(
-                json_encode(['items' => $result], JSON_PRETTY_PRINT)
+                json_encode(['items' => [$data]], JSON_PRETTY_PRINT)
             )
             ->once();
 
@@ -121,59 +87,10 @@ class AlbumListApplicationTest extends MockeryTestCase
         $request = Mockery::mock(ServerRequestInterface::class);
         $album = Mockery::mock(AlbumInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
-        $artist = Mockery::mock(ArtistInterface::class);
+        $item = Mockery::mock(JsonSerializable::class);
 
-        $albumId = 666;
         $artistId = 42;
-        $albumName = 'some-album-name';
-        $artistName = 'some-artist-name';
-        $baseUrl = 'some-base-url';
-        $length = 33;
-
-        $this->config->shouldReceive('getBaseUrl')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($baseUrl);
-
-        $this->albumRepository->shouldReceive('findBy')
-            ->with(['artist_id' => $artistId], ['title' => 'ASC'])
-            ->once()
-            ->andReturn([$album]);
-
-        $album->shouldReceive('getArtist')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artist);
-        $album->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumId);
-        $album->shouldReceive('getTitle')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($albumName);
-        $album->shouldReceive('getLength')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($length);
-
-        $artist->shouldReceive('getId')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artistId);
-        $artist->shouldReceive('getTitle')
-            ->withNoArgs()
-            ->once()
-            ->andReturn($artistName);
-
-        $result = [[
-            'id' => $albumId,
-            'artistId' => $artistId,
-            'artistName' => $artistName,
-            'name' => $albumName,
-            'cover' => sprintf($baseUrl . '/art/album/%d', $albumId),
-            'length' => $length,
-        ]];
+        $data = ['some-data'];
 
         $response->shouldReceive('getBody')
             ->withNoArgs()
@@ -186,9 +103,24 @@ class AlbumListApplicationTest extends MockeryTestCase
 
         $stream->shouldReceive('write')
             ->with(
-                json_encode(['items' => $result], JSON_PRETTY_PRINT)
+                json_encode(['items' => [$data]], JSON_PRETTY_PRINT)
             )
             ->once();
+
+        $this->resultItemFactory->shouldReceive('createAlbumListItem')
+            ->with($album)
+            ->once()
+            ->andReturn($item);
+
+        $this->albumRepository->shouldReceive('findBy')
+            ->with(['artist_id' => $artistId], ['title' => 'ASC'])
+            ->once()
+            ->andReturn([$album]);
+
+        $item->shouldReceive('jsonSerialize')
+            ->withNoArgs()
+            ->once()
+            ->andReturn($data);
 
         $this->assertSame(
             $response,
