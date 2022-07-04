@@ -27,6 +27,7 @@ return [
             'getCoverArt.view' => fn () => $c->get(CoverArtDataProvider::class),
             'getArtist.view' => fn () => $c->get(ArtistDataProvider::class),
             'getGenres.view' => fn () => $c->get(GenresDataProvider::class),
+            'getMusicFolders.view' => fn () => $c->get(MusicFoldersDataProvider::class),
         ],
     ),
 ];
